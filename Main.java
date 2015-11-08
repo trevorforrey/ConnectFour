@@ -31,17 +31,17 @@ public class Main extends JFrame {
 
       // Creates menu title cover and sets image for the menu
       JLabel menuTitleCover = new JLabel();
-      menuTitleCover.setIcon(new ImageIcon("ConnectFourCover.jpg")); // Placeholder image
+      menuTitleCover.setIcon(new ImageIcon("Assets/ConnectFourCover.jpg")); // Placeholder image
 
       
       // Creates player vs player button and sets image for the button
       JButton pvpButton = new JButton();
-      pvpButton.setIcon(new ImageIcon("PlayerVsPlayerCover2.jpg")); // Placeholder image
+      pvpButton.setIcon(new ImageIcon("Assets/PlayerVsPlayerCover2.jpg")); // Placeholder image
 
 
       // Creates player vs computer button and sets image for the button
       JButton pvcButton = new JButton();
-      pvcButton.setIcon(new ImageIcon("PlayerVsComputerCover2.jpg")); // Placeholder image
+      pvcButton.setIcon(new ImageIcon("Assets/PlayerVsComputerCover2.jpg")); // Placeholder image
 
 
 
