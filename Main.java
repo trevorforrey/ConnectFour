@@ -2,7 +2,7 @@ import java.awt.*;       // Using AWT containers and components
 import java.awt.event.*; // Using AWT events and listener interfaces
 import javax.swing.*;    // Using Swing components and containers
  
-// A Swing GUI application that creates a main menu window for the user to begin a connect four game
+// Creates a main menu window for the user to begin a connect four game
 public class Main extends JFrame {
  
    /** Constructor to setup the GUI */
