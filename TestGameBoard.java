@@ -18,6 +18,7 @@ public class TestGameBoard extends JFrame
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
         frame.add(lpane, BorderLayout.CENTER);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
         lpane.setBounds(0, 0, 900, 755);
         //panelBlue.setBackground(Color.BLUE);
         backgroundImagePanel.setBounds(0, 0, 900, 755);
@@ -25,21 +26,21 @@ public class TestGameBoard extends JFrame
         JLabel boardLabel = new JLabel();
 		JLabel chipLabel = new JLabel();
 
-		theLabel.setIcon(new ImageIcon("Assets/Board.png"));
-		theOtherLabel.setIcon(new ImageIcon("Assets/RedChip.png"));
+		boardLabel.setIcon(new ImageIcon("Assets/Board.png"));
+		chipLabel.setIcon(new ImageIcon("Assets/RedChip.png"));
         //panelBlue.setOpaque(true);
         //panelGreen.setBackground(Color.GREEN);
         chipImagePanel.setBounds(50,15,102,107);        // label.setBounds(origin.x, origin.y, icon.getIconWidth(), icon.getIconHeight());
         //panelGreen.setBounds(200, 100, 100, 100);
         chipImagePanel.setOpaque(true);
         
-        chipImagePanel.add(theOtherLabel);
-        backgroundImagePanel.add(theLabel);
+        chipImagePanel.add(chipLabel);
+        backgroundImagePanel.add(boardLabel);
         lpane.add(backgroundImagePanel, new Integer(0), 0);
         lpane.add(chipImagePanel, new Integer(1), 0);
         frame.pack();
         frame.setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
+        
     }
 
 
@@ -75,7 +76,7 @@ public class TestGameBoard extends JFrame
 
 		//JPanel thePanel = new JPanel();
 		//JPanel theOtherPanel = new JPanel();
-		//JLabel theLabel = new JLabel();
+		//JLabel boardLabel = new JLabel();
 		//JLabel theOtherLabel = new JLabel();
 
 
