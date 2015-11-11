@@ -18,7 +18,7 @@ public class TestGameBoard extends JFrame
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
         frame.add(lpane, BorderLayout.CENTER);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
         lpane.setBounds(0, 0, 900, 755);
         //panelBlue.setBackground(Color.BLUE);
         backgroundImagePanel.setBounds(0, 0, 900, 755);
