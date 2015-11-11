@@ -1,5 +1,4 @@
 import javax.swing.*;
-
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.geom.*;
@@ -11,6 +10,7 @@ public class TestGameBoard extends JFrame
     private JLayeredPane lpane = new JLayeredPane();
     private JPanel backgroundImagePanel = new JPanel();
     private JPanel chipImagePanel = new JPanel();
+
     public TestGameBoard()
     {
         frame.setPreferredSize(new Dimension(900, 755));
@@ -22,11 +22,11 @@ public class TestGameBoard extends JFrame
         //panelBlue.setBackground(Color.BLUE);
         backgroundImagePanel.setBounds(0, 0, 900, 755);
 
-        JLabel theLabel = new JLabel();
-		JLabel theOtherLabel = new JLabel();
+        JLabel boardLabel = new JLabel();
+		JLabel chipLabel = new JLabel();
 
-		theLabel.setIcon(new ImageIcon("/Users/Reza/Desktop/ConnectFour/Connect4Board.png"));
-		theOtherLabel.setIcon(new ImageIcon("/Users/Reza/Desktop/JavaCircleDude.png"));
+		theLabel.setIcon(new ImageIcon("Assets/Board.png"));
+		theOtherLabel.setIcon(new ImageIcon("Assets/RedChip.png"));
         //panelBlue.setOpaque(true);
         //panelGreen.setBackground(Color.GREEN);
         chipImagePanel.setBounds(50,15,102,107);        // label.setBounds(origin.x, origin.y, icon.getIconWidth(), icon.getIconHeight());
@@ -39,6 +39,7 @@ public class TestGameBoard extends JFrame
         lpane.add(chipImagePanel, new Integer(1), 0);
         frame.pack();
         frame.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
     }
 
 
