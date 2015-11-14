@@ -2,6 +2,7 @@ import java.awt.*;       // Using AWT containers and components
 import java.awt.event.*; // Using AWT events and listener interfaces
 import javax.swing.*
 
+// Currently holds all game logic (non gui components of the board)
 public class Board implements JFrame{
   
   
@@ -81,7 +82,7 @@ public class Board implements JFrame{
 
     }
 
-    // Handles the animation of a revently placed chip
+    // Handles the animation of a recently placed chip
     private void DropChip() {
 
     }
