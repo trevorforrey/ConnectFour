@@ -123,39 +123,48 @@ public class Board implements JFrame{
         }
       }
       //if the chip is not at the edge of the board
-      else if (y > 0 && y < 5) {
-        boolean runCheck = true;
-        int loopCount = 1;
-        int missCount = 0;
-        while (runCheck) {
-          if (tempCount != 3) {
-            if (tempY > 0) {
-              tempY -= loopCount;
-              if (Chips[tempY][tempX].getVisible() && Chips[tempY][tempX].whosChip() == player) {
+      else if (y > 1 && y < 4) {
+        // 0  
+        // -
+        // 0 - [chip to check from], top is a match and bot is not
+        // -
+        // X
+        if ((Chips[tempY - 1][tempX].getVisible() && Chips[tempY - 1][tempX].whosChip == player) && 
+          (!Chips[tempY + 1][tempX].getVisible() || Chips[tempY + 1][tempX].whosChip != player)) {
+            for (int i = tempY - 1; i >= 0; i--) {
+              if (Chips[i][tempX].getVisible() && Chips[i][tempX].whosChip == player) {
                 tempCount++;
-                loopCount++;
+              } else if (tempCount == 3) {
+                return true;
               } else {
-                missCount++;
+                return false;
               }
             }
-            
-            if (tempY < 5) {
-              tempY += loopCount;
-              if (Chips[tempY][tempX].getVisible() && Chips[tempY][tempX].whosChip() == player) {
-                tempCount++;
-                loopCount++;
-              } else {
-                missCount++;
-              }
-            }
-            if (missCount == 2) {
-              runCheck = false;
-              return false;
-            }
-          } else {
-            runCheck = false;
-            return true;
           }
+        // X  
+        // -
+        // 0 - [chip to check from], bot is a match and top is not
+        // -
+        // 0
+        else if ((Chips[tempY + 1][tempX].getVisible() && Chips[tempY + 1][tempX].whosChip == player) && 
+          (!Chips[tempY - 1][tempX].getVisible() || Chips[tempY - 1][tempX].whosChip != player)) {
+            for (int i = tempY + 1; i < 6; i++) {
+              if (Chips[i][tempX].getVisible() && Chips[i][tempX].whosChip == player) {
+                tempCount++;
+              } else if (tempCount == 3) {
+                return true;
+              } else {
+                return false;
+              }
+            }
+          }
+        // 0
+        // -
+        // 0 - [chip to check from], bot and top are a match
+        // -
+        // 0
+        else {
+          
         }
       }
     }
