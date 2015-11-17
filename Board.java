@@ -3,7 +3,7 @@ import java.awt.event.*; // Using AWT events and listener interfaces
 import javax.swing.*
 
 // Currently holds all game logic (non gui components of the board)
-public class Board implements JFrame{
+public class Board extends JPanel{
   
   
   private boolean mConnectFour;
@@ -83,99 +83,349 @@ public class Board implements JFrame{
       return tempCount;
     }
 
-    private boolean CheckVertical(int playerTurn, int x, int y) {
-      int tempX = x;
-      int tempY = y;
-      int tempCount = 0;
-      int player = 0;
-      
-      //Determine who's chip is being checked
-      if (Player1Chip.class.equals(Chips[y][x].getClass()) {
-        player = 1;
-      } else if (Player2Chip.class.equals(Chips[y][x].getClass()) {
-        player = 2;
-      } else {
-        player = 0;
-      }
-      
-      //if the chip is at the top
-      if (y == 0) {
-        for (int i = 1; i < 6; i++) {
-          if (Chips[i][tempX].getVisible() && Chips[i][tempX].whosChip() == player) {
-            tempCount++;
-          } else if (count > 3) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      }
-      //if the chip is at the bottom
-      else if (y == 5) {
-        for (int i = 4; i >= 0; i--) {
-          if (Chips[i][tempX].getVisible() && Chips[i][tempX].whosChip() == player) {
-            tempCount++;
-          } else if (tempCount > 3) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      }
-      //if the chip is not at the edge of the board
-      else if (y > 1 && y < 4) {
-        // 0  
-        // -
-        // 0 - [chip to check from], top is a match and bot is not
-        // -
-        // X
-        if ((Chips[tempY - 1][tempX].getVisible() && Chips[tempY - 1][tempX].whosChip == player) && 
-          (!Chips[tempY + 1][tempX].getVisible() || Chips[tempY + 1][tempX].whosChip != player)) {
-            for (int i = tempY - 1; i >= 0; i--) {
-              if (Chips[i][tempX].getVisible() && Chips[i][tempX].whosChip == player) {
-                tempCount++;
-              } else if (tempCount == 3) {
-                return true;
-              } else {
-                return false;
-              }
-            }
-          }
-        // X  
-        // -
-        // 0 - [chip to check from], bot is a match and top is not
-        // -
-        // 0
-        else if ((Chips[tempY + 1][tempX].getVisible() && Chips[tempY + 1][tempX].whosChip == player) && 
-          (!Chips[tempY - 1][tempX].getVisible() || Chips[tempY - 1][tempX].whosChip != player)) {
-            for (int i = tempY + 1; i < 6; i++) {
-              if (Chips[i][tempX].getVisible() && Chips[i][tempX].whosChip == player) {
-                tempCount++;
-              } else if (tempCount == 3) {
-                return true;
-              } else {
-                return false;
-              }
-            }
-          }
-        // 0
-        // -
-        // 0 - [chip to check from], bot and top are a match
-        // -
-        // 0
-        else {
-          
-        }
-      }
-    }
-    private boolean CheckHorizontal(int x, int y) {
-      int tempX = x;
-      int tempY = y;
-    }
-    private boolean CheckDiagonal(int x, int y) {
-      int tempX = x;
-      int tempY = y;
-    }
+    private boolean CheckVertical(int init_X, int init_Y, int playerTurn) {
+  		int x = init_X;
+  		int y = init_Y;
+  		int count = 0;
+  		if (y == 0) {
+  			System.out.println("Starting Top check...");
+  			for (int i = 0; i < 6; i++) {
+  				if (Chips[i][x].isVisible() && Chips[i][x].WhosChip() == playerTurn) {
+  					count++;
+  					System.out.println("Count: " + count);
+  				} else {
+  					System.out.println("Breaking...");
+  					break;
+  				}
+  			}
+  			if (count >= 4) {
+  				System.out.println("Success");
+  				return true;
+  			} else {
+  				System.out.println("Failure");
+  				return false;
+  			}
+  		}
+  		else if (y == 5) {
+  			System.out.println("Startign Bot check...");
+  			for (int i = 5; i > -1; i--) {
+  				if (Chips[i][x].isVisible() && Chips[i][x].WhosChip() == playerTurn) {
+  					count++;
+  					System.out.println("Count: " + count);
+  				} else {
+  					System.out.println("Breaking...");
+  					break;
+  				}
+  			}
+  			if (count >= 4) {
+  				System.out.println("Success");
+  				return true;
+  			} else {
+  				System.out.println("Failure");
+  				return false;
+  			}
+  		}
+  		else if (y > 0 && y < 5) {
+  			System.out.println("Starting vertical check not from edge");
+  			count += 1;
+  			for (int i = y - 1; i > -1; i--) {
+  				if (Chips[i][x].isVisible() && Chips[i][x].WhosChip() == playerTurn) {
+  					count++;
+  					System.out.println("Count: " + count);
+  				} else {
+  					System.out.println("Breaking...");
+  					break;
+  				}
+  			}
+  			for (int i = y + 1; i < 6; i++) {
+  				if (Chips[i][x].isVisible() && Chips[i][x].WhosChip() == playerTurn) {
+  					count++;
+  					System.out.println("Count: " + count);
+  				} else {
+  					System.out.println("Breaking...");
+  					break;
+  				}
+  			}
+  			if (count >= 4) {
+  				System.out.println("Success");
+  				return true;
+  			} else {
+  				System.out.println("Failure");
+  				return false;
+  			}
+  		}
+  		
+  		
+  		return false;
+  	}
+  	private boolean CheckHorizontal(int init_X, int init_Y, int playerTurn) {
+  		int x = init_X;
+  		int y = init_Y;
+  		int count = 0;
+  		if (x == 0) {
+  			System.out.println("Starting check from left edge...");
+  			for (int i = 0; i < 7; i++) {
+  				if (Chips[y][i].isVisible() && Chips[y][i].WhosChip() == playerTurn) {
+  					count++;
+  					System.out.println("Count: " + count);
+  				} else {
+  					System.out.println("Breaking...");
+  					break;
+  				}
+  			}
+  			if (count >= 4) {
+  				System.out.println("Success");
+  				return true;
+  			} else {
+  				System.out.println("Failure");
+  				return false;
+  			}
+  		}
+  		else if (x == 6) {
+  			System.out.println("Starting check from right edge...");
+  			for (int i = 6; i > -1; i--) {
+  				if (Chips[y][i].isVisible() && Chips[y][i].WhosChip() == playerTurn) {
+  					count++;
+  					System.out.println("Count: " + count);
+  				} else {
+  					System.out.println("Breaking...");
+  					break;
+  				}
+  			}
+  			if (count >= 4) {
+  				System.out.println("Success");
+  				return true;
+  			} else {
+  				System.out.println("Failure");
+  				return false;
+  			}
+  		}
+  		else if (x > 0 && x < 6) {
+  			System.out.println("Starting horizontal check not from edge...");
+  			count += 1;
+  			for (int i = x - 1; i > -1; i--) {
+  				if (Chips[y][i].isVisible() && Chips[y][i].WhosChip() == playerTurn ) {
+  					count++;
+  					System.out.println("Count: " + count);
+  				} else {
+  					System.out.println("Breaking...");
+  					break;
+  				}
+  			}
+  			for (int i = x + 1; i < 7; i++) {
+  				if (Chips[y][i].isVisible() && Chips[y][i].WhosChip() == playerTurn) {
+  					count++;
+  					System.out.println("Count: " + count);
+  				} else {
+  					System.out.println("Breaking...");
+  					break;
+  				}
+  			}
+  			if (count >= 4) {
+  				System.out.println("Success");
+  				return true;
+  			} else {
+  				System.out.println("Failure");
+  				return false;
+  			}
+  		}
+  		
+  		
+  		return false;
+  	}
+  	
+  	private boolean CheckDiagonalDownUp(int init_X, int init_Y, int playerTurn) {
+  		int x = init_X;
+  		int y = init_Y;
+  		int count = 0;
+  		if (x == 0) {
+  		  if (y == 0) {
+  		    System.out.println("Starting check from top left corner...");
+  		    for (int i = 0; i < 6; i++) {
+  		      if (Chips[i][i].isVisible() && Chips[i][i].WhosChip() == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking...");
+  		        break;
+  		      }
+  		    }
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Failure");
+  		      return false;
+  		    }
+  		  }
+  		  else if (y == 5) {
+  		    System.out.println("Starting check from bot left corner...");
+  		    int loopCount = 0;
+  		    for (int i = 5; i > -1; i--) {
+  		      if (Chips[i][x + loopCount].isVisible() && Chips[i][x + loopCount].WhosChip() == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking...");
+  		        break;
+  		      }
+  		      loopCount++;
+  		    }
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Failure");
+  		      return false;
+  		    }
+  		  }
+  		  else if (y > 0 && y < 5) {
+  		    System.out.println("Starting check from left edge...");
+  		    int loopCount = 0;
+  		    for (int i = y; i > -1; i--) {
+  		      if (Chips[i][x + loopCount].isVisible() && Chips[i][x + loopCount].WhosChip() == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking...");
+  		        break;
+  		      }
+  		      loopCount++
+  		    }
+  		    loopCount = 0;
+  		    for (int i = y; i < 6; i++) {
+  		      if (Chips[i][x + loopCount].isVisible() && Chips[i][x + loopCount].WhosChip() == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking...");
+  		        break;
+  		      }
+  		      loopCount++;
+  		    }
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Failure");
+  		      return false;
+  		    }
+  		  }
+  		}
+  		else if (x == 6) {
+  		  if (y == 0) {
+  		    System.out.println("Starting check from top right corner...");
+  		    int loopCount = 0;
+  		    for (int i = 0; i < 6; i++) {
+  		      if (Chips[i][x - loopCount].isVisible() && Chips[i][x - loopCount].WhosChip() == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking...");
+  		        break;
+  		      }
+  		      loopCount++;
+  		    }
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Failure");
+  		      return false;
+  		    }
+  		  }
+  		  else if (y == 5) {
+  		    System.out.println("Starting check from bot left corner...");
+  		    int loopCount = 0;
+  		    for (int i = 5; i > -1; i--) {
+  		      if (Chips[i][x - loopCount].isVisible() && Chips[i][x - loopCount].WhosChip() == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking...");
+  		        break;
+  		      }
+  		      loopCount++;
+  		    }
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Failure");
+  		      return false;
+  		    }
+  		  }
+  		  else if (y > 0 && y < 5) {
+  		    System.out.println("Starting check from left edge...");
+  		    int loopCount = 0;
+  		    for (int i = y; i > -1; i--) {
+  		      if (Chips[i][x - loopCount].isVisible() && Chips[i][x - loopCount].WhosChip() == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking...");
+  		        break;
+  		      }
+  		      loopCount++
+  		    }
+  		    loopCount = 0;
+  		    for (int i = y; i < 6; i++) {
+  		      if (Chips[i][x - loopCount].isVisible() && Chips[i][x - loopCount].WhosChip() == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking...");
+  		        break;
+  		      }
+  		      loopCount++;
+  		    }
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Failure");
+  		      return false;
+  		    }
+  		  }
+  		}
+  		else if (x > 0 && x < 6) {
+  		  if (x == 1) {
+  		    if (y == 0) {
+  		    
+    		  }
+    		  else if (y == 5) {
+    		    
+    		  }
+    		  else if (y > 0 && y < 5) {
+    		    
+    		  }
+  		  }
+  		  else if (x == 5) {
+  		    if (y == 0) {
+  		    
+    		  }
+    		  else if (y == 5) {
+    		    
+    		  }
+    		  else if (y > 0 && y < 5) {
+    		    
+    		  }
+  		  }
+  		  else {
+  		    if (y == 0) {
+  		    
+    		  }
+    		  else if (y == 5) {
+    		    
+    		  }
+    		  else if (y > 0 && y < 5) {
+    		    
+    		  }
+  		  }
+  		}
+  		
+  		return false;
+  	}
 
     private boolean ChipCheck(int x, int y) {
       
