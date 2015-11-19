@@ -43,29 +43,21 @@ public class Board extends JPanel{
     }
 
 
-    public void Begin() {
-      while (mIsPlaying) {
-        update();
-        render();
-      }
-    }
-
-
     // Calls chip constructor for either player1 or player2 chip
     
     private void SetChip(int playerTurn, int x, int y) {
       playerTurn = playerTurn % 2;
       if (playerTurn == 0) {
-        Chips[x][y] = new Player1Chip();
+        mChips[x][y] = new Player1Chip();
       } else if (playerTurn == 1) {
-        Chips[x][y] = new Player2Chip();
+        mChips[x][y] = new Player2Chip();
       }
     }
 
 
     // Sets recently placed chip's visibility to true
     private void PlaceChip(int playerTurn, int x, int y) {
-      Chips[x][y].setVisible(true);
+      mChips[x][y].setVisible(true);
     }
 
 
@@ -73,7 +65,7 @@ public class Board extends JPanel{
     private int CheckColumn(int col) {
       int tempCount = 6;
       for (int i = 6; i > 0; i--) {
-        if (Chips[i][col].isVisible() == true) {
+        if (mChips[i][col].isVisible() == true) {
           this.mColumnMap[i] = 1;
           tempCount -= 1;
         } else {
@@ -90,7 +82,7 @@ public class Board extends JPanel{
   		if (y == 0) {
   			System.out.println("Starting Top check...");
   			for (int i = 0; i < 6; i++) {
-  				if (Chips[i][x].isVisible() && Chips[i][x].WhosChip() == playerTurn) {
+  				if (mChips[i][x].isVisible() && mChips[i][x].WhosChip() == playerTurn) {
   					count++;
   					System.out.println("Count: " + count);
   				} else {
@@ -109,7 +101,7 @@ public class Board extends JPanel{
   		else if (y == 5) {
   			System.out.println("Startign Bot check...");
   			for (int i = 5; i > -1; i--) {
-  				if (Chips[i][x].isVisible() && Chips[i][x].WhosChip() == playerTurn) {
+  				if (mChips[i][x].isVisible() && mChips[i][x].WhosChip() == playerTurn) {
   					count++;
   					System.out.println("Count: " + count);
   				} else {
@@ -129,7 +121,7 @@ public class Board extends JPanel{
   			System.out.println("Starting vertical check not from edge");
   			count += 1;
   			for (int i = y - 1; i > -1; i--) {
-  				if (Chips[i][x].isVisible() && Chips[i][x].WhosChip() == playerTurn) {
+  				if (mChips[i][x].isVisible() && mChips[i][x].WhosChip() == playerTurn) {
   					count++;
   					System.out.println("Count: " + count);
   				} else {
@@ -138,7 +130,7 @@ public class Board extends JPanel{
   				}
   			}
   			for (int i = y + 1; i < 6; i++) {
-  				if (Chips[i][x].isVisible() && Chips[i][x].WhosChip() == playerTurn) {
+  				if (mChips[i][x].isVisible() && mChips[i][x].WhosChip() == playerTurn) {
   					count++;
   					System.out.println("Count: " + count);
   				} else {
@@ -165,7 +157,7 @@ public class Board extends JPanel{
   		if (x == 0) {
   			System.out.println("Starting check from left edge...");
   			for (int i = 0; i < 7; i++) {
-  				if (Chips[y][i].isVisible() && Chips[y][i].WhosChip() == playerTurn) {
+  				if (mChips[y][i].isVisible() && mChips[y][i].WhosChip() == playerTurn) {
   					count++;
   					System.out.println("Count: " + count);
   				} else {
@@ -184,7 +176,7 @@ public class Board extends JPanel{
   		else if (x == 6) {
   			System.out.println("Starting check from right edge...");
   			for (int i = 6; i > -1; i--) {
-  				if (Chips[y][i].isVisible() && Chips[y][i].WhosChip() == playerTurn) {
+  				if (mChips[y][i].isVisible() && mChips[y][i].WhosChip() == playerTurn) {
   					count++;
   					System.out.println("Count: " + count);
   				} else {
@@ -204,7 +196,7 @@ public class Board extends JPanel{
   			System.out.println("Starting horizontal check not from edge...");
   			count += 1;
   			for (int i = x - 1; i > -1; i--) {
-  				if (Chips[y][i].isVisible() && Chips[y][i].WhosChip() == playerTurn ) {
+  				if (mChips[y][i].isVisible() && mChips[y][i].WhosChip() == playerTurn ) {
   					count++;
   					System.out.println("Count: " + count);
   				} else {
@@ -213,7 +205,7 @@ public class Board extends JPanel{
   				}
   			}
   			for (int i = x + 1; i < 7; i++) {
-  				if (Chips[y][i].isVisible() && Chips[y][i].WhosChip() == playerTurn) {
+  				if (mChips[y][i].isVisible() && mChips[y][i].WhosChip() == playerTurn) {
   					count++;
   					System.out.println("Count: " + count);
   				} else {
@@ -242,7 +234,7 @@ public class Board extends JPanel{
   		  if (y == 0) {
   		    System.out.println("Starting check from top left corner...");
   		    for (int i = 0; i < 6; i++) {
-  		      if (Chips[i][i].isVisible() && Chips[i][i].WhosChip() == playerTurn) {
+  		      if (mChips[i][i].isVisible() && mChips[i][i].WhosChip() == playerTurn) {
   		        count++;
   		        System.out.println("Count: " + count);
   		      } else {
@@ -262,7 +254,7 @@ public class Board extends JPanel{
   		    System.out.println("Starting check from bot left corner...");
   		    int loopCount = 0;
   		    for (int i = 5; i > -1; i--) {
-  		      if (Chips[i][x + loopCount].isVisible() && Chips[i][x + loopCount].WhosChip() == playerTurn) {
+  		      if (mChips[i][x + loopCount].isVisible() && mChips[i][x + loopCount].WhosChip() == playerTurn) {
   		        count++;
   		        System.out.println("Count: " + count);
   		      } else {
@@ -283,7 +275,7 @@ public class Board extends JPanel{
   		    System.out.println("Starting check from left edge...");
   		    int loopCount = 0;
   		    for (int i = y; i > -1; i--) {
-  		      if (Chips[i][x + loopCount].isVisible() && Chips[i][x + loopCount].WhosChip() == playerTurn) {
+  		      if (mChips[i][x + loopCount].isVisible() && mChips[i][x + loopCount].WhosChip() == playerTurn) {
   		        count++;
   		        System.out.println("Count: " + count);
   		      } else {
@@ -293,8 +285,15 @@ public class Board extends JPanel{
   		      loopCount++
   		    }
   		    loopCount = 0;
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Continuing...");
+  		      count = 0;
+  		    }
   		    for (int i = y; i < 6; i++) {
-  		      if (Chips[i][x + loopCount].isVisible() && Chips[i][x + loopCount].WhosChip() == playerTurn) {
+  		      if (mChips[i][x + loopCount].isVisible() && mChips[i][x + loopCount].WhosChip() == playerTurn) {
   		        count++;
   		        System.out.println("Count: " + count);
   		      } else {
@@ -317,7 +316,7 @@ public class Board extends JPanel{
   		    System.out.println("Starting check from top right corner...");
   		    int loopCount = 0;
   		    for (int i = 0; i < 6; i++) {
-  		      if (Chips[i][x - loopCount].isVisible() && Chips[i][x - loopCount].WhosChip() == playerTurn) {
+  		      if (mChips[i][x - loopCount].isVisible() && mChips[i][x - loopCount].WhosChip() == playerTurn) {
   		        count++;
   		        System.out.println("Count: " + count);
   		      } else {
@@ -338,7 +337,7 @@ public class Board extends JPanel{
   		    System.out.println("Starting check from bot left corner...");
   		    int loopCount = 0;
   		    for (int i = 5; i > -1; i--) {
-  		      if (Chips[i][x - loopCount].isVisible() && Chips[i][x - loopCount].WhosChip() == playerTurn) {
+  		      if (mChips[i][x - loopCount].isVisible() && mChips[i][x - loopCount].WhosChip() == playerTurn) {
   		        count++;
   		        System.out.println("Count: " + count);
   		      } else {
@@ -359,7 +358,7 @@ public class Board extends JPanel{
   		    System.out.println("Starting check from left edge...");
   		    int loopCount = 0;
   		    for (int i = y; i > -1; i--) {
-  		      if (Chips[i][x - loopCount].isVisible() && Chips[i][x - loopCount].WhosChip() == playerTurn) {
+  		      if (mChips[i][x - loopCount].isVisible() && mChips[i][x - loopCount].WhosChip() == playerTurn) {
   		        count++;
   		        System.out.println("Count: " + count);
   		      } else {
@@ -369,8 +368,15 @@ public class Board extends JPanel{
   		      loopCount++
   		    }
   		    loopCount = 0;
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Continuing...");
+  		      count = 0;
+  		    }
   		    for (int i = y; i < 6; i++) {
-  		      if (Chips[i][x - loopCount].isVisible() && Chips[i][x - loopCount].WhosChip() == playerTurn) {
+  		      if (mChips[i][x - loopCount].isVisible() && mChips[i][x - loopCount].WhosChip() == playerTurn) {
   		        count++;
   		        System.out.println("Count: " + count);
   		      } else {
@@ -391,7 +397,7 @@ public class Board extends JPanel{
   		else if (x > 0 && x < 6) {
   		  if (x == 1) {
   		    if (y == 0) {
-  		    
+  		      
     		  }
     		  else if (y == 5) {
     		    
@@ -446,14 +452,7 @@ public class Board extends JPanel{
     }
 
 
-    private void render() {
-
-    }
     
-    
-    private void update() {
-
-    }
     
     
     // Basic Board Frame attributes
