@@ -11,8 +11,6 @@ public class Board extends JPanel{
   private int mTurnCount;
   private boolean mPlayerTurn;
   private boolean mIsPlaying;
-  private int mXPositionOfMouse;
-  private int mYPositionOfMouse;
 
 
   private int[] mColumnMap;
@@ -334,7 +332,7 @@ public class Board extends JPanel{
   		    }
   		  }
   		  else if (y == 5) {
-  		    System.out.println("Starting check from bot left corner...");
+  		    System.out.println("Starting check from bot right corner...");
   		    int loopCount = 0;
   		    for (int i = 5; i > -1; i--) {
   		      if (mChips[i][x - loopCount].isVisible() && mChips[i][x - loopCount].WhosChip() == playerTurn) {
@@ -395,38 +393,87 @@ public class Board extends JPanel{
   		  }
   		}
   		else if (x > 0 && x < 6) {
-  		  if (x == 1) {
-  		    if (y == 0) {
-  		      
-    		  }
-    		  else if (y == 5) {
-    		    
-    		  }
-    		  else if (y > 0 && y < 5) {
-    		    
-    		  }
+  		  if (y == 0) {
+  		    System.out.println("Starting check from top edge...");
+  		    int loopCount = 0;
+  		    for (int i = x; i > -1; i--) {
+  		      if (mChips[y + loopCount][i].isVisible() && mChips[y + loopCount][i].WhosChip() == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking");
+  		        break;
+  		      }
+  		      loopCount++;
+  		    }
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Continuing...");
+  		      count = 0;
+  		    }
+  		    loopCount = 0;
+  		    for (int i = x; i < 7; i++) {
+  		      if (mChips[y + loopCount][i].isVisible() && mChips[y + loopCount][i].WhosChip == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking");
+  		        break;
+  		      }
+  		      loopCount++;
+  		    }
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Failure");
+  		      return false;
+  		    }
   		  }
-  		  else if (x == 5) {
-  		    if (y == 0) {
-  		    
-    		  }
-    		  else if (y == 5) {
-    		    
-    		  }
-    		  else if (y > 0 && y < 5) {
-    		    
-    		  }
+  		  else if (y == 5) {
+  		    System.out.println("Starting check from bot edge...");
+  		    loopCount = 0;
+  		    for (int i = x; i > -1; i--) {
+  		      if (mChips[y - loopCount][i].isVisible() && mChips[y - loopCount][i].WhosChip() == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking");
+  		        break;
+  		      }
+  		      loopCount++;
+  		    }
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Continuing...");
+  		      count = 0;
+  		    }
+  		    loopCount = 0;
+  		    for (int i = x; i < 7; i++) {
+  		      if (mChips[y - loopCount][i].isVisible() && mChips[y - loopCount][i].WhosChip() == playerTurn) {
+  		        count++;
+  		        System.out.println("Count: " + count);
+  		      } else {
+  		        System.out.println("Breaking");
+  		        break;
+  		      }
+  		      loopCount++;
+  		    }
+  		    if (count >= 4) {
+  		      System.out.println("Success");
+  		      return true;
+  		    } else {
+  		      System.out.println("Failure");
+  		      return false;
+  		    }
   		  }
-  		  else {
-  		    if (y == 0) {
+  		  else if (y > 0 && y < 5) {
+  		    //8 distinct cases
   		    
-    		  }
-    		  else if (y == 5) {
-    		    
-    		  }
-    		  else if (y > 0 && y < 5) {
-    		    
-    		  }
   		  }
   		}
   		
