@@ -44,7 +44,6 @@ public class Board extends JPanel{
     // Calls chip constructor for either player1 or player2 chip
     
     private void SetChip(int playerTurn, int x, int y) {
-      playerTurn = playerTurn % 2;
       if (playerTurn == 0) {
         mChips[x][y] = new Player1Chip();
       } else if (playerTurn == 1) {
@@ -54,8 +53,12 @@ public class Board extends JPanel{
 
 
     // Sets recently placed chip's visibility to true
-    private void PlaceChip(int playerTurn, int x, int y) {
+    public void PlaceChip(int playerTurn, int x, int y) {
+      SetChip(playerTurn, x, y);
       mChips[x][y].setVisible(true);
+      if (ChipCheck()) {
+        System.out.println("There is a connect 4!");
+      }
     }
 
 
@@ -345,7 +348,7 @@ public class Board extends JPanel{
   		return false;
   	}
   	
-  	private boolean CheckDiagonalDownUp(int init_X, int init_Y, int playerTurn) {
+  	private boolean CheckDiagonal(int init_X, int init_Y, int playerTurn) {
   		int x = init_X;
   		int y = init_Y;
   		int count = 0;
@@ -597,34 +600,106 @@ public class Board extends JPanel{
   		    if (y == 1) {
   		      if (x > 0 && x < 3) {
   		        //1
+  		        if ((DiagonalTopLeftward(x, y, playerTurn) + DiagonalBotRightward(x, y, playerTurn)) >= 4) {
+  		          return true;
+  		        }
+  		        else if ((DiagonalLeftDownward(x, y, playerTurn) + DiagonalTopRightward(x, y, playerTurn)) > = 4) {
+  		          return true;
+  		        }
+  		        else {
+  		          return false;
+  		        }
   		      }
   		      else if (x > 3 && x < 6) {
   		        //2
+  		        if ((DiagonalTopLeftward(x, y, playerTurn) + DiagonalRightDownward(x, y, playerTurn)) >= 4) {
+  		          return true;
+  		        }
+  		        else if ((DiagonalBotLeftward(x, y, playerTurn) + DiagonalTopRightward(x, y, playerTurn)) > = 4) {
+  		          return true;
+  		        }
+  		        else {
+  		          return false;
+  		        }
   		      }
   		    }
   		    else if ( y == 4) {
   		      if (x > 0 && x < 3) {
   		        //3
+  		        if ((DiagonalLeftUpward(x, y, playerTurn) + DiagonalBotRightward(x, y, playerTurn)) >= 4) {
+  		          return true;
+  		        }
+  		        else if ((DiagonalBotLeftward(x, y, playerTurn) + DiagonalTopRightward(x, y, playerTurn)) > = 4) {
+  		          return true;
+  		        }
+  		        else {
+  		          return false;
+  		        }
   		      }
   		      else if (x > 3 && x < 6) {
   		        //4
+  		        if ((DiagonalTopLeftward(x, y, playerTurn) + DiagonalBotRightward(x, y, playerTurn)) >= 4) {
+  		          return true;
+  		        }
+  		        else if ((DiagonalBotLeftward(x, y, playerTurn) + DiagonalRightUpward(x, y, playerTurn)) > = 4) {
+  		          return true;
+  		        }
+  		        else {
+  		          return false;
+  		        }
   		      }
   		    }
   		    else if (y > 1 && y < 4) {
   		      if (x > 0 && x < 3) {
   		        //5
+  		        if ((DiagonalLeftUpward(x, y, playerTurn) + DiagonalBotRightward(x, y, playerTurn)) >= 4) {
+  		          return true;
+  		        }
+  		        else if ((DiagonalLeftDownward(x, y, playerTurn) + DiagonalTopRightward(x, y, playerTurn)) > = 4) {
+  		          return true;
+  		        }
+  		        else {
+  		          return false;
+  		        }
   		      }
   		      else if (x > 3 && x < 6) {
   		        //6
+  		        if ((DiagonalTopLeftward(x, y, playerTurn) + DiagonalRightDownward(x, y, playerTurn)) >= 4) {
+  		          return true;
+  		        }
+  		        else if ((DiagonalBotLeftward(x, y, playerTurn) + DiagonalRightUpward(x, y, playerTurn)) > = 4) {
+  		          return true;
+  		        }
+  		        else {
+  		          return false;
+  		        }
   		      }
   		    }
   		    else if (y > 0 && y < 5) {
   		      if (x == 3) {
   		        if (y > 0 && y < 3) {
   		          //7
+  		          if ((DiagonalTopLeftward(x, y, playerTurn) + DiagonalRightDownward(x, y, playerTurn)) >= 4) {
+  		            return true;
+    		        }
+    		        else if ((DiagonalTopRightward(x, y, playerTurn) + DiagonalLeftDownward(x, y, playerTurn)) > = 4) {
+    		          return true;
+    		        }
+    		        else {
+    		          return false;
+    		        }
   		        }
   		        else if (y > 2 && y < 5) {
   		          //8
+  		          if ((DiagonalLeftUpward(x, y, playerTurn) + DiagonalBotRightward(x, y, playerTurn)) >= 4) {
+    		          return true;
+    		        }
+    		        else if ((DiagonalRightUpward(x, y, playerTurn) + DiagonalBotLeftward(x, y, playerTurn)) > = 4) {
+    		          return true;
+    		        }
+    		        else {
+    		          return false;
+    		        }
   		        }
   		      }
   		    }
@@ -634,8 +709,14 @@ public class Board extends JPanel{
   		return false;
   	}
 
-    private boolean ChipCheck(int x, int y) {
-      
+    public boolean ChipCheck(int x, int y, int playerTurn) {
+      if (CheckHorizontal(x, y, playerTurn) || 
+      CheckVertical(x, y, playerTurn) ||
+      CheckDiagonal(x, y, playerTurn)) {
+        return true;
+      } else {
+        return false;
+      }
     }
 
     // Handles the animation of a recently placed chip
@@ -655,13 +736,13 @@ public class Board extends JPanel{
 
     
     
-    
+    /*
     // Basic Board Frame attributes
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
     setTitle("Connect Four"); // Sets title
-    setSize(/**boardsize**/);         // Sets initial size
+    setSize(*boardsize*);         // Sets initial size
     setVisible(true)
-    
+    */
     
   }
 }
