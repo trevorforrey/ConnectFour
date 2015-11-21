@@ -73,6 +73,127 @@ public class Board extends JPanel{
       return tempCount;
     }
 
+    //Diagonal cases which will return count. These will then be added
+    //to check for connect4 in the Check Diagonal
+    // comments are first word is the limiter in the given direction: left, right, top, bot
+    // the next are the direction in which it is moving
+    
+    //Top leftward
+    private int DiagonalTopLeftward(int x, int y, int playerTurn) {
+      int count = 0;
+      int loopCount = 0;
+      for (int i = y; i > -1; i--) {
+        if (mChips[i][x - loopCount].isVisible() && mChips[i][x - loopCount].WhosChip() == playerTurn) {
+          count++;
+        } else {
+          break;
+        }
+        loopCount++;
+      }
+      return count;
+    }
+    //top rightward
+    private int DiagonalTopRightward(int x, int y, int playerTurn) {
+      int count = 0;
+      int loopCount = 0;
+      for (int i = y; i > -1; i--) {
+        if (mChips[i][x + loopCount].isVisible() && mChips[i][x + loopCount].WhosChip() == playerTurn) {
+          count++;
+        } else {
+          break;
+        }
+        loopCount++;
+      }
+      return count;
+    }
+    
+    //Bot leftward
+    private int DiagonalBotLeftward(int x, int y, int playerTurn) {
+      int count = 0;
+      int loopCount = 0;
+      for (int i = y; i > 6; i++) {
+        if (mChips[i][x - loopCount].isVisible() && mChips[i][x - loopCount].WhosChip() == playerTurn) {
+          count++;
+        } else {
+          break;
+        }
+        loopCount++;
+      }
+      return count;
+    }
+    //Bot rightward
+    private int DiagonalBotRightward(int x, int y, int playerTurn) {
+      int count = 0;
+      int loopCount = 0;
+      for (int i = y; i > 6; i++) {
+        if (mChips[i][x + loopCount].isVisible() && mChips[i][x + loopCount].WhosChip() == playerTurn) {
+          count++;
+        } else {
+          break;
+        }
+        loopCount++;
+      }
+      return count;
+    }
+    
+    //Left upward
+    private int DiagonalLeftUpward(int x, int y, int playerTurn) {
+      int count = 0;
+      int loopCount = 0;
+      for (int i = x; i > -1; i--) {
+        if (mChips[y - loopCount][i].isVisible() && mChips[y - loopCount][i].WhosChip() == playerTurn) {
+          count++;
+        } else {
+          break;
+        }
+        loopCount++;
+      }
+      return count;
+    }
+    //Left downward
+    private int DiagonalLeftDownward(int x, int y, int playerTurn) {
+      int count = 0;
+      int loopCount = 0;
+      for (int i  = x; i > -1; i--) {
+        if (mChips[y + loopCount][i].isVisible() && mChips[y + loopCount][i].WhosChip() == playerTurn) {
+          count++;
+        } else {
+          break;
+        }
+        loopCount++;
+      }
+      return count;
+    }
+    
+    //Right upward
+    private int DiagonalRightUpward(int x, int y, int playerTurn) {
+      int count = 0;
+      int loopCount = 0;
+      for (int i = x; i < 7; i++) {
+        if (mChips[y - loopCount][i].isVisible() && mChips[y - loopCount][i].WhosChip() == playerTurn) {
+          count++;
+        } else {
+          break;
+        }
+        loopCount++;
+      }
+      return count;
+    }
+    //Right downward
+    private int DiagonalRightDownward(int x, int y, int playerTurn) {
+      int count = 0;
+      int loopCount = 0;
+      for (int i = x; i < 7; i++) {
+        if (mChips[y + loopCount][i].isVisible() && mChips[y + loopCount][i].WhosChip() == playerTurn) {
+          count++;
+        } else {
+          break;
+        }
+        loopCount++;
+      }
+      return count;
+    }
+    
     private boolean CheckVertical(int init_X, int init_Y, int playerTurn) {
   		int x = init_X;
   		int y = init_Y;
@@ -473,7 +594,40 @@ public class Board extends JPanel{
   		  }
   		  else if (y > 0 && y < 5) {
   		    //8 distinct cases
-  		    
+  		    if (y == 1) {
+  		      if (x > 0 && x < 3) {
+  		        //1
+  		      }
+  		      else if (x > 3 && x < 6) {
+  		        //2
+  		      }
+  		    }
+  		    else if ( y == 4) {
+  		      if (x > 0 && x < 3) {
+  		        //3
+  		      }
+  		      else if (x > 3 && x < 6) {
+  		        //4
+  		      }
+  		    }
+  		    else if (y > 1 && y < 4) {
+  		      if (x > 0 && x < 3) {
+  		        //5
+  		      }
+  		      else if (x > 3 && x < 6) {
+  		        //6
+  		      }
+  		    }
+  		    else if (y > 0 && y < 5) {
+  		      if (x == 3) {
+  		        if (y > 0 && y < 3) {
+  		          //7
+  		        }
+  		        else if (y > 2 && y < 5) {
+  		          //8
+  		        }
+  		      }
+  		    }
   		  }
   		}
   		
