@@ -8,11 +8,18 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
 
 /* IMPORTANT LINK FOR INFO: http://zetcode.com/tutorials/javagamestutorial/ 
 */
@@ -53,30 +60,113 @@ class Board extends JPanel
         implements ActionListener {         // Example already implemented a action listener in the signature, therefore you have to overload the ActionPerformed task.
 
     private final int B_WIDTH = 890;        // Realy peculiar dimensions, but needed to create perfect alignment between chip and gameboard.
-    private final int B_HEIGHT = 750;
+    private final int B_HEIGHT = 880;
     private final int INITIAL_X = 36;       // INITIAL X for the gameboard.
-    private final int INITIAL_Y = 4;        // INboardTAL Y for the gameboard.
+    private final int INITIAL_Y = 134;        // INboardTAL Y for the gameboard.
     private final int DELAY = 25;           // Time delay for response to animation rendering.
 
     private Image backgroundGameBoard;      // Create variable type of image for background gameboard.
     private Image chipPicture;              // Create chip image variable for animated chip.
+    private Image chipSetPicture;
+    private ImageIcon board, redChip, yellowChip;
     private Timer timer;
     private int x, y;                       // x & y coordinates for moving the picture animation.
-
-
+    private int chipX, chipY;
+    private int[][] drawMap;
+    private int playerTurn;
+    
+    private BoardLogic mBoardLogic = new BoardLogic();
+    private boolean takeInput;
+    private boolean animationOccuring;
+    private int columnClicked, columnHeight;
+    private boolean place;
+    
     public Board() {
-
+    	drawMap = mBoardLogic.GetDrawMap();
         initBoard();
+                
+        addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+                if (takeInput && !animationOccuring) {
+                	if (e.getX() >= 0 && e.getX() <= 157) {
+            			columnClicked = 0;
+            	    }  
+            	    else if (e.getX() >= 158 && e.getX() <= 271) {
+            	    	columnClicked = 1;
+            	    }
+            	    else if (e.getX() >= 272 && e.getX() <= 386) {
+            	    	columnClicked = 2;
+            	    }
+            	    else if (e.getX() >= 387 && e.getX() <= 503) {
+            	    	columnClicked = 3;
+            	    }
+            	    else if (e.getX() >= 504 && e.getX() <= 616) {
+            	    	columnClicked = 4;
+            	    }
+            	    else if (e.getX() >= 617 && e.getX() <= 732) {
+            	    	columnClicked = 5;
+            	    }
+            	    else if (e.getX() >= 733 && e.getX() <= 890) {
+            	    	columnClicked = 6;
+            	    }
+                    System.out.println("Mouse clicked column " + columnClicked);
+                    System.out.println(mBoardLogic.CheckColumn(columnClicked));
+                    columnHeight = mBoardLogic.CheckColumn(columnClicked);
+                    chipX = 50 + (columnClicked * 100) + (columnClicked * 15);
+                    animationOccuring = true;
+                    
+                }
+                revalidate();
+              }
+        });
+        addMouseMotionListener(new MouseAdapter() {
+        	public void mouseMoved(MouseEvent e) {
+        		if (place) {
+                	if (columnHeight > -1) {
+                    	mBoardLogic.PlaceChip(playerTurn%2, columnClicked, columnHeight);
+                    	playerTurn++;
+                    	place = false;
+                    }
+                }
+        		if (animationOccuring == false) {
+        			if (e.getX() >= 0 && e.getX() <= 157) {
+            			chipX = 50 + (0 * 100) + (0 * 15);
+            	    }  
+            	    else if (e.getX() >= 158 && e.getX() <= 271) {
+            	    	chipX = 50 + (1 * 100) + (1 * 15);
+            	    }
+            	    else if (e.getX() >= 272 && e.getX() <= 386) {
+            	    	chipX = 50 + (2 * 100) + (2 * 15);
+            	    }
+            	    else if (e.getX() >= 387 && e.getX() <= 503) {
+            	    	chipX = 50 + (3 * 100) + (3 * 15);
+            	    }
+            	    else if (e.getX() >= 504 && e.getX() <= 616) {
+            	    	chipX = 50 + (4 * 100) + (4 * 15);
+            	    }
+            	    else if (e.getX() >= 617 && e.getX() <= 732) {
+            	    	chipX = 50 + (5 * 100) + (5 * 15);
+            	    }
+            	    else if (e.getX() >= 733 && e.getX() <= 890) {
+            	    	chipX = 50 + (6 * 100) + (6 * 15);
+            	    }
+        		}
+        		revalidate();
+        	}
+        });
         
     }
 
     private void loadImage() {
 
-        ImageIcon board = new ImageIcon("Assets/Board.png");       // Change directory depending on your root file.
-        ImageIcon redChip = new ImageIcon("Assets/RedChip.png");
+        board = new ImageIcon("C:/Users/brian/workspace/Sandbox/src/Assets/Board.png");       // Change directory depending on your root file.
+        redChip = new ImageIcon("C:/Users/brian/workspace/Sandbox/src/Assets/RedChip.png");
+        yellowChip = new ImageIcon("C:/Users/brian/workspace/Sandbox/src/Assets/YellowChip.png");
         backgroundGameBoard = board.getImage();
         chipPicture = redChip.getImage();
-        this.addMouseListener(new BoardMouseListener());
+        chipSetPicture = chipPicture;
+        
     }
 
     private void initBoard() {
@@ -87,11 +177,24 @@ class Board extends JPanel
 
         loadImage();                    // Calls to loadImage method which derives the gameboard and chip pictures.
         
+        
         x = INITIAL_X;                  // Calls to the constant initialization for gameboard.
         y = INITIAL_Y;
         
+        chipX = 50;
+        chipY = 18;
+        
+        columnClicked = 0;
+        playerTurn = 0;
+        takeInput = true;
+        animationOccuring = false;
+        place = false;
+        
         timer = new Timer(DELAY, this);
         timer.start();
+        //timer.start();
+        //this.addMouseListener(new BoardMouseListener(mBoardLogic));
+        //this.addMouseMotionListener(new BoardMouseListener(mBoardLogic));
     }
 
     @Override
@@ -102,162 +205,31 @@ class Board extends JPanel
     }
 
     private void drawBoard(Graphics g) {
-
-        g.drawImage(backgroundGameBoard, x, y, this);   // Render image onto the gameboard, notice we call to this method in the paintcomponent method.
-        g.drawImage(chipPicture,50,18,this);            // Specifics again, those are the required coordinates for the chip to be initialized, we will
+        
+        
+        if (playerTurn % 2 == 0) {
+        	chipPicture = redChip.getImage();
+        }
+        if (playerTurn % 2 == 1) {
+        	chipPicture = yellowChip.getImage();
+        }
+        g.drawImage(chipPicture,chipX, chipY,this);
+        for (int i = 0; i < 6; i++) {
+        	for (int j = 0; j < 7; j++) {
+        		if (drawMap[i][j] == 1) {
+        			chipSetPicture = redChip.getImage();
+        			g.drawImage(chipSetPicture,50 + (j * 100) + (j * 15),148 + (i * 100) + (i * 15),this);
+        		} else if (drawMap[i][j] == 2) {
+        			chipSetPicture = yellowChip.getImage();
+        			g.drawImage(chipSetPicture,50 + (j * 100) + (j * 15),148 + (i * 100) + (i * 15),this);
+        		}
+        	}
+        }
+        g.drawImage(backgroundGameBoard, x, y, this);// Render image onto the gameboard, notice we call to this method in the paintcomponent method.
+        //g.drawImage(chipPicture,chipX,chipY,this);            // Specifics again, those are the required coordinates for the chip to be initialized, we will
         Toolkit.getDefaultToolkit().sync();         // have to add 30 to the x across to consult with column, 30 for row as well.
     }
-
-
-    class BoardMouseListener implements MouseListener{
-
-      // Method that takes the x position of where the user clicked, translates that to the column they clicked in
-      // Calls all running/logical functions that deal with a chip being placed on the board
-      public void mouseClicked(MouseEvent e) {
-
-        int row = 0;
-        int columnClicked = 0;
-
-        System.out.print("Mouse Clicked: ("+e.getX()+", "+e.getY() +")");
-
-        // If player clicked in 1st column
-        if (e.getX() >= 51 && e.getX() <= 149) {
-
-          // Assigns values for the column and row the chip will be placed
-          columnClicked = 0;
-          //row = CheckColumn(columnClicked);
-
-
-          // Logical sequence of functions that will be called to handle chip animation and creation
-
-          //SetChip(int playerTurn, int column, int row);
-          //DropChip();
-          //PlaceChip(int playerTurn, int column, int row);
-
-
-          System.out.println("Column 1 clicked");
-        }
-
-
-        // If player clicked in 2nd column
-        else if (e.getX() >= 164 && e.getX() <= 264) {
-
-          columnClicked = 1;
-          //row = CheckColumn(columnClicked);
-          
-          System.out.println("Column 2 clicked");
-
-
-          // Logical sequence of functions that will be called to handle chip animation and creation
-
-          //SetChip(int playerTurn, int column, int row);
-          //DropChip();
-          //PlaceChip(int playerTurn, int column, int row);
-        }
- 
-        // If player clicked in 3rd column
-        else if (e.getX() >= 279 && e.getX() <= 379) {
-
-          columnClicked = 2;
-          //row = CheckColumn(columnClicked);
-          
-          System.out.println("Column 3 clicked");
-
-
-          // Logical sequence of functions that will be called to handle chip animation and creation
-
-          //SetChip(int playerTurn, int column, int row);
-          //DropChip();
-          //PlaceChip(int playerTurn, int column, int row);
-        }
-
-
-        // If player clicked in 4th column
-        else if (e.getX() >= 394 && e.getX() <= 494) {
-
-          columnClicked = 3;
-          //row = CheckColumn(columnClicked);
-          
-          System.out.println("Column 4 clicked");
-
-
-          // Logical sequence of functions that will be called to handle chip animation and creation
-
-          //SetChip(int playerTurn, int column, int row);
-          //DropChip();
-          //PlaceChip(int playerTurn, int column, int row);
-        }
-
-
-        // If player clicked in 5th column
-        else if (e.getX() >= 509 && e.getX() <= 609) {
-
-          columnClicked = 4;
-          //row = CheckColumn(columnClicked);
-          
-          System.out.println("Column 5 clicked");
-
-
-          // Logical sequence of functions that will be called to handle chip animation and creation
-
-          //SetChip(int playerTurn, int column, int row);
-          //DropChip();
-          //PlaceChip(int playerTurn, int column, int row);
-        }
-
-
-        // If player clicked in 6th column
-        else if (e.getX() >= 625 && e.getX() <= 725) {
-
-          columnClicked = 5;
-          //row = CheckColumn(columnClicked);
-          
-          System.out.println("Column 6 clicked");
-
-
-          // Logical sequence of functions that will be called to handle chip animation and creation
-
-          //SetChip(int playerTurn, int column, int row);
-          //DropChip();
-          //PlaceChip(int playerTurn, int column, int row);
-        }
-
-
-        // If player clicked in 7th column
-        else if (e.getX() >= 748 && e.getX() <= 848) {
-
-          columnClicked = 6;
-          //row = CheckColumn(columnClicked);
-          
-          System.out.println("Column 7 clicked");
-
-
-          // Logical sequence of functions that will be called to handle chip animation and creation
-
-          //SetChip(int playerTurn, int column, int row);
-          //DropChip();
-          //PlaceChip(int playerTurn, int column, int row);
-        }
-
-
-      }
-
-      public void mousePressed(MouseEvent e) {
-      }
-
-      public void mouseReleased(MouseEvent e) {
-      }
-
-      // Logic to show the "shadow" chip of where the player's chip will fall if they click in the column
-      public void mouseEntered(MouseEvent e) {
-      }
-
-      public void mouseExited(MouseEvent e) {
-      }
-    }
-
-
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {    // Need to implement the action performed to suit our needs.
 
@@ -269,7 +241,25 @@ class Board extends JPanel
             y = INITIAL_Y;
             x = INITIAL_X;
         }
-
-        repaint();*/
+		*/
+    	
+    	if (animationOccuring) {
+    		if (chipY < 18 + (columnHeight * 100) + (15 * columnHeight) + 100 + 30) {
+            	chipY += 10;
+            } else {
+            	
+                	if (columnHeight > -1) {
+                    	this.mBoardLogic.PlaceChip(playerTurn%2, columnClicked, columnHeight);
+                    	playerTurn++;
+                    }
+                
+            	animationOccuring = false;
+            }
+    	} else {
+    		chipY = 18;
+    	}
+    	
+    	validate();
+        repaint();
     }
 }
