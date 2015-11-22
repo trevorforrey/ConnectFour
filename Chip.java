@@ -3,8 +3,12 @@ public class Chip {
     private int playersChip;
     private boolean visible;
     
+    public Chip() {
+    	this.playersChip = 0;
+    	this.visible = false;
+    }
     // Chip Constructor
-    Chip (int playersChip) {
+    public Chip (int playersChip) {
         this.playersChip = playersChip;
         this.visible = false;
         
@@ -16,7 +20,7 @@ public class Chip {
     }
     
     //Set and get visible
-    public boolean setVisible(boolean visible) {
+    public void setVisible(boolean visible) {
         this.visible = visible;
     }
     
@@ -30,19 +34,19 @@ public class Chip {
 
 
 // Player 1 Chip
-public class player1Chip extends Chip {
+class player1Chip extends Chip {
     
     player1Chip(int playersChip) {
-        Chip(playersChip)
+        super(playersChip);
     }
     
 }
 
 
 // Player 2 Chip 
-public class player2Chip extends Chip {
+class player2Chip extends Chip {
     
     player2Chip(int playersChip) {
-        Chip(playersChip);
+        super(playersChip);
     }
 }
