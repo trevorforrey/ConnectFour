@@ -160,9 +160,9 @@ class Board extends JPanel
 
     private void loadImage() {
 
-        board = new ImageIcon("C:/Users/brian/workspace/Sandbox/src/Assets/Board.png");       // Change directory depending on your root file.
-        redChip = new ImageIcon("C:/Users/brian/workspace/Sandbox/src/Assets/RedChip.png");
-        yellowChip = new ImageIcon("C:/Users/brian/workspace/Sandbox/src/Assets/YellowChip.png");
+        board = new ImageIcon("Assets/Board.png");       // Change directory depending on your root file.
+        redChip = new ImageIcon("Assets/RedChip.png");
+        yellowChip = new ImageIcon("Assets/YellowChip.png");
         backgroundGameBoard = board.getImage();
         chipPicture = redChip.getImage();
         chipSetPicture = chipPicture;
