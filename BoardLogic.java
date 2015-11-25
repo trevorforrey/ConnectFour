@@ -713,6 +713,11 @@ public class BoardLogic {
   		return false;
   	}
 
+    // Chip array getter
+    public Chip[][] getChips() {
+      return mChips;
+    }
+
     public boolean ChipCheck(int x, int y, int playerTurn) {
       if (CheckHorizontal(x, y, playerTurn) || 
       CheckVertical(x, y, playerTurn) ||

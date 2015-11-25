@@ -64,7 +64,8 @@ public class Main extends JFrame {
 
             // Components are deleted from frame, new components are brought up
             dispose();
-            // Board gameBoard = new Board();
+            Connect4TimerExample board = new Connect4TimerExample(1);
+            board.setVisible(true);
 
 
             //Test
@@ -79,7 +80,8 @@ public class Main extends JFrame {
          public void actionPerformed(ActionEvent e) {
             // Components are deleted from frame, new components are brought up
             dispose();
-            // Board gameBoard = new Board();
+            Connect4TimerExample board = new Connect4TimerExample(2);
+            board.setVisible(true);
 
 
             //Test

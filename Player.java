@@ -1,8 +1,8 @@
 public class Player {
     
-    private String playerName;
-    private String chipDesignColor;
-    private int numberOfWins;
+    protected String playerName;
+    protected String chipDesignColor;
+    protected int numberOfWins;
     
     
     Player(String playerName) {

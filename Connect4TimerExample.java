@@ -26,15 +26,18 @@ import javax.swing.AbstractAction;
 
 public class Connect4TimerExample extends JFrame {
 
+    private int typeOfGame4Timer;
 
-    public Connect4TimerExample() {
+    public Connect4TimerExample(int gameType) {
+
+        typeOfGame4Timer = gameType;
         
         initUI();
     }
     
     private void initUI() {
 
-        add(new Board());           // Add gameboard class created below which implements draw function and timer for moving object.
+        add(new Board(typeOfGame4Timer));           // Add gameboard class created below which implements draw function and timer for moving object.
         
         setResizable(false);
         pack();
@@ -48,8 +51,8 @@ public class Connect4TimerExample extends JFrame {
         
         EventQueue.invokeLater(new Runnable() {
             @Override
-            public void run() {                
-                JFrame ex = new Connect4TimerExample();
+            public void run() {            
+                JFrame ex = new Connect4TimerExample(2);
                 ex.setVisible(true);                
             }
         });
@@ -58,6 +61,14 @@ public class Connect4TimerExample extends JFrame {
 
 class Board extends JPanel
         implements ActionListener {         // Example already implemented a action listener in the signature, therefore you have to overload the ActionPerformed task.
+
+    //Game Type
+        // 0 - Pvp hotseat
+        // 1 - Pvp online
+        // 2 - Pvc
+    private int typeOfGame;
+    private ComputerPlayer computerPlayer;
+
 
     private final int B_WIDTH = 890;        // Realy peculiar dimensions, but needed to create perfect alignment between chip and gameboard.
     private final int B_HEIGHT = 880;
@@ -81,9 +92,12 @@ class Board extends JPanel
     private int columnClicked, columnHeight;
     private boolean place;
     
-    public Board() {
+    public Board(int gameType) {
     	drawMap = mBoardLogic.GetDrawMap();
         initBoard();
+
+        typeOfGame = gameType;
+        computerPlayer = new ComputerPlayer("RAMy");
                 
         addMouseListener(new MouseAdapter() {
         	@Override
@@ -129,6 +143,17 @@ class Board extends JPanel
                     	place = false;
                     }
                 }
+
+//*****************
+                if (typeOfGame == 2 && playerTurn % 2 == 1) {
+                    int columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
+                    int rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
+                    mBoardLogic.PlaceChip(playerTurn%2, columnComputerPlay, rowComputerPlay);
+                    playerTurn++;
+                    place = false;
+                }
+
+
         		if (animationOccuring == false) {
         			if (e.getX() >= 0 && e.getX() <= 157) {
             			chipX = 50 + (0 * 100) + (0 * 15);
