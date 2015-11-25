@@ -205,7 +205,7 @@ public class ComputerPlayer extends Player {
         // Counts how many enemy chips are to the right of where the chip would be placed in a row
         while (tempColumn < 6) {
             tempColumn++;
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
                 scoreOfMove++;
                 // If there are three enemy chips to the right in a row of the "ghost chip"
                 if (scoreOfMove == 3) {
@@ -225,7 +225,7 @@ public class ComputerPlayer extends Player {
         // Counts how many enemy chips are to the left of where the chip would be placed in a row
         while (tempColumn > 0) {
             tempColumn--;
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
                 scoreOfMove++;
                 // If there are three enemy chips to the left in a row of the "ghost chip"
                 if (scoreOfMove == 3) {
@@ -245,14 +245,10 @@ public class ComputerPlayer extends Player {
 
         // Checks down the column for enemy chips
         while (tempRow < 5) {
+    
+                tempRow++;
             
-            if (tempRow == 0) {
-                break;
-            } else {
-                tempRow--;
-            }
-            
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
                 scoreOfMove++;
                  // If there are three enemy chips in a row below the "ghost chip"
                 if (scoreOfMove == 3) {
@@ -277,7 +273,7 @@ public class ComputerPlayer extends Player {
             tempRow--;
             tempColumn++;
             
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
                 scoreOfMove++;
                 // If there are three enemy chips to the (bottom-left to upper right) diagonal in a row
                 if (scoreOfMove == 3) {
@@ -302,7 +298,7 @@ public class ComputerPlayer extends Player {
             tempRow++;
             tempColumn--;
             
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
                 scoreOfMove++;
                 // If there are three enemy chips to the (upper right to bottom left) diagonal in a row
                 if (scoreOfMove == 3) {
@@ -327,7 +323,7 @@ public class ComputerPlayer extends Player {
             tempRow--;
             tempColumn--;
             
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
                 scoreOfMove++;
                 // If there are three enemy chips to the (bottom right to upper left) diagonal in a row
                 if (scoreOfMove == 3) {
@@ -352,7 +348,7 @@ public class ComputerPlayer extends Player {
             tempRow++;
             tempColumn++;
             
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
                 scoreOfMove++;
                 // If there are three enemy chips to the (upper left to bottom right) diagonal in a row
                 if (scoreOfMove == 3) {
@@ -408,7 +404,7 @@ public class ComputerPlayer extends Player {
         // Counts how many of the computer's own chips are to the right of where the chip would be placed in a row
         while (tempColumn < 6) {
             tempColumn++;
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
                 scoreOfMove++;
                 // If there are three of its own chips to the right in a row of the "ghost chip"
                 if (scoreOfMove == 3) {
@@ -430,7 +426,7 @@ public class ComputerPlayer extends Player {
         // Counts how many of the computer's own chips are to the left of where the chip would be placed in a row
         while (tempColumn > 0) {
             tempColumn--;
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
                 scoreOfMove++;
                 // If there are three of its own chips to the left in a row of the "ghost chip"
                 if (scoreOfMove == 3) {
@@ -452,13 +448,9 @@ public class ComputerPlayer extends Player {
         // Checks down the column for its own chips
         while (tempRow < 5) {
             
-            if (tempRow == 0) {
-                break;
-            } else {
-                tempRow--;
-            }
+            tempRow++;
             
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
                 scoreOfMove++;
                  // If there are three of its own chips in a row below the "ghost chip"
                 if (scoreOfMove == 3) {
@@ -484,7 +476,7 @@ public class ComputerPlayer extends Player {
             tempRow--;
             tempColumn++;
             
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
                 scoreOfMove++;
                 // If there are three of its own chips to the (bottom-left to upper right) diagonal in a row
                 if (scoreOfMove == 3) {
@@ -510,7 +502,7 @@ public class ComputerPlayer extends Player {
             tempRow++;
             tempColumn--;
             
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
                 scoreOfMove++;
                 // If there are three of its own chips to the (upper right to bottom left) diagonal in a row
                 if (scoreOfMove == 3) {
@@ -536,7 +528,7 @@ public class ComputerPlayer extends Player {
             tempRow--;
             tempColumn--;
             
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
                 scoreOfMove++;
                 // If there are three of its own chips to the (bottom right to upper left) diagonal in a row
                 if (scoreOfMove == 3) {
@@ -562,7 +554,7 @@ public class ComputerPlayer extends Player {
             tempRow++;
             tempColumn++;
             
-            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
                 scoreOfMove++;
                 // If there are three of its own chips to the (upper left to bottom right) diagonal in a row
                 if (scoreOfMove == 3) {

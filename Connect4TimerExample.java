@@ -171,9 +171,9 @@ class Board extends JPanel
 
     private void loadImage() {
 
-        board = new ImageIcon("C:/Users/brian/workspace/Connect4/src/Assets/Board.png");       // Change directory depending on your root file.
-        redChip = new ImageIcon("C:/Users/brian/workspace/Connect4/src/Assets/RedChip.png");
-        yellowChip = new ImageIcon("C:/Users/brian/workspace/Connect4/src/Assets/YellowChip.png");
+        board = new ImageIcon("Assets/Board.png");       // Change directory depending on your root file.
+        redChip = new ImageIcon("Assets/RedChip.png");
+        yellowChip = new ImageIcon("Assets/YellowChip.png");
         backgroundGameBoard = board.getImage();
         chipPicture = redChip.getImage();
         chipSetPicture = chipPicture;
@@ -259,8 +259,7 @@ class Board extends JPanel
             columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
             rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
             chipX = 50 + (columnComputerPlay * 100) + (columnComputerPlay * 15);
-            animationOccuring = true;
-            
+            animationOccuring = true;    
         }
     	
     	if (animationOccuring) {
