@@ -136,22 +136,8 @@ class Board extends JPanel
         });
         addMouseMotionListener(new MouseAdapter() {
         	public void mouseMoved(MouseEvent e) {
-        		if (place) {
-                	if (columnHeight > -1) {
-                    	mBoardLogic.PlaceChip(playerTurn%2, columnClicked, columnHeight);
-                    	playerTurn++;
-                    	place = false;
-                    }
-                }
-
+        		
 //*****************
-                if (typeOfGame == 2 && playerTurn % 2 == 1) {
-                    int columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
-                    int rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
-                    mBoardLogic.PlaceChip(playerTurn%2, columnComputerPlay, rowComputerPlay);
-                    playerTurn++;
-                    place = false;
-                }
 
 
         		if (animationOccuring == false) {
@@ -185,9 +171,9 @@ class Board extends JPanel
 
     private void loadImage() {
 
-        board = new ImageIcon("Assets/Board.png");       // Change directory depending on your root file.
-        redChip = new ImageIcon("Assets/RedChip.png");
-        yellowChip = new ImageIcon("Assets/YellowChip.png");
+        board = new ImageIcon("C:/Users/brian/workspace/Connect4/src/Assets/Board.png");       // Change directory depending on your root file.
+        redChip = new ImageIcon("C:/Users/brian/workspace/Connect4/src/Assets/RedChip.png");
+        yellowChip = new ImageIcon("C:/Users/brian/workspace/Connect4/src/Assets/YellowChip.png");
         backgroundGameBoard = board.getImage();
         chipPicture = redChip.getImage();
         chipSetPicture = chipPicture;
@@ -267,19 +253,45 @@ class Board extends JPanel
             x = INITIAL_X;
         }
 		*/
+    	int rowComputerPlay = 0;
+    	int columnComputerPlay = 0;
+        if (typeOfGame == 2 && playerTurn % 2 == 1) {
+            columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
+            rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
+            chipX = 50 + (columnComputerPlay * 100) + (columnComputerPlay * 15);
+            animationOccuring = true;
+            
+        }
     	
     	if (animationOccuring) {
-    		if (chipY < 18 + (columnHeight * 100) + (15 * columnHeight) + 100 + 30) {
-            	chipY += 10;
-            } else {
-            	
-                	if (columnHeight > -1) {
-                    	this.mBoardLogic.PlaceChip(playerTurn%2, columnClicked, columnHeight);
-                    	playerTurn++;
-                    }
-                
-            	animationOccuring = false;
-            }
+    		if (playerTurn % 2 == 0) {
+    			if (chipY < 18 + (columnHeight * 100) + (15 * columnHeight) + 100 + 30) {
+                	chipY += 10;
+                } else {
+                	
+                    	if (columnHeight > -1) {
+                        	this.mBoardLogic.PlaceChip(playerTurn%2, columnClicked, columnHeight);
+                        	playerTurn++;
+                        }
+                    
+                	animationOccuring = false;
+                	chipY = 18;
+                }
+    		} else if (playerTurn % 2 == 1) {
+    			if (chipY < 18 + (rowComputerPlay * 100) + (15 * rowComputerPlay) + 100 + 30) {
+                	chipY += 10;
+                } else {
+                	
+                    	if (rowComputerPlay > -1) {
+                        	this.mBoardLogic.PlaceChip(playerTurn%2, columnComputerPlay, rowComputerPlay);
+                        	playerTurn++;
+                        }
+                    
+                	animationOccuring = false;
+                	chipY = 18;
+                }
+    		}
+    		
     	} else {
     		chipY = 18;
     	}
