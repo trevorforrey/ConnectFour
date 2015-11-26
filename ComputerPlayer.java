@@ -1539,7 +1539,7 @@ public class ComputerPlayer extends Player {
         // If there are three enemy chips in total from the left and right
         if (scoreOfDirection == -3) {
             // Increase the score of the move (block the potential win)
-            scoreOfDirection = -49;
+            scoreOfDirection = -35;
             System.out.println("Waiting to win on a horizontal gap");
         } else {
             scoreOfDirection = 0;
@@ -1663,7 +1663,7 @@ public class ComputerPlayer extends Player {
         // If there are three enemy chips in total from the left and right
         if (scoreOfDirection == -3) {
             // Increase the score of the move (block the potential win)
-            scoreOfDirection = -49;
+            scoreOfDirection = -35;
             System.out.println("Waiting to win with a bottom left to up right gap");
         } else {
             scoreOfDirection = 0;
@@ -1784,7 +1784,7 @@ public class ComputerPlayer extends Player {
         // If there are three of its own chips in total from the left and right
         if (scoreOfDirection == -3) {
             // Increase the score of the move (take the win)
-            scoreOfDirection = -49;
+            scoreOfDirection = -35;
             System.out.println("Waiting to win with a bottom right to up left gap");
         } else {
             // Stops double counting if it isn't a game winning play

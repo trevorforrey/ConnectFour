@@ -256,7 +256,7 @@ class Board extends JPanel
     	int rowComputerPlay = 0;
     	int columnComputerPlay = 0;
         if (typeOfGame == 2 && playerTurn % 2 == 1) {
-            columnComputerPlay = computerPlayer.mediumTurn(mBoardLogic.getChips());
+            columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
             rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
             chipX = 50 + (columnComputerPlay * 100) + (columnComputerPlay * 15);
             animationOccuring = true;    
