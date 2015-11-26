@@ -272,14 +272,23 @@ public class ComputerPlayer extends Player {
         return columnToPlay;
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //*******Defense Score Method*******//
     
     
@@ -312,9 +321,12 @@ public class ComputerPlayer extends Player {
         // Starts scoring the position for every direction
         
         
+
         // Counts how many enemy chips are to the right of where the chip would be placed in a row
         while (tempColumn < 6) {
+
             tempColumn++;
+
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
                 scoreOfDirection++;
                 // If there are three enemy chips to the right in a row of the "ghost chip"
@@ -329,6 +341,7 @@ public class ComputerPlayer extends Player {
         }
 
 
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
         
@@ -336,9 +349,12 @@ public class ComputerPlayer extends Player {
         tempColumn = trueColumn;
         
 
+
         // Counts how many enemy chips are to the left of where the chip would be placed in a row
         while (tempColumn > 0) {
+
             tempColumn--;
+
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
                 scoreOfDirection++;
                 // If there are three enemy chips to the left in a row of the "ghost chip"
@@ -352,6 +368,8 @@ public class ComputerPlayer extends Player {
             }
         }
         
+
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
         
@@ -359,12 +377,17 @@ public class ComputerPlayer extends Player {
         tempColumn = trueColumn;
         
 
-//****** Checks for possible horizontal gaps to block
+        // Gap Checks
+
+        // Checks for possible horizontal gaps to block
         scoreOfMove += horizontalGapDefense(trueColumn, trueRow, chips);
+
         // Checks to see if it should wait on the column so that the other player isn't opened up for a win
         scoreOfMove += horizontalGapDefenseWait(trueColumn, trueRow, chips);
-        // Checks to see if the player has two chips in the middle of the board
+
+        // Checks to see if the player has two chips in the middle of the board with space on the side
         scoreOfMove += horizontalTwoInTheMiddleBlock(trueColumn, trueRow, chips);
+
 
 
         // Checks down the column for enemy chips
@@ -386,6 +409,7 @@ public class ComputerPlayer extends Player {
         }
         
         
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
         
@@ -401,6 +425,7 @@ public class ComputerPlayer extends Player {
 
         // Checks from bottom left to upper right diagonal for enemy chips
         while (tempRow > 0 && tempColumn < 6) {
+
             tempRow--;
             tempColumn++;
             
@@ -418,6 +443,7 @@ public class ComputerPlayer extends Player {
         }
 
 
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
 
@@ -425,6 +451,7 @@ public class ComputerPlayer extends Player {
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
         tempRow = trueRow;
+
 
 
 // Bottom Left to Up Right Not Play
@@ -453,26 +480,34 @@ public class ComputerPlayer extends Player {
             }
         }
         
+
+        // Updates the score of the move and resets the score of the direction
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
         tempRow = trueRow;
         
-        scoreOfMove += scoreOfDirection;
-        scoreOfDirection = 0;
 
+
+        // Gap Checks
 
 
         // Checks to see if it can block an enemy win from using a gap in a bottom left upper right diagonal direction
         scoreOfMove += diagonalGapGoingUpToRightDefense(trueColumn, trueRow, chips);
+
         // Checks to see if it should wait on the column so that the other player isn't opened up for a win
         scoreOfMove += diagonalGapGoingUpToRightDefenseWait(trueColumn, trueRow, chips);
+
 
 
 // Up Right to Bottom Left
 
         // Checks from upper right to bottom left diagonal for enemy chips
         while (tempRow < 5 && tempColumn > 0) {
+
             tempRow++;
             tempColumn--;
             
@@ -490,6 +525,7 @@ public class ComputerPlayer extends Player {
         }
         
         
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
 
@@ -499,10 +535,12 @@ public class ComputerPlayer extends Player {
         tempRow = trueRow - 1 ;
         
         
+
 // Up Right to Bottom Left Not Play
 
         // Checks from upper right to bottom left diagonal for enemy chips
         while (tempRow < 5 && tempColumn > 0) {
+
             tempRow++;
             tempColumn--;
             
@@ -519,6 +557,8 @@ public class ComputerPlayer extends Player {
             }
         }
 
+
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
 
@@ -528,9 +568,12 @@ public class ComputerPlayer extends Player {
         tempRow = trueRow;
 
 
+
 // Bottom Right to Up Left
+
         // Checks bottom right to the upper left diagonal for enemy chips
         while(tempRow > 0 && tempColumn > 0) {
+
             tempRow--;
             tempColumn--;
             
@@ -548,6 +591,7 @@ public class ComputerPlayer extends Player {
         }
         
 
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
 
@@ -557,10 +601,12 @@ public class ComputerPlayer extends Player {
         tempRow = trueRow - 1;
 
         
+
 // Bottom Right to Up Left Not Play
 
         // Checks bottom right to the upper left diagonal for enemy chips
         while(tempRow > 0 && tempColumn > 0) {
+
             tempRow--;
             tempColumn--;
             
@@ -578,7 +624,7 @@ public class ComputerPlayer extends Player {
         }
 
 
-
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
         
@@ -589,10 +635,12 @@ public class ComputerPlayer extends Player {
         tempRow = trueRow;
         
         
+
 // Up Left to Bottom Right Block
 
         // Checks top left to bottom right for enemy chips
         while (tempRow < 5 && tempColumn < 6) {
+
             tempRow++;
             tempColumn++;
             
@@ -610,6 +658,7 @@ public class ComputerPlayer extends Player {
         }
         
 
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
 
@@ -619,10 +668,12 @@ public class ComputerPlayer extends Player {
         tempRow = trueRow - 1;
 
 
+
 // Up Left to Bottom Right Not Play
 
         // Checks top left to bottom right for enemy chips
         while (tempRow < 5 && tempColumn < 6) {
+
             tempRow++;
             tempColumn++;
             
@@ -639,17 +690,27 @@ public class ComputerPlayer extends Player {
             }
         }
 
+
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
 
+        // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
+        // Resets tempRow back to the row being checked
         tempRow = trueRow;
+
+
+
+        // Gap Checks
 
 
         // Checks to see if it can block a win from using a gap in a bottom right upper left diagonal direction
         scoreOfMove += diagonalGapGoingUpToLeftDefense(trueColumn, trueRow, chips);
+
         // Checks to see if it should wait on the column so that the other player isn't opened up for a win
         scoreOfMove += diagonalGapGoingUpToLeftDefenseWait(trueColumn, trueRow, chips);
+
 
 
         // Returns the defensive score of the move of a specific column
@@ -661,9 +722,11 @@ public class ComputerPlayer extends Player {
 
 
 
+
 //******** GAP RECOGNITION ON DEFENSE *************//
 
 
+    // Method that recognizes a gap in a horizontal connect 4 and blocks the potential player win
     public int horizontalGapDefense(int trueColumn, int trueRow, Chip[][] chips) {
 
         int scoreOfDirection = 0;
@@ -697,9 +760,11 @@ public class ComputerPlayer extends Player {
         
         // If there are three enemy chips in total from the left and right
         if (scoreOfDirection == 3) {
+
             // Increase the score of the move (block the potential win)
             scoreOfDirection = 50;
             System.out.println("Blocking a horizontal gap");
+
         } else {
             scoreOfDirection = 0;
         }
@@ -710,13 +775,16 @@ public class ComputerPlayer extends Player {
 
 
 
+    // Method that recognizes a gap above the temp row in a horizontal connect 4 and waits for player turn in column to then block potential win
     public int horizontalGapDefenseWait(int trueColumn, int trueRow, Chip[][] chips) {
 
         int scoreOfDirection = 0;
         int tempColumn = trueColumn;
         int tempRow = trueRow - 1;
 
+        // If there will be an array out of bounds exception
         if (tempRow == - 1) {
+            // Stop it from happening
             return 0;
         }
 
@@ -762,7 +830,7 @@ public class ComputerPlayer extends Player {
 
 
 
-
+    // Method that recognizes a gap in a diagonal (up to the right) connect 4 and blocks the potential player win
     public int diagonalGapGoingUpToRightDefense(int trueColumn, int trueRow, Chip[][] chips) {
 
 
@@ -821,7 +889,9 @@ public class ComputerPlayer extends Player {
 
 
 
-
+    /** Method that recognizes a gap in a diagonal (up to the right) connect 4 above the temp row
+        and waits for player to move in column so that the computer can block the potential win
+    **/
     public int diagonalGapGoingUpToRightDefenseWait(int trueColumn, int trueRow, Chip[][] chips) {
 
 
@@ -830,7 +900,9 @@ public class ComputerPlayer extends Player {
         int tempRow = trueRow - 1;
 
 
+        // If there will be an array out of bounds exception
         if (tempRow == -1) {
+            // Stop it from happening
             return 0;
         }
 
@@ -886,7 +958,7 @@ public class ComputerPlayer extends Player {
 
 
 
-
+    // Method that recognizes a gap in a diagonal (up to the left) connect 4 and blocks the potential player win
     public int diagonalGapGoingUpToLeftDefense(int trueColumn, int trueRow, Chip[][] chips) {
 
 
@@ -946,13 +1018,22 @@ public class ComputerPlayer extends Player {
 
 
 
-
+    /** Method that recognizes a gap in a diagonal (up to the left) connect 4 above the temp row
+        and waits for player to move in column so that the computer can block the potential win
+    **/
     public int diagonalGapGoingUpToLeftDefenseWait(int trueColumn, int trueRow, Chip[][] chips) {
 
 
         int scoreOfDirection = 0;
         int tempColumn = trueColumn;
         int tempRow = trueRow - 1;
+
+
+        // If there will be an array out of bounds exception
+        if (tempRow == -1) {
+            // Stop it from happening
+            return 0;
+        }
 
 
         // Bottom Right to Up Left
@@ -1009,6 +1090,8 @@ public class ComputerPlayer extends Player {
 
     //************ SPECIAL DEFENSE CASES *************/
 
+
+    // Method that finds when there are two enemy blocks and space on both sides and blocks the potential win
     public int horizontalTwoInTheMiddleBlock(int trueColumn, int trueRow, Chip[][] chips) {
 
         int scoreOfDirection = 0;
@@ -1105,13 +1188,18 @@ public class ComputerPlayer extends Player {
             return 0;
         }
         
+
+
         
         // Starts scoring the position for every direction
         
         
+
         // Counts how many of the computer's own chips are to the right of where the chip would be placed in a row
         while (tempColumn < 6) {
+
             tempColumn++;
+
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
                 scoreOfDirection++;
                 // If there are three of its own chips to the right in a row of the "ghost chip"
@@ -1124,6 +1212,8 @@ public class ComputerPlayer extends Player {
             }
         }
         
+
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
         
@@ -1135,7 +1225,9 @@ public class ComputerPlayer extends Player {
 
         // Counts how many of the computer's own chips are to the left of where the chip would be placed in a row
         while (tempColumn > 0) {
+
             tempColumn--;
+
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
                 scoreOfDirection++;
                 // If there are three of its own chips to the left in a row of the "ghost chip"
@@ -1149,6 +1241,7 @@ public class ComputerPlayer extends Player {
         }
         
         
+        // Update the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
         
@@ -1156,12 +1249,19 @@ public class ComputerPlayer extends Player {
         tempColumn = trueColumn;
 
 
+
+        // Gap Checks
+
+
         // Checks to see if it can win from a horizontal gap
         scoreOfMove += horizontalGapOffense(trueColumn, trueRow, chips);
+
         // Checks to see if it should wait on the column until the player hits it to take a win
         scoreOfMove += horizontalGapOffenseWait(trueColumn, trueRow, chips);
+
         // Checks to see if the computer has two chips in the middle of the board
         scoreOfMove += horizontalTwoInTheMiddleSetUpWin(trueColumn, trueRow, chips);
+
 
 
         // Checks down the column for its own chips
@@ -1182,6 +1282,7 @@ public class ComputerPlayer extends Player {
         }
         
         
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
         
@@ -1191,8 +1292,12 @@ public class ComputerPlayer extends Player {
         tempRow = trueRow;
         
 
+
+// Bottom Left to Up Right
+
         // Checks from bottom left to upper right diagonal for its own chips
         while (tempRow > 0 && tempColumn < 6) {
+
             tempRow--;
             tempColumn++;
             
@@ -1209,6 +1314,7 @@ public class ComputerPlayer extends Player {
         }
         
 
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
         
@@ -1216,6 +1322,7 @@ public class ComputerPlayer extends Player {
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
         tempRow = trueRow - 1;
+
 
 
 // Bottom Left to Up Right Not Play (To Save Potential Win)
@@ -1240,6 +1347,7 @@ public class ComputerPlayer extends Player {
         }
         
 
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
 
@@ -1248,9 +1356,13 @@ public class ComputerPlayer extends Player {
         // Resets tempRow back to the row being checked
         tempRow = trueRow;
         
-        
+
+
+// Up Right to Bottom Left
+
         // Checks from upper right to bottom left diagonal for its own chips
         while (tempRow < 5 && tempColumn > 0) {
+
             tempRow++;
             tempColumn--;
             
@@ -1267,6 +1379,7 @@ public class ComputerPlayer extends Player {
         }
         
 
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
         
@@ -1276,10 +1389,12 @@ public class ComputerPlayer extends Player {
         tempRow = trueRow - 1;
 
 
+
 // Up Right to Bottom Left Not Play (To Save Potential Win)
 
         // Checks to make sure it doesn't allow the opponent to block a potential diagonal score
         while (tempRow < 5 && tempColumn > 0) {
+
             tempRow++;
             tempColumn--;
             
@@ -1297,6 +1412,7 @@ public class ComputerPlayer extends Player {
         }
 
 
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
 
@@ -1306,15 +1422,23 @@ public class ComputerPlayer extends Player {
         tempRow = trueRow;
 
 
+
+        // Gap Checks
+
+
         // Checks to see if it can win from using a gap in a bottom left upper right diagonal direction
         scoreOfMove += diagonalGapGoingUpToRightOffense(trueColumn, trueRow, chips);
 
         // Checks to see if it should wait on the column until the player hits it to take a win
         scoreOfMove += diagonalGapGoingUpToRightOffenseWait(trueColumn, trueRow, chips);
         
-        
+
+
+// Bottom Right to Up Left
+
         // Checks bottom right to the upper left diagonal for its own chips
         while(tempRow > 0 && tempColumn > 0) {
+
             tempRow--;
             tempColumn--;
             
@@ -1331,6 +1455,7 @@ public class ComputerPlayer extends Player {
         }
         
         
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
         
@@ -1340,10 +1465,12 @@ public class ComputerPlayer extends Player {
         tempRow = trueRow - 1;
         
         
+
 // Bottom Right to Up Left Not Play (To Save Potential Win)
 
         // Checks to make sure it doesn't allow the opponent to block a potential diagonal score
         while(tempRow > 0 && tempColumn > 0) {
+
             tempRow--;
             tempColumn--;
             
@@ -1361,6 +1488,7 @@ public class ComputerPlayer extends Player {
         }
 
 
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
         
@@ -1372,6 +1500,7 @@ public class ComputerPlayer extends Player {
         
         // Checks top left to bottom right for its own chips
         while (tempRow < 5 && tempColumn < 6) {
+
             tempRow++;
             tempColumn++;
             
@@ -1388,6 +1517,7 @@ public class ComputerPlayer extends Player {
         }
 
 
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
 
@@ -1397,10 +1527,12 @@ public class ComputerPlayer extends Player {
         tempRow = trueRow - 1;
 
 
+
 // Up Left to Bottom Right Not Play (To Save Potential Win)
 
         // Checks to make sure it doesn't allow the opponent to block a potential diagonal score
         while (tempRow < 5 && tempColumn < 6) {
+
             tempRow++;
             tempColumn++;
             
@@ -1417,11 +1549,17 @@ public class ComputerPlayer extends Player {
             }
         }
 
+
+        // Updates the score of the move and resets the score of the direction
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
 
         tempColumn = trueColumn;
         tempRow = trueRow;
+
+
+
+        // Gap Checks
 
 
         // Checks to see if it can win from using a gap in a bottom right upper left diagonal direction
@@ -1484,7 +1622,7 @@ public class ComputerPlayer extends Player {
         
         // If there are three enemy chips in total from the left and right
         if (scoreOfDirection == 3) {
-            // Increase the score of the move (block the potential win)
+            // Increase the score of the move (wait for potential win)
             scoreOfDirection = 400;
             System.out.println("Winning on a horizontal gap");
         } else {
@@ -1508,7 +1646,9 @@ public class ComputerPlayer extends Player {
         int tempRow = trueRow - 1;
 
 
+        // If there will be an array out of bounds exception
         if (tempRow == -1) {
+            // Stop it from happening
             return 0;
         }
 
@@ -1538,7 +1678,7 @@ public class ComputerPlayer extends Player {
         
         // If there are three enemy chips in total from the left and right
         if (scoreOfDirection == -3) {
-            // Increase the score of the move (block the potential win)
+            // Increase the score of the move (wait for potential win)
             scoreOfDirection = -35;
             System.out.println("Waiting to win on a horizontal gap");
         } else {
@@ -1577,7 +1717,9 @@ public class ComputerPlayer extends Player {
         }
 
 
+        // Resets tempColumn back to trueColumn value
         tempColumn = trueColumn;
+        // Resets tempRow back to trueRow value
         tempRow = trueRow;
 
 
@@ -1598,7 +1740,7 @@ public class ComputerPlayer extends Player {
 
         // If there are three enemy chips in total from the left and right
         if (scoreOfDirection == 3) {
-            // Increase the score of the move (block the potential win)
+            // Increase the score of the move (take the win)
             scoreOfDirection = 400;
             System.out.println("Winning with a bottom left to up right gap");
         } else {
@@ -1621,7 +1763,9 @@ public class ComputerPlayer extends Player {
         int tempRow = trueRow - 1;
 
 
+        // If there will be an array out of bounds exception
         if (tempRow == -1){
+            // Stop it from happening
             return 0;
         }
 
@@ -1641,7 +1785,9 @@ public class ComputerPlayer extends Player {
         }
 
 
+        // Set tempColumn back to trueColumn
         tempColumn = trueColumn;
+        // Set tempRow back to space above trueRow
         tempRow = trueRow - 1;
 
 
@@ -1662,7 +1808,7 @@ public class ComputerPlayer extends Player {
 
         // If there are three enemy chips in total from the left and right
         if (scoreOfDirection == -3) {
-            // Increase the score of the move (block the potential win)
+            // Increase the score of the move (wait for potential win)
             scoreOfDirection = -35;
             System.out.println("Waiting to win with a bottom left to up right gap");
         } else {
@@ -1699,7 +1845,9 @@ public class ComputerPlayer extends Player {
         }
         
 
+        // Reset temp Column back to true Column value
         tempColumn = trueColumn;
+        // Reset temp Row back to true Row value
         tempRow = trueRow;
 
         
@@ -1743,7 +1891,9 @@ public class ComputerPlayer extends Player {
         int tempRow = trueRow - 1;
 
 
+        // If there will be an array out of bounds exception
         if (tempRow == -1) {
+            // Stop it from happening
             return 0;
         }
 
@@ -1762,7 +1912,9 @@ public class ComputerPlayer extends Player {
         }
         
 
+        // Reset temp Column to true Column value
         tempColumn = trueColumn;
+        // Reset temp Row to row above the true Row
         tempRow = trueRow - 1;
 
         
@@ -1801,6 +1953,7 @@ public class ComputerPlayer extends Player {
 
     //************ SPECIAL OFFENSE CASES *************/
 
+    // Recognizes when there's two of its own chips with space on either side, and attempts to take a win
     public int horizontalTwoInTheMiddleSetUpWin(int trueColumn, int trueRow, Chip[][] chips) {
 
         int scoreOfDirection = 0;
@@ -1888,7 +2041,8 @@ public class ComputerPlayer extends Player {
     
     
     
-    
+
+    // Method that returns a random column to place a chip into (easy turn method)
     public int randomColumn() {
         Random rand = new Random();
         
