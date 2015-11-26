@@ -86,6 +86,60 @@ public class ComputerPlayer extends Player {
         column7Score >= column6Score && column7Score >= column1Score) {
             columnToPlay = 6;
         }
+
+
+
+        // For when there's no choice but to make a play where afterwards the other player wins
+
+
+        // Checks if a column1 play leads the other player to score and there are no other options
+        if (column1Score < 0 && column7Score <= 0 && column2Score <= 0 &&
+        column3Score <= 0 && column4Score <= 0 && column5Score <= 0 &&
+        column6Score <= 0) {
+            columnToPlay = 0;
+        }
+
+        // Checks if a column2 play leads the other player to score and there are no other options
+        if (column2Score < 0 && column1Score <= 0 && column7Score <= 0 &&
+        column3Score <= 0 && column4Score <= 0 && column5Score <= 0 &&
+        column6Score <= 0) {
+            columnToPlay = 1;
+        }
+
+        // Checks if a column3 play leads the other player to score and there are no other options
+        if (column3Score < 0 && column1Score <= 0 && column2Score <= 0 &&
+        column7Score <= 0 && column4Score <= 0 && column5Score <= 0 &&
+        column6Score <= 0) {
+            columnToPlay = 2;
+        }
+
+        // Checks if a column4 play leads the other player to score and there are no other options
+        if (column4Score < 0 && column1Score <= 0 && column2Score <= 0 &&
+        column3Score <= 0 && column7Score <= 0 && column5Score <= 0 &&
+        column6Score <= 0) {
+            columnToPlay = 3;
+        }
+
+        // Checks if a column5 play leads the other player to score and there are no other options
+        if (column5Score < 0 && column1Score <= 0 && column2Score <= 0 &&
+        column3Score <= 0 && column4Score <= 0 && column7Score <= 0 &&
+        column6Score <= 0) {
+            columnToPlay = 4;
+        }
+
+        // Checks if a column6 play leads the other player to score and there are no other options
+        if (column6Score < 0 && column1Score <= 0 && column2Score <= 0 &&
+        column3Score <= 0 && column4Score <= 0 && column5Score <= 0 &&
+        column7Score <= 0) {
+            columnToPlay = 5;
+        }
+
+        // Checks if a column7 play leads the other player to score and there are no other options
+        if (column7Score < 0 && column1Score <= 0 && column2Score <= 0 &&
+        column3Score <= 0 && column4Score <= 0 && column5Score <= 0 &&
+        column6Score <= 0) {
+            columnToPlay = 6;
+        }
         
         // Returns the index of the best column to drop the chip into
         return columnToPlay;
@@ -158,6 +212,61 @@ public class ComputerPlayer extends Player {
         column7TotalScore >= column6TotalScore && column7TotalScore >= column1TotalScore) {
             columnToPlay = 6;
         }
+
+
+
+        // For when there's no choice but to make a play where afterwards the other player wins
+
+
+        // Checks if a column1 play leads the other player to score and there are no other options
+        if (column1TotalScore < 0 && column7TotalScore <= 0 && column2TotalScore <= 0 &&
+        column3TotalScore <= 0 && column4TotalScore <= 0 && column5TotalScore <= 0 &&
+        column6TotalScore <= 0) {
+            columnToPlay = 0;
+        }
+
+        // Checks if a column2 play leads the other player to score and there are no other options
+        if (column2TotalScore < 0 && column1TotalScore <= 0 && column7TotalScore <= 0 &&
+        column3TotalScore <= 0 && column4TotalScore <= 0 && column5TotalScore <= 0 &&
+        column6TotalScore <= 0) {
+            columnToPlay = 1;
+        }
+
+        // Checks if a column3 play leads the other player to score and there are no other options
+        if (column3TotalScore < 0 && column1TotalScore <= 0 && column2TotalScore <= 0 &&
+        column7TotalScore <= 0 && column4TotalScore <= 0 && column5TotalScore <= 0 &&
+        column6TotalScore <= 0) {
+            columnToPlay = 2;
+        }
+
+        // Checks if a column4 play leads the other player to score and there are no other options
+        if (column4TotalScore < 0 && column1TotalScore <= 0 && column2TotalScore <= 0 &&
+        column3TotalScore <= 0 && column7TotalScore <= 0 && column5TotalScore <= 0 &&
+        column6TotalScore <= 0) {
+            columnToPlay = 3;
+        }
+
+        // Checks if a column5 play leads the other player to score and there are no other options
+        if (column5TotalScore < 0 && column1TotalScore <= 0 && column2TotalScore <= 0 &&
+        column3TotalScore <= 0 && column4TotalScore <= 0 && column7TotalScore <= 0 &&
+        column6TotalScore <= 0) {
+            columnToPlay = 4;
+        }
+
+        // Checks if a column6 play leads the other player to score and there are no other options
+        if (column6TotalScore < 0 && column1TotalScore <= 0 && column2TotalScore <= 0 &&
+        column3TotalScore <= 0 && column4TotalScore <= 0 && column5TotalScore <= 0 &&
+        column7TotalScore <= 0) {
+            columnToPlay = 5;
+        }
+
+        // Checks if a column7 play leads the other player to score and there are no other options
+        if (column7TotalScore < 0 && column1TotalScore <= 0 && column2TotalScore <= 0 &&
+        column3TotalScore <= 0 && column4TotalScore <= 0 && column5TotalScore <= 0 &&
+        column6TotalScore <= 0) {
+            columnToPlay = 6;
+        }
+
         
         // Returns the index of the best column to drop the chip into
         return columnToPlay;
@@ -176,9 +285,10 @@ public class ComputerPlayer extends Player {
     
     // Method that takes in a column and returns a score based on how many enemy chips would be next to the computer chip in a row
     public int columnDefenseScore(int trueColumn, Chip[][] chips) {
-        
+
         // Initializes score of move
         int scoreOfMove = 0;
+        int scoreOfDirection = 0;
         
         // Creates a temp column to move around the chip array
         int tempColumn = trueColumn;
@@ -206,17 +316,21 @@ public class ComputerPlayer extends Player {
         while (tempColumn < 6) {
             tempColumn++;
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three enemy chips to the right in a row of the "ghost chip"
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move
-                    scoreOfMove += 50;
+                    scoreOfDirection += 50;
+                    System.out.println("Block from the left");
                 }
             } else {
                 break;
             }
         }
-        
+
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
         
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
@@ -226,17 +340,20 @@ public class ComputerPlayer extends Player {
         while (tempColumn > 0) {
             tempColumn--;
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three enemy chips to the left in a row of the "ghost chip"
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move
-                    scoreOfMove += 50;
+                    scoreOfDirection += 50;
+                    System.out.println("Block from the right");
                 }
             } else {
                 break;
             }
         }
         
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
         
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
@@ -246,14 +363,15 @@ public class ComputerPlayer extends Player {
         // Checks down the column for enemy chips
         while (tempRow < 5) {
     
-                tempRow++;
+            tempRow++;
             
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
-                scoreOfMove++;
+                scoreOfDirection++;
                  // If there are three enemy chips in a row below the "ghost chip"
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move
-                    scoreOfMove += 50;
+                    scoreOfDirection += 50;
+                    System.out.println("Block from above");
                 }
             } else {
                 break;
@@ -261,37 +379,83 @@ public class ComputerPlayer extends Player {
         }
         
         
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+        
+
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
         tempRow = trueRow;
         
+
         
-        
+// Bottom Left to Up Right
+
         // Checks from bottom left to upper right diagonal for enemy chips
         while (tempRow > 0 && tempColumn < 6) {
             tempRow--;
             tempColumn++;
             
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three enemy chips to the (bottom-left to upper right) diagonal in a row
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move
-                    scoreOfMove += 50;
+                    scoreOfDirection += 50;
+                    System.out.println("Block bottom left to upper right diagonal");
+                }
+            } else {
+                break;
+            }
+        }
+
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+
+        // Resets tempColumn back to the column being checked
+        tempColumn = trueColumn;
+        // Resets tempRow back to the row being checked
+        tempRow = trueRow;
+
+
+// Bottom Left to Up Right Not Play
+
+        // Resets tempColumn back to the column being checked
+        tempColumn = trueColumn;
+        // Resets tempRow back to the row being checked
+        tempRow = trueRow - 1;
+
+        // Checks to make sure it doesn't set up the opponenent for a diagonal connect 4
+        while (tempRow > 0 && tempColumn < 6) {
+
+            tempRow--;
+            tempColumn++;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+                scoreOfDirection--;
+                // If there are three enemy chips to the (bottom-left to upper right) diagonal in a row
+                if (scoreOfDirection == -3) {
+                    // Make it a very high scoring move
+                    scoreOfDirection -= 100;
+                    System.out.println("Won't hit it");
                 }
             } else {
                 break;
             }
         }
         
-        
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
         tempRow = trueRow;
         
-        
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+
+
+// Up Right to Bottom Left
 
         // Checks from upper right to bottom left diagonal for enemy chips
         while (tempRow < 5 && tempColumn > 0) {
@@ -299,11 +463,12 @@ public class ComputerPlayer extends Player {
             tempColumn--;
             
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three enemy chips to the (upper right to bottom left) diagonal in a row
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move
-                    scoreOfMove += 50;
+                    scoreOfDirection += 50;
+                    System.out.println("Block up right to left bottom diagonal");
                 }
             } else {
                 break;
@@ -311,55 +476,158 @@ public class ComputerPlayer extends Player {
         }
         
         
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+
+        // Resets tempColumn back to the column being checked
+        tempColumn = trueColumn;
+        // Resets tempRow back to the row being checked
+        tempRow = trueRow - 1 ;
+        
+        
+// Up Right to Bottom Left Not Play
+
+        // Checks from upper right to bottom left diagonal for enemy chips
+        while (tempRow < 5 && tempColumn > 0) {
+            tempRow++;
+            tempColumn--;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+                scoreOfDirection--;
+                // If there are three enemy chips to the (upper right to bottom left) diagonal in a row
+                if (scoreOfDirection == -3) {
+                    // Make it a very high scoring move
+                    scoreOfDirection -= 100;
+                    System.out.println("wont play");
+                }
+            } else {
+                break;
+            }
+        }
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
         tempRow = trueRow;
-        
-        
-        
+
+
+// Bottom Right to Up Left
         // Checks bottom right to the upper left diagonal for enemy chips
         while(tempRow > 0 && tempColumn > 0) {
             tempRow--;
             tempColumn--;
             
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three enemy chips to the (bottom right to upper left) diagonal in a row
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move
-                    scoreOfMove += 50;
+                    scoreOfDirection += 50;
+                    System.out.println("Block up right to left up diagonal");
                 }
             } else {
                 break;
             }
         }
         
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+
+        // Resets tempColumn back to the column being checked
+        tempColumn = trueColumn;
+        // Resets tempRow back to the row being checked
+        tempRow = trueRow - 1 ;
+
         
+// Bottom Right to Up Left Not Play
+
+        // Checks bottom right to the upper left diagonal for enemy chips
+        while(tempRow > 0 && tempColumn > 0) {
+            tempRow--;
+            tempColumn--;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+                scoreOfDirection--;
+                // If there are three enemy chips to the (bottom right to upper left) diagonal in a row
+                if (scoreOfDirection == -3) {
+                    // Make it a very high scoring move
+                    scoreOfDirection -= 100;
+                    System.out.println("wont hit it");
+                }
+            } else {
+                break;
+            }
+        }
+
+
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+        
+
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
         tempRow = trueRow;
         
         
-        
+// Up Left to Bottom Right Block
+
         // Checks top left to bottom right for enemy chips
         while (tempRow < 5 && tempColumn < 6) {
             tempRow++;
             tempColumn++;
             
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three enemy chips to the (upper left to bottom right) diagonal in a row
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move
-                    scoreOfMove += 50;
+                    scoreOfDirection += 50;
+                    System.out.println("Block up left to right bottom diagonal");
                 }
             } else {
                 break;
             }
         }
         
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+
+        // Resets tempColumn back to the column being checked
+        tempColumn = trueColumn;
+        // Resets tempRow back to the row being checked
+        tempRow = trueRow - 1;
+
+
+// Up Left to Bottom Right Not Play
+
+        // Checks top left to bottom right for enemy chips
+        while (tempRow < 5 && tempColumn < 6) {
+            tempRow++;
+            tempColumn++;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+                scoreOfDirection--;
+                // If there are three enemy chips to the (upper left to bottom right) diagonal in a row
+                if (scoreOfDirection == -3) {
+                    // Make it a very high scoring move
+                    scoreOfDirection -= 100;
+                    System.out.println("wont hit");
+                }
+            } else {
+                break;
+            }
+        }
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+
         // Returns the defensive score of the move of a specific column
         return scoreOfMove;
     }
@@ -378,8 +646,10 @@ public class ComputerPlayer extends Player {
     // Method that takes in a column and returns a score based on how many computer chips would be next to the placed computer chip in a row
     public int columnOffenseScore(int trueColumn, Chip[][] chips) {
         
+
         // Initializes score of move
         int scoreOfMove = 0;
+        int scoreOfDirection = 0;
         
         // Creates a temp column to move around the chip array
         int tempColumn = trueColumn;
@@ -405,17 +675,19 @@ public class ComputerPlayer extends Player {
         while (tempColumn < 6) {
             tempColumn++;
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three of its own chips to the right in a row of the "ghost chip"
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move (take the win)
-                    scoreOfMove += 400;
+                    scoreOfDirection += 400;
                 }
             } else {
                 break;
             }
         }
         
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
         
         
         // Resets tempColumn back to the column being checked
@@ -427,11 +699,11 @@ public class ComputerPlayer extends Player {
         while (tempColumn > 0) {
             tempColumn--;
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three of its own chips to the left in a row of the "ghost chip"
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move (take the win)
-                    scoreOfMove += 400;
+                    scoreOfDirection += 400;
                 }
             } else {
                 break;
@@ -439,6 +711,8 @@ public class ComputerPlayer extends Player {
         }
         
         
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
         
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
@@ -451,11 +725,11 @@ public class ComputerPlayer extends Player {
             tempRow++;
             
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
-                scoreOfMove++;
+                scoreOfDirection++;
                  // If there are three of its own chips in a row below the "ghost chip"
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move (take the win)
-                    scoreOfMove += 400;
+                    scoreOfDirection += 400;
                 }
             } else {
                 break;
@@ -463,13 +737,14 @@ public class ComputerPlayer extends Player {
         }
         
         
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
         
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
         tempRow = trueRow;
         
-
 
         // Checks from bottom left to upper right diagonal for its own chips
         while (tempRow > 0 && tempColumn < 6) {
@@ -477,50 +752,113 @@ public class ComputerPlayer extends Player {
             tempColumn++;
             
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three of its own chips to the (bottom-left to upper right) diagonal in a row
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move (take the win)
-                    scoreOfMove += 400;
+                    scoreOfDirection += 400;
                 }
             } else {
                 break;
             }
         }
         
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
         
+        // Resets tempColumn back to the column being checked
+        tempColumn = trueColumn;
+        // Resets tempRow back to the row being checked
+        tempRow = trueRow - 1;
+
+
+// Bottom Left to Up Right Not Play (To Save Potential Win)
+
+        // Checks to make sure it doesn't allow the opponent to block a potential diagonal score
+        while (tempRow > 0 && tempColumn < 6) {
+
+            tempRow--;
+            tempColumn++;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+                scoreOfDirection--;
+                // If there are three of the computer's own chips to the (bottom-left to upper right) diagonal in a row
+                if (scoreOfDirection == -3) {
+                    // Make it a very low scoring move (keep the potential for win)
+                    scoreOfDirection -= 49;
+                    System.out.println("Want to win");
+                }
+            } else {
+                break;
+            }
+        }
         
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
         tempRow = trueRow;
         
         
-
         // Checks from upper right to bottom left diagonal for its own chips
         while (tempRow < 5 && tempColumn > 0) {
             tempRow++;
             tempColumn--;
             
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three of its own chips to the (upper right to bottom left) diagonal in a row
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move (take the win)
-                    scoreOfMove += 400;
+                    scoreOfDirection += 400;
                 }
             } else {
                 break;
             }
         }
         
-        
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
         
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
+        tempRow = trueRow - 1;
+
+
+// Up Right to Bottom Left Not Play (To Save Potential Win)
+
+        // Checks to make sure it doesn't allow the opponent to block a potential diagonal score
+        while (tempRow < 5 && tempColumn > 0) {
+            tempRow++;
+            tempColumn--;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+                scoreOfDirection--;
+                // If there are three enemy chips to the (upper right to bottom left) diagonal in a row
+                if (scoreOfDirection == -3) {
+                    // Make it a very low scoring move (keep the potential for win)
+                    scoreOfDirection -= 49;
+                    System.out.println("want to win");
+                }
+            } else {
+                break;
+            }
+        }
+
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+
+        // Resets tempColumn back to the column being checked
+        tempColumn = trueColumn;
+        // Resets tempRow back to the row being checked
         tempRow = trueRow;
-        
         
         
         // Checks bottom right to the upper left diagonal for its own chips
@@ -529,11 +867,11 @@ public class ComputerPlayer extends Player {
             tempColumn--;
             
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three of its own chips to the (bottom right to upper left) diagonal in a row
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move (take the win)
-                    scoreOfMove += 400;
+                    scoreOfDirection += 400;
                 }
             } else {
                 break;
@@ -541,13 +879,44 @@ public class ComputerPlayer extends Player {
         }
         
         
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+        
+        // Resets tempColumn back to the column being checked
+        tempColumn = trueColumn;
+        // Resets tempRow back to the row being checked
+        tempRow = trueRow - 1;
+        
+        
+// Bottom Right to Up Left Not Play (To Save Potential Win)
+
+        // Checks to make sure it doesn't allow the opponent to block a potential diagonal score
+        while(tempRow > 0 && tempColumn > 0) {
+            tempRow--;
+            tempColumn--;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+                scoreOfDirection--;
+                // If there are three of its own chips to the (bottom right to upper left) diagonal in a row
+                if (scoreOfDirection == -3) {
+                    // Make it a very low scoring move (keep the potential for win)
+                    scoreOfDirection -= 49;
+                    System.out.println("want to win");
+                }
+            } else {
+                break;
+            }
+        }
+
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
         
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
         tempRow = trueRow;
-        
-        
+
         
         // Checks top left to bottom right for its own chips
         while (tempRow < 5 && tempColumn < 6) {
@@ -555,16 +924,49 @@ public class ComputerPlayer extends Player {
             tempColumn++;
             
             if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
-                scoreOfMove++;
+                scoreOfDirection++;
                 // If there are three of its own chips to the (upper left to bottom right) diagonal in a row
-                if (scoreOfMove == 3) {
+                if (scoreOfDirection == 3) {
                     // Make it a very high scoring move (take the win)
-                    scoreOfMove += 400;
+                    scoreOfDirection += 400;
                 }
             } else {
                 break;
             }
         }
+
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
+
+        // Resets tempColumn back to the column being checked
+        tempColumn = trueColumn;
+        // Resets tempRow back to the row being checked
+        tempRow = trueRow - 1;
+
+
+// Up Left to Bottom Right Not Play (To Save Potential Win)
+
+        // Checks to make sure it doesn't allow the opponent to block a potential diagonal score
+        while (tempRow < 5 && tempColumn < 6) {
+            tempRow++;
+            tempColumn++;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+                scoreOfDirection--;
+                // If there are three of its own chips to the (upper left to bottom right) diagonal in a row just above where chip would land
+                if (scoreOfDirection == -3) {
+                    // Make it a very low scoring move (keep the potential for win)
+                    scoreOfDirection -= 49;
+                    System.out.println("want to win");
+                }
+            } else {
+                break;
+            }
+        }
+
+        scoreOfMove += scoreOfDirection;
+        scoreOfDirection = 0;
         
         // Returns the offensive score of the move of a specific column
         return scoreOfMove;
