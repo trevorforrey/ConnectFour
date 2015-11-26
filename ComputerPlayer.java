@@ -359,6 +359,9 @@ public class ComputerPlayer extends Player {
         tempColumn = trueColumn;
         
 
+//****** Checks for possible horizontal gaps to block
+        scoreOfMove += horizontalGapDefense(trueColumn, trueRow, chips);
+
 
         // Checks down the column for enemy chips
         while (tempRow < 5) {
@@ -455,6 +458,11 @@ public class ComputerPlayer extends Player {
         scoreOfDirection = 0;
 
 
+
+        // Checks to see if it can block an enemy win from using a gap in a bottom left upper right diagonal direction
+        scoreOfMove += diagonalGapGoingUpToRightDefense(trueColumn, trueRow, chips);
+
+
 // Up Right to Bottom Left
 
         // Checks from upper right to bottom left diagonal for enemy chips
@@ -540,7 +548,7 @@ public class ComputerPlayer extends Player {
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
-        tempRow = trueRow - 1 ;
+        tempRow = trueRow - 1;
 
         
 // Bottom Right to Up Left Not Play
@@ -628,11 +636,194 @@ public class ComputerPlayer extends Player {
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
 
+        tempColumn = trueColumn;
+        tempRow = trueRow;
+
+
+        // Checks to see if it can block a win from using a gap in a bottom right upper left diagonal direction
+        scoreOfMove += diagonalGapGoingUpToLeftDefense(trueColumn, trueRow, chips);
+
+
         // Returns the defensive score of the move of a specific column
         return scoreOfMove;
     }
     
     
+
+
+
+
+//******** GAP RECOGNITION ON DEFENSE *************//
+
+
+    public int horizontalGapDefense(int trueColumn, int trueRow, Chip[][] chips) {
+
+        int scoreOfDirection = 0;
+        int tempColumn = trueColumn;
+        int tempRow = trueRow;
+
+
+        // Counts how many enemy chips are to the right of where the chip would be placed in a row
+        while (tempColumn < 6) {
+            tempColumn++;
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+        
+        // Resets tempColumn back to the column being checked
+        tempColumn = trueColumn;
+        
+
+        // Counts how many enemy chips are to the left of where the chip would be placed in a row
+        while (tempColumn > 0) {
+            tempColumn--;
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+        
+        // If there are three enemy chips in total from the left and right
+        if (scoreOfDirection == 3) {
+            // Increase the score of the move (block the potential win)
+            scoreOfDirection = 50;
+            System.out.println("Blocking a horizontal gap");
+        } else {
+            scoreOfDirection = 0;
+        }
+
+        return scoreOfDirection;
+    }
+
+
+
+    private int diagonalGapGoingUpToRightDefense(int trueColumn, int trueRow, Chip[][] chips) {
+
+
+        int scoreOfDirection = 0;
+        int tempColumn = trueColumn;
+        int tempRow = trueRow;
+
+
+        // Bottom Left to Up Right
+
+        // Checks from bottom left to upper right diagonal for enemy chips
+        while (tempRow > 0 && tempColumn < 6) {
+            tempRow--;
+            tempColumn++;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+
+
+        tempColumn = trueColumn;
+        tempRow = trueRow;
+
+
+        // Up Right to Bottom Left
+
+        // Checks from upper right to bottom left diagonal for enemy chips
+        while (tempRow < 5 && tempColumn > 0) {
+            tempRow++;
+            tempColumn--;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+        
+
+        // If there are three enemy chips in total from the left and right
+        if (scoreOfDirection == 3) {
+            // Increase the score of the move (block the potential win)
+            scoreOfDirection = 50;
+            System.out.println("Blocking a bottom left to up right gap");
+        } else {
+            scoreOfDirection = 0;
+        }
+
+        return scoreOfDirection;
+    }
+
+
+
+
+    private int diagonalGapGoingUpToLeftDefense(int trueColumn, int trueRow, Chip[][] chips) {
+
+
+        int scoreOfDirection = 0;
+        int tempColumn = trueColumn;
+        int tempRow = trueRow;
+
+
+        // Bottom Right to Up Left
+
+        // Checks bottom right to the upper left diagonal for enemy chips
+        while(tempRow > 0 && tempColumn > 0) {
+            tempRow--;
+            tempColumn--;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+        
+
+        tempColumn = trueColumn;
+        tempRow = trueRow;
+
+        
+        // Up Left to Bottom Right Block
+
+        // Checks top left to bottom right for enemy chips
+        while (tempRow < 5 && tempColumn < 6) {
+            tempRow++;
+            tempColumn++;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 0) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+
+
+        // If there are three enemy chips in total from the left and right
+        if (scoreOfDirection == 3) {
+            // Increase the score of the move (block the potential win)
+            scoreOfDirection = 50;
+            System.out.println("Blocking a bottom right to up left gap");
+        } else {
+            // Stops double counting if it isn't a game saving play
+            scoreOfDirection = 0;
+        }
+
+        return scoreOfDirection;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -716,7 +907,9 @@ public class ComputerPlayer extends Player {
         
         // Resets tempColumn back to the column being checked
         tempColumn = trueColumn;
-        
+
+
+        scoreOfMove += horizontalGapOffense(trueColumn, trueRow, chips);
 
 
         // Checks down the column for its own chips
@@ -859,6 +1052,10 @@ public class ComputerPlayer extends Player {
         tempColumn = trueColumn;
         // Resets tempRow back to the row being checked
         tempRow = trueRow;
+
+
+        // Checks to see if it can win from using a gap in a bottom left upper right diagonal direction
+        scoreOfMove += diagonalGapGoingUpToRightOffense(trueColumn, trueRow, chips);
         
         
         // Checks bottom right to the upper left diagonal for its own chips
@@ -967,6 +1164,15 @@ public class ComputerPlayer extends Player {
 
         scoreOfMove += scoreOfDirection;
         scoreOfDirection = 0;
+
+        tempColumn = trueColumn;
+        tempRow = trueRow;
+
+
+        // Checks to see if it can win from using a gap in a bottom right upper left diagonal direction
+        scoreOfMove += diagonalGapGoingUpToLeftOffense(trueColumn, trueRow, chips);
+
+
         
         // Returns the offensive score of the move of a specific column
         return scoreOfMove;
@@ -974,6 +1180,185 @@ public class ComputerPlayer extends Player {
     
     
     
+
+
+
+
+
+    //******** GAP RECOGNITION ON OFFENSE *************//
+
+
+    public int horizontalGapOffense(int trueColumn, int trueRow, Chip[][] chips) {
+
+        int scoreOfDirection = 0;
+        int tempColumn = trueColumn;
+        int tempRow = trueRow;
+
+
+        // Counts how many enemy chips are to the right of where the chip would be placed in a row
+        while (tempColumn < 6) {
+            tempColumn++;
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+        
+        // Resets tempColumn back to the column being checked
+        tempColumn = trueColumn;
+        
+
+        // Counts how many enemy chips are to the left of where the chip would be placed in a row
+        while (tempColumn > 0) {
+            tempColumn--;
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+        
+        // If there are three enemy chips in total from the left and right
+        if (scoreOfDirection == 3) {
+            // Increase the score of the move (block the potential win)
+            scoreOfDirection = 400;
+            System.out.println("Winning on a horizontal gap");
+        } else {
+            scoreOfDirection = 0;
+        }
+
+        return scoreOfDirection;
+    }
+
+
+
+    private int diagonalGapGoingUpToRightOffense(int trueColumn, int trueRow, Chip[][] chips) {
+
+
+        int scoreOfDirection = 0;
+        int tempColumn = trueColumn;
+        int tempRow = trueRow;
+
+
+        // Bottom Left to Up Right
+
+        // Checks from bottom left to upper right diagonal for enemy chips
+        while (tempRow > 0 && tempColumn < 6) {
+            tempRow--;
+            tempColumn++;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+
+
+        tempColumn = trueColumn;
+        tempRow = trueRow;
+
+
+        // Up Right to Bottom Left
+
+        // Checks from upper right to bottom left diagonal for enemy chips
+        while (tempRow < 5 && tempColumn > 0) {
+            tempRow++;
+            tempColumn--;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+        
+
+        // If there are three enemy chips in total from the left and right
+        if (scoreOfDirection == 3) {
+            // Increase the score of the move (block the potential win)
+            scoreOfDirection = 400;
+            System.out.println("Winning with a bottom left to up right gap");
+        } else {
+            scoreOfDirection = 0;
+        }
+
+        return scoreOfDirection;
+    }
+
+
+
+
+    private int diagonalGapGoingUpToLeftOffense(int trueColumn, int trueRow, Chip[][] chips) {
+
+
+        int scoreOfDirection = 0;
+        int tempColumn = trueColumn;
+        int tempRow = trueRow;
+
+
+        // Bottom Right to Up Left
+
+        // Checks bottom right to the upper left diagonal for its own chips
+        while(tempRow > 0 && tempColumn > 0) {
+            tempRow--;
+            tempColumn--;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+        
+
+        tempColumn = trueColumn;
+        tempRow = trueRow;
+
+        
+        // Up Left to Bottom Right Block
+
+        // Checks top left to bottom right for its own chips
+        while (tempRow < 5 && tempColumn < 6) {
+            tempRow++;
+            tempColumn++;
+            
+            if (chips[tempRow][tempColumn].isVisible() && chips[tempRow][tempColumn].WhosChip() == 1) {
+                scoreOfDirection++;
+            } else {
+                break;
+            }
+        }
+
+
+        // If there are three of its own chips in total from the left and right
+        if (scoreOfDirection == 3) {
+            // Increase the score of the move (take the win)
+            scoreOfDirection = 400;
+            System.out.println("Winning with a bottom right to up left gap");
+        } else {
+            // Stops double counting if it isn't a game winning play
+            scoreOfDirection = 0;
+        }
+
+        return scoreOfDirection;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     
     
