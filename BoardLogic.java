@@ -58,6 +58,7 @@ public class BoardLogic {
       mChips[y][x].setVisible(true);
       if (ChipCheck(x, y, playerTurn)) {
         System.out.println("There is a connect 4!");
+        YouWin winner = new YouWin();
       }
     }
     
