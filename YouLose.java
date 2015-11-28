@@ -12,7 +12,7 @@ public class YouLose extends JFrame {
       Container container = getContentPane();
       container.setLayout(new FlowLayout());
  
-      container.add(new JLabel("You Won!"));
+      container.add(new JLabel("You Lose!"));
  
       JButton rematchBtn = new JButton("Rematch");
       JButton backToMenu = new JButton("Main Menu");
@@ -42,6 +42,7 @@ public class YouLose extends JFrame {
       });
  
 
+      setLocationRelativeTo(null);        
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
       setTitle("You Lose"); // "this" JFrame sets title
       setSize(300, 100);         // "this" JFrame sets initial size

@@ -256,8 +256,11 @@ class Board extends JPanel
     	int rowComputerPlay = 0;
     	int columnComputerPlay = 0;
         if (typeOfGame == 2 && playerTurn % 2 == 1) {
+
             columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
+            //columnComputerPlay = computerPlayer.easyTurn();
             rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
+
             chipX = 50 + (columnComputerPlay * 100) + (columnComputerPlay * 15);
             animationOccuring = true;    
         }
@@ -275,6 +278,12 @@ class Board extends JPanel
                     
                 	animationOccuring = false;
                 	chipY = 18;
+
+                    if (mBoardLogic.ChipCheck(columnComputerPlay, rowComputerPlay, (playerTurn-1)%2) && animationOccuring == false) {
+                        System.out.println("You Win Called");
+                        takeInput = false;
+                        YouWin youWin = new YouWin();
+                    }
                 }
     		} else if (playerTurn % 2 == 1) {
     			if (chipY < 18 + (rowComputerPlay * 100) + (15 * rowComputerPlay) + 100 + 30) {
@@ -288,12 +297,21 @@ class Board extends JPanel
                     
                 	animationOccuring = false;
                 	chipY = 18;
+
+                    if (mBoardLogic.ChipCheck(columnComputerPlay, rowComputerPlay, ((playerTurn-1)%2)) && animationOccuring == false) {
+                        System.out.println("You Lose Called");
+                        takeInput = false;
+                        YouLose youLose = new YouLose();
+                    }
+
                 }
     		}
+
     		
     	} else {
     		chipY = 18;
     	}
+
     	
     	validate();
         repaint();

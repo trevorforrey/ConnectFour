@@ -42,6 +42,7 @@ public class YouWin extends JFrame {
       });
  
 
+      setLocationRelativeTo(null);      
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
       setTitle("You Win"); // "this" JFrame sets title
       setSize(300, 100);         // "this" JFrame sets initial size
