@@ -91,6 +91,8 @@ class Board extends JPanel
     private boolean animationOccuring;
     private int columnClicked, columnHeight;
     private boolean place;
+
+    private boolean computerLost;
     
     public Board(int gameType) {
     	drawMap = mBoardLogic.GetDrawMap();
@@ -98,6 +100,7 @@ class Board extends JPanel
 
         typeOfGame = gameType;
         computerPlayer = new ComputerPlayer("RAMy");
+        computerLost = false;
                 
         addMouseListener(new MouseAdapter() {
         	@Override
@@ -255,10 +258,10 @@ class Board extends JPanel
 		*/
     	int rowComputerPlay = 0;
     	int columnComputerPlay = 0;
-        if (typeOfGame == 2 && playerTurn % 2 == 1) {
+        if (typeOfGame == 2 && playerTurn % 2 == 1 && !computerLost) {
 
-            columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
-            //columnComputerPlay = computerPlayer.easyTurn();
+            //columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
+            columnComputerPlay = computerPlayer.mediumTurn(mBoardLogic.getChips());
             rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
 
             chipX = 50 + (columnComputerPlay * 100) + (columnComputerPlay * 15);
@@ -279,8 +282,9 @@ class Board extends JPanel
                 	animationOccuring = false;
                 	chipY = 18;
 
-                    if (mBoardLogic.ChipCheck(columnComputerPlay, rowComputerPlay, (playerTurn-1)%2) && animationOccuring == false) {
+                    if (mBoardLogic.ChipCheck(columnClicked, columnHeight, ((playerTurn-1)%2)) && animationOccuring == false) {
                         System.out.println("You Win Called");
+                        computerLost = true;
                         takeInput = false;
                         YouWin youWin = new YouWin();
                     }

@@ -14,9 +14,13 @@ public class ComputerPlayer extends Player {
     
     // Method that calls an easy computer turn
         // Picks random open column
-    public int easyTurn() {
+    public int easyTurn(Chip[][] chips) {
         
         columnToPlay = randomColumn();
+        int rowPlayed = getRowPosition(columnToPlay, chips);
+        if (rowPlayed == -1) {
+            columnToPlay = easyTurn(chips);
+        }
         
         // Returns the index of a random column to drop the chip into
         return columnToPlay;
