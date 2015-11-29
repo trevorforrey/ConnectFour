@@ -143,7 +143,7 @@ class Board extends JPanel
 //*****************
 
 
-        		if (animationOccuring == false) {
+        		if (animationOccuring == false && takeInput) {
         			if (e.getX() >= 0 && e.getX() <= 157) {
             			chipX = 50 + (0 * 100) + (0 * 15);
             	    }  
@@ -257,7 +257,7 @@ class Board extends JPanel
 		*/
     	int rowComputerPlay = 0;
     	int columnComputerPlay = 0;
-        if (typeOfGame == 2 && playerTurn % 2 == 1 && !computerLost) {
+        if (typeOfGame == 2 && playerTurn % 2 == 1 && !computerLost && animationOccuring == false) {
 
             //columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
             columnComputerPlay = computerPlayer.mediumTurn(mBoardLogic.getChips());
