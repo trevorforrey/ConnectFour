@@ -1,7 +1,8 @@
 import java.awt.*;       // Using AWT containers and components
 import java.awt.event.*; // Using AWT events and listener interfaces
 import javax.swing.*;    // Using Swing components and containers
- 
+
+
 // Creates a main menu window for the user to begin a connect four game
 public class Main extends JFrame {
  
@@ -31,17 +32,17 @@ public class Main extends JFrame {
 
       // Creates menu title cover and sets image for the menu
       JLabel menuTitleCover = new JLabel();
-      menuTitleCover.setIcon(new ImageIcon("Assets/ConnectFourCover.jpg")); // Placeholder image
+      menuTitleCover.setIcon(new ImageIcon(getClass().getResource("Assets/ConnectFourCover.jpg"))); // Placeholder image
 
       
       // Creates player vs player button and sets image for the button
       JButton pvpButton = new JButton();
-      pvpButton.setIcon(new ImageIcon("Assets/PlayerVsPlayerCover2.jpg")); // Placeholder image
+      pvpButton.setIcon(new ImageIcon(getClass().getResource("Assets/PlayerVsPlayerCover2.jpg"))); // Placeholder image
 
 
       // Creates player vs computer button and sets image for the button
       JButton pvcButton = new JButton();
-      pvcButton.setIcon(new ImageIcon("Assets/PlayerVsComputerCover2.jpg")); // Placeholder image
+      pvcButton.setIcon(new ImageIcon(getClass().getResource("Assets/PlayerVsComputerCover2.jpg"))); // Placeholder image
 
 
 

@@ -64,8 +64,9 @@ class Board extends JPanel
 
     //Game Type
         // 0 - Pvp hotseat
-        // 1 - Pvp online
-        // 2 - Pvc
+        // 1 - Pvc easy
+        // 2 - Pvc medium
+		// 3 - Pvc hard
     private int typeOfGame;
     private ComputerPlayer computerPlayer;
 
@@ -90,7 +91,6 @@ class Board extends JPanel
     private boolean takeInput;
     private boolean animationOccuring;
     private int columnClicked, columnHeight;
-    private boolean place;
 
     private boolean computerLost;
     
@@ -174,9 +174,9 @@ class Board extends JPanel
 
     private void loadImage() {
 
-        board = new ImageIcon("Assets/Board.png");       // Change directory depending on your root file.
-        redChip = new ImageIcon("Assets/RedChip.png");
-        yellowChip = new ImageIcon("Assets/YellowChip.png");
+        board = new ImageIcon(getClass().getResource("Assets/Board.png"));       // Change directory depending on your root file.
+        redChip = new ImageIcon(getClass().getResource("Assets/RedChip.png"));
+        yellowChip = new ImageIcon(getClass().getResource("Assets/YellowChip.png"));
         backgroundGameBoard = board.getImage();
         chipPicture = redChip.getImage();
         chipSetPicture = chipPicture;
@@ -202,7 +202,6 @@ class Board extends JPanel
         playerTurn = 0;
         takeInput = true;
         animationOccuring = false;
-        place = false;
         
         timer = new Timer(DELAY, this);
         timer.start();
