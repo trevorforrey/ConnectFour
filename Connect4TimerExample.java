@@ -86,6 +86,7 @@ class Board extends JPanel
     private int chipX, chipY;
     private int[][] drawMap;
     private int playerTurn;
+    private int rowComputerPlay, columnComputerPlay;
     
     private BoardLogic mBoardLogic = new BoardLogic();
     private boolean takeInput;
@@ -255,13 +256,13 @@ class Board extends JPanel
             x = INITIAL_X;
         }
 		*/
-    	int rowComputerPlay = 0;
-    	int columnComputerPlay = 0;
-        if (typeOfGame == 2 && playerTurn % 2 == 1 && !computerLost && animationOccuring == false) {
+    	
+        if (typeOfGame == 2 && playerTurn % 2 == 1 && !computerLost && !animationOccuring) {
 
             //columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
-            columnComputerPlay = computerPlayer.mediumTurn(mBoardLogic.getChips());
+            columnComputerPlay = computerPlayer.easyTurn(mBoardLogic.getChips());
             rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
+            System.out.println(rowComputerPlay);
 
             chipX = 50 + (columnComputerPlay * 100) + (columnComputerPlay * 15);
             animationOccuring = true;    
@@ -274,7 +275,7 @@ class Board extends JPanel
                 } else {
                 	
                     	if (columnHeight > -1) {
-                        	this.mBoardLogic.PlaceChip(playerTurn%2, columnClicked, columnHeight);
+                        	mBoardLogic.PlaceChip(playerTurn%2, columnClicked, columnHeight);
                         	playerTurn++;
                         }
                     
@@ -294,7 +295,7 @@ class Board extends JPanel
                 } else {
                 	
                     	if (rowComputerPlay > -1) {
-                        	this.mBoardLogic.PlaceChip(playerTurn%2, columnComputerPlay, rowComputerPlay);
+                        	mBoardLogic.PlaceChip(playerTurn%2, columnComputerPlay, rowComputerPlay);
                         	playerTurn++;
                         }
                     
