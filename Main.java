@@ -81,8 +81,7 @@ public class Main extends JFrame {
          public void actionPerformed(ActionEvent e) {
             // Components are deleted from frame, new components are brought up
             dispose();
-            Connect4TimerExample board = new Connect4TimerExample(2);
-            board.setVisible(true);
+            ComputerDifficultyMenu difficultyMenu = new ComputerDifficultyMenu();
 
 
             //Test
