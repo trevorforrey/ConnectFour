@@ -247,19 +247,11 @@ class Board extends JPanel
     @Override
     public void actionPerformed(ActionEvent e) {    // Need to implement the action performed to suit our needs.
 
-        /*x += 1;
-        y += 1;
+        // Computer Turns
 
-        if (y > B_HEIGHT) {
+        // If its a game against an easy computer player and the game isn't over or a chip is droped
+        if (typeOfGame == 1 && playerTurn % 2 == 1 && !computerLost && !animationOccuring) {
 
-            y = INITIAL_Y;
-            x = INITIAL_X;
-        }
-		*/
-    	
-        if (typeOfGame == 2 && playerTurn % 2 == 1 && !computerLost && !animationOccuring) {
-
-            //columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
             columnComputerPlay = computerPlayer.easyTurn(mBoardLogic.getChips());
             rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
             System.out.println(rowComputerPlay);
@@ -267,7 +259,32 @@ class Board extends JPanel
             chipX = 50 + (columnComputerPlay * 100) + (columnComputerPlay * 15);
             animationOccuring = true;    
         }
+
+
+        // If its a game against a medium computer player and the game isn't over or a chip is droped
+        if (typeOfGame == 2 && playerTurn % 2 == 1 && !computerLost && !animationOccuring) {
+
+            columnComputerPlay = computerPlayer.mediumTurn(mBoardLogic.getChips());
+            rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
+            System.out.println(rowComputerPlay);
+
+            chipX = 50 + (columnComputerPlay * 100) + (columnComputerPlay * 15);
+            animationOccuring = true;    
+        }
+
+
+        // If its a game against a hard computer player and the game isn't over or a chip is droped
+        if (typeOfGame == 3 && playerTurn % 2 == 1 && !computerLost && !animationOccuring) {
+
+            columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
+            rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
+            System.out.println(rowComputerPlay);
+
+            chipX = 50 + (columnComputerPlay * 100) + (columnComputerPlay * 15);
+            animationOccuring = true;    
+        }
     	
+
     	if (animationOccuring) {
     		if (playerTurn % 2 == 0) {
     			if (chipY < 18 + (columnHeight * 100) + (15 * columnHeight) + 100 + 30) {
