@@ -79,8 +79,28 @@ public class MainFlowLayout extends JFrame {
 
       // Action Listeners
 
+      // Player vs Player Online action listener
+      pvpOnlineButton.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
 
-      // Player vs Player action listener
+            // Components are deleted from frame, new components are brought up
+            dispose();
+            /**
+
+
+               Code that begins the pvp online game setup and board creation
+
+
+            **/
+
+            //Test
+            System.out.println("Player vs Player was clicked");
+         }
+      });
+
+
+      // Player vs Player Hot Seat action listener
       pvpButton.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
