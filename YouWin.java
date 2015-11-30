@@ -1,61 +1,124 @@
 import java.awt.*;       // Using AWT containers and components
 import java.awt.event.*; // Using AWT events and listener interfaces
 import javax.swing.*;    // Using Swing components and containers
- 
-// A Swing GUI application that creates a small window for the player to enter their name
-public class YouWin extends JFrame {
+import java.util.*;
+
+
+// Creates a Post game menu for the user to decide what to do after a win
+public class YouWinNew extends JFrame {
  
    /** Constructor to setup the GUI */
-   public YouWin () {
+   public YouWinNew() {
+
       // Retrieve the content-pane of the top-level container JFrame
       // All operations done on the content-pane
       Container container = getContentPane();
-      container.setLayout(new FlowLayout());
- 
-      container.add(new JLabel("You Won!"));
- 
-      JButton rematchBtn = new JButton("Rematch");
-      JButton backToMenu = new JButton("Main Menu");
-      container.add(rematchBtn);
-      container.add(backToMenu);
- 
-      // Create action listener for button
-      rematchBtn.addActionListener(new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            //What happens after button is clicked
-            // components are deleted from frame, new components are brought up
-            //Test
-            System.out.println("rematch twas clicked");
-         }
-      });
 
+      JPanel postGameOptions = new JPanel();
+      postGameOptions.setLayout(new FlowLayout());
 
-      backToMenu.addActionListener(new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            //What happens after button is clicked
-            // components are deleted from frame, new components are brought up
-            //Test
-            System.out.println("menu twas clicked");
-         }
-      });
- 
+      JPanel youWinCover = new JPanel();
 
-      setLocationRelativeTo(null);      
+      container.setLayout(new BorderLayout(0,0)); 
+
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
-      setTitle("You Win"); // "this" JFrame sets title
-      setSize(300, 100);         // "this" JFrame sets initial size
-      setVisible(true);          // "this" JFrame shows
+      setTitle("You Won"); // Sets title
+      setSize(650, 450);         // Sets initial size
+      setVisible(true);          // Shows
+      setLocationRelativeTo(null); // Displays frame in the middle of the screen
+
+
+
+      // Creation of components
+
+      // Creates you win cover and sets image for the menu
+      JLabel youWinTitleCover = new JLabel();
+      youWinTitleCover.setIcon(new ImageIcon(getClass().getResource("Assets/YouWinCover.jpg"))); // Placeholder image
+
+      
+      // Creates rematch button and sets image for the button
+      JButton rematchButton = new JButton();
+      rematchButton.setIcon(new ImageIcon(getClass().getResource("Assets/RematchButton.jpg"))); // Placeholder image
+      //pvpButton.setBorder(BorderFactory.createEmptyBorder());
+      //pvpButton.setContentAreaFilled(false);
+
+
+      // Creates main menu button and sets image for the button
+      JButton mainMenuButton = new JButton();
+      mainMenuButton.setIcon(new ImageIcon(getClass().getResource("Assets/MainMenuButton.jpg"))); // Placeholder image
+      //pvcButton.setBorder(BorderFactory.createEmptyBorder());
+      //pvcButton.setContentAreaFilled(false);
+
+
+
+      // Components added to the frame
+
+      youWinCover.add(youWinTitleCover);
+
+      postGameOptions.add(rematchButton);
+      postGameOptions.add(mainMenuButton);
+
+      
+      container.add(postGameOptions, BorderLayout.SOUTH);
+      container.add(youWinCover, BorderLayout.NORTH);
+ 
+
+
+      // Action Listeners
+
+
+      // Rematch button action listener
+      rematchButton.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+
+            // Components are deleted from frame, new components are brought up
+            dispose();
+            
+
+            /**
+
+               Code that calls the resetting of the board
+               
+
+            **/
+
+
+            //Test
+            System.out.println("Rematch clicked");
+         }
+      });
+
+
+      // Main menu button action listener
+      mainMenuButton.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            // Components are deleted from frame, new components are brought up
+            dispose();
+            
+            /**
+
+               Code that brings the player back to the main menu
+               
+
+            **/
+
+
+            //Test
+            System.out.println("Main Menu clicked");
+         }
+      });
    }
  
-   /** Testing Pop Up **/
+
+   /** Testing Main Menu **/
    public static void main(String[] args) {
       // Run the GUI construction in the Event-Dispatching thread for thread-safety
       SwingUtilities.invokeLater(new Runnable() {
          @Override
          public void run() {
-            new YouWin(); // Constructor does the job
+            new YouWinNew(); // Constructor does the job
          }
       });
    }
