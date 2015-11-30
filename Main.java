@@ -65,7 +65,7 @@ public class Main extends JFrame {
 
             // Components are deleted from frame, new components are brought up
             dispose();
-            Connect4TimerExample board = new Connect4TimerExample(1);
+            Connect4TimerExample board = new Connect4TimerExample(0);
             board.setVisible(true);
 
 
@@ -81,6 +81,7 @@ public class Main extends JFrame {
          public void actionPerformed(ActionEvent e) {
             // Components are deleted from frame, new components are brought up
             dispose();
+            // Menu to choose computer difficulty is brought up
             ComputerDifficultyMenu difficultyMenu = new ComputerDifficultyMenu();
 
 
