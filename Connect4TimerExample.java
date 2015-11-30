@@ -46,9 +46,9 @@ public class Connect4TimerExample extends JFrame {
         setLocationRelativeTo(null);        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
+/**
     public static void main(String[] args) {
-        
+        /**
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {            
@@ -56,7 +56,9 @@ public class Connect4TimerExample extends JFrame {
                 ex.setVisible(true);                
             }
         });
+        
     }
+**/
 }
 
 class Board extends JPanel
