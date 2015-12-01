@@ -1,26 +1,25 @@
 
 // Currently holds all game logic (non gui components of the board)
 public class BoardLogic {
-  
-  
-  private boolean mConnectFour;
+  //count of the chips on the board
+  //if all chips are placed, game is tied.
   private int mChipCount;
-  private int mTurnCount;
-  private boolean mPlayerTurn;
-  private boolean mIsPlaying;
-
+  private boolean mConnectFour;
+  
+  //0 - game is still active
+  //1 - player 1 has won
+  //2 - player 2 has won
+  //3 - tie game
+  private int mWhoWon;
 
   private int[] mColumnMap;
   private Chip[][] mChips;
   private int[][] mDrawMap;
 
   public BoardLogic() {
-    
-    this.mIsPlaying = true;
-    this.mConnectFour = false;
+    this.mWhoWon = 0;
     this.mChipCount = 0;
-    this.mTurnCount = 0;
-    this.mPlayerTurn = true;
+    this.mConnectFour = false;
     this.mColumnMap = new int[6];
     this.mChips = new Chip[6][7];
     this.mDrawMap = new int[6][7];
@@ -36,11 +35,40 @@ public class BoardLogic {
     		mChips[i][j] = new Chip();
     		mDrawMap[i][j] = 0;
     	}
-     }
+    }
   }
 
+  	public int WhoWon(int playerTurn) {
+  		playerTurn = playerTurn % 2;
+  		
+  		if (mChipCount != 42 && mConnectFour) {
+  			if (playerTurn == 0) {
+  				mWhoWon = 1;
+  			} else if (playerTurn == 1) {
+  				mWhoWon = 2;
+  			}
+  		} else if (mChipCount == 42 && !mConnectFour) {
+  			mWhoWon = 3;
+  		} else {
+  			mWhoWon = 0;
+  		}
+  		
+  		return mWhoWon;
+  	}
+  	public void resetBoard() {
+  		for (int i = 0; i < 6; i++) {
+  			for (int j = 0; j < 7; j++) {
+  				mChips[i][j] = new Chip();
+  				mDrawMap[i][j] = 0;
+  			}
+  			this.mColumnMap[i] = 0;
+  		}
+  		this.mChipCount = 0;
+  		this.mWhoWon = 0;
+  		this.mConnectFour = false;
+  	}
+  
     // Calls chip constructor for either player1 or player2 chip
-    
     private void SetChip(int playerTurn, int x, int y) {
       if (playerTurn == 0) {
         mChips[y][x] = new player1Chip(playerTurn);
@@ -56,8 +84,9 @@ public class BoardLogic {
     public void PlaceChip(int playerTurn, int x, int y) {
       SetChip(playerTurn, x, y);
       mChips[y][x].setVisible(true);
+      mChipCount++;
       if (ChipCheck(x, y, playerTurn)) {
-        System.out.println("There is a connect 4!");
+        mConnectFour = true;
       }
     }
     

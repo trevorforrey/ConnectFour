@@ -8,7 +8,7 @@ import java.util.*;
 public class YouLose extends JFrame {
  
    /** Constructor to setup the GUI */
-   public YouLose() {
+   public YouLose(BoardLogic mBoardLogic) {
 
       // Retrieve the content-pane of the top-level container JFrame
       // All operations done on the content-pane
@@ -85,6 +85,7 @@ public class YouLose extends JFrame {
 
 
             //Test
+            mBoardLogic.resetBoard();
             System.out.println("Rematch clicked");
          }
       });
@@ -113,7 +114,7 @@ public class YouLose extends JFrame {
  
 
    /** Testing Main Menu **/
-   public static void main(String[] args) {
+   /*public static void main(String[] args) {
       // Run the GUI construction in the Event-Dispatching thread for thread-safety
       SwingUtilities.invokeLater(new Runnable() {
          @Override
@@ -121,5 +122,5 @@ public class YouLose extends JFrame {
             new YouLose(); // Constructor does the job
          }
       });
-   }
+   }*/
 }

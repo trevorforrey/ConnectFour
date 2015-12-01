@@ -133,8 +133,13 @@ class Board extends JPanel
                     System.out.println("Mouse clicked column " + columnClicked);
                     System.out.println(mBoardLogic.CheckColumn(columnClicked));
                     columnHeight = mBoardLogic.CheckColumn(columnClicked);
-                    chipX = 50 + (columnClicked * 100) + (columnClicked * 15);
-                    animationOccuring = true;
+                    if (columnHeight == -1) {
+                    	columnHeight = mBoardLogic.CheckColumn(columnClicked);
+                    } else {
+                    	chipX = 50 + (columnClicked * 100) + (columnClicked * 15);
+                        animationOccuring = true;
+                    }
+                    
                     
                 }
                 revalidate();
@@ -275,7 +280,7 @@ class Board extends JPanel
         }
 
 
-        // If its a game against a hard computer player and the game isn't over or a chip is droped
+        // If its a game against a hard computer player and the game isn't over or a chip is dropped
         if (typeOfGame == 3 && playerTurn % 2 == 1 && !computerLost && !animationOccuring) {
 
             columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
@@ -305,7 +310,9 @@ class Board extends JPanel
                         System.out.println("You Win Called");
                         computerLost = true;
                         takeInput = false;
-                        YouWinNew youWin = new YouWinNew();
+                        YouWinNew youWin = new YouWinNew(mBoardLogic);
+                        takeInput = true;
+                        computerLost = false;
                     }
                 }
     		} else if (playerTurn % 2 == 1) {
@@ -325,7 +332,9 @@ class Board extends JPanel
                         if (mBoardLogic.ChipCheck(columnComputerPlay, rowComputerPlay, ((playerTurn-1)%2)) && animationOccuring == false) {
                             System.out.println("You Lose Called");
                             takeInput = false;
-                            YouLose youLose = new YouLose();
+                            YouLose youLose = new YouLose(mBoardLogic);
+                            takeInput = true;
+                            
                         }
 
                     }
@@ -346,7 +355,9 @@ class Board extends JPanel
                             System.out.println("You Win Called");
                             computerLost = true;
                             takeInput = false;
-                            YouWinNew youWin = new YouWinNew();
+                            YouWinNew youWin = new YouWinNew(mBoardLogic);
+                            takeInput = true;
+                            computerLost = false;
                         }
                     }
     			}
@@ -358,7 +369,10 @@ class Board extends JPanel
     		chipY = 18;
     	}
 
-    	
+    	if (mBoardLogic.WhoWon(playerTurn) == 3) {
+    		takeInput = false;
+    		TieGame tieGame = new TieGame(mBoardLogic);
+    	}
     	validate();
         repaint();
     }
