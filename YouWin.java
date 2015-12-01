@@ -5,10 +5,10 @@ import java.util.*;
 
 
 // Creates a Post game menu for the user to decide what to do after a win
-public class YouWinNew extends JFrame {
+public class YouWin extends JFrame {
  
    /** Constructor to setup the GUI */
-   public YouWinNew() {
+   public YouWin(BoardLogic mBoardLogic) {
 
       // Retrieve the content-pane of the top-level container JFrame
       // All operations done on the content-pane
@@ -76,15 +76,7 @@ public class YouWinNew extends JFrame {
             dispose();
             
 
-            /**
-
-               Code that calls the resetting of the board
-               
-
-            **/
-
-
-            //Test
+            mBoardLogic.resetBoard();
             System.out.println("Rematch clicked");
          }
       });
@@ -113,13 +105,13 @@ public class YouWinNew extends JFrame {
  
 
    /** Testing Main Menu **/
-   public static void main(String[] args) {
+   /*public static void main(String[] args) {
       // Run the GUI construction in the Event-Dispatching thread for thread-safety
       SwingUtilities.invokeLater(new Runnable() {
          @Override
          public void run() {
-            new YouWinNew(); // Constructor does the job
+            new YouWin(); // Constructor does the job
          }
       });
-   }
+   }*/
 }

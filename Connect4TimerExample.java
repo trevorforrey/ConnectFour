@@ -310,7 +310,7 @@ class Board extends JPanel
                         System.out.println("You Win Called");
                         computerLost = true;
                         takeInput = false;
-                        YouWinNew youWin = new YouWinNew(mBoardLogic);
+                        YouWin youWin = new YouWin(mBoardLogic);
                         takeInput = true;
                         computerLost = false;
                     }
@@ -355,7 +355,7 @@ class Board extends JPanel
                             System.out.println("You Win Called");
                             computerLost = true;
                             takeInput = false;
-                            YouWinNew youWin = new YouWinNew(mBoardLogic);
+                            YouWin youWin = new YouWin(mBoardLogic);
                             takeInput = true;
                             computerLost = false;
                         }
