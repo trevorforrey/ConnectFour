@@ -42,64 +42,49 @@ public class Server extends JFrame {
 
 
 
-      DataInputStream inputFromClient;
-      DataOutputStream outputToClient;
+      ObjectInputStream inputFromClient;
+      ObjectOutputStream outputToClient;
       ServerSocket serverSocket;
-      Socket connectionToTheServer, connectionToClient;
+      Socket connectionToClient;
       int port = 8000;
 
       // Create a server socket
       serverSocket = new ServerSocket(port);   // The default port we will be listening for to establish a 'accept' connection between s & client.
-      jta.append("Server started at " + new Date() + '\n'); // Calls date function to state when connection was made, this is just part of the SER215 notes example however.
 
       // Connecting our client would be done this way:
       //connectionToTheServer = new Socket("192.168.1.109" /* localhost*/, 8000);
 
-      // Listen for a connection request
-      connectionToClient = serverSocket.accept();  // This is the most crucial part of the program, it listens to clients trying to connect to
-                                                          // establish our connection and make a new socket for hosting that connection, hence "Socket socket".
-                                                          // It accepts the original socket establishment, the first socket we create to host connection.
-
-      /* Client side of things will look as follows:
-            Client socket
-            Socket socket = new Socket(host, 8000).
-      */
-
-      // Create an input stream from the socket
-      //inputFromClient = new ObjectInputStream(socket.getInputStream());
-
-      // Read from input
-      
-      // The object creation below would be the example/template for the object created of the actual gameboard, to which it'll render and re-draw 
-      // the gameboard by calling to the BoardLogic class which in turn calls to all the other classes and methods to paint componenet's, set board
-      // values to true, false, etc.
-      // Object object = inputFromClient.readObject();
-
-
+      // Listen for a connection request      
       // Create data input and output streams
-      inputFromClient = new DataInputStream(connectionToClient.getInputStream());     // in is for accepting input to the server to make the outted changes.
-      outputToClient = new DataOutputStream(connectionToClient.getOutputStream());    // out is for writing to the server.
+      inputFromClient = new ObjectInputStream(connectionToClient.getInputStream());       // in is for accepting input to the server to make the outted changes.
+      outputToClient = new ObjectOutputStream(connectionToClient.getOutputStream());     // out is for writing to the server.
         // Basically for every input we get, we clarify that input with inputFromClient.action/input,
         // we output the actions as follows, outputToClient.action/output.  
         // in.readDouble()  out.writeDouble(number).
 
+      HelperThreadServer Player1;
+      HelperThreadServer Player2;
+      int playersConnected = 0;
+      
       while (true) {
         // Could also implement a socket session with threads in the while loop to create multiple threads for multiple connections,
         // but that isn't needed for the sake of this assignment.
+        if (playersConnected < 2) {                                 // If playersConnect is less than 2, so a client is connected to server.
+          if (playersConnected == 0) {                              // If playersConnected is 0, we have yet to establish connection.  
+            Socket clientSocket = serverSocket.accept();            // Thus we accept a client connection through a socket.
+            Player1 = new HelperThreadServer(clientSocket);         // Put client into the thread.
+          }
+          if (playersConnected == 1) {                              // If playersConnected push them into the thread to begin our game.
+            Socket clientSocket = serverSocket.accept();            // Accept client into clientSocket, so we can push socket
+            Player2 = new HelperThreadServer(clientSocket);         // into our HelperThreadServer as we do here,
+          }
+          
+        }
+        if (playersConnected == 2) {              // Begin the Conenct4Game between the 2 clients.
+          Player1.start();
+          Player2.start();
+        }
 
-        // Maybe will want to run the connection establishments within the true loop, debatable. 
-
-
-        // Receive radius from the client
-        double radius = inputFromClient.readDouble();
-        // Compute area
-        double area = radius * radius * Math.PI;
-
-
-        // Send area back to the client
-        outputToClient.writeDouble(area);
-        jta.append("Radius received from client: " + radius + '\n');
-        jta.append("Area found: " + area + '\n');
       }
     }
 

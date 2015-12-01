@@ -1,7 +1,10 @@
-public class MiddleMan {
+import java.io.*;
+import java.util.*;
+
+public class MiddleMan implements Serializable {
   private int [][] drawMap;   // Private variables so they cannot be interfered with outside of scope.
   private int x, y;           // Variables that will be used for the accessor and mutator methods in regards to x&y.
-
+  private int playerTurn;
   // Overloaded Constructors
   // -Basic Constructor
   // -From server
@@ -18,10 +21,11 @@ public class MiddleMan {
 
   }
 
-  public MiddleMan(int[][] drawMap, int x, int y) {    // Using multidimensional array for storing chips.
+  public MiddleMan(int[][] drawMap, int x, int y, int playerTurn) {    // Using multidimensional array for storing chips.
     this.drawMap = drawMap;             // Setting program drawMap array equal to user given drawMap array for each change made from client to server.
     this.x = x;
     this.y = y;
+    this.playerTurn = playerTurn;
   }
 
   public MiddleMan(int x) {
@@ -37,6 +41,9 @@ public class MiddleMan {
   }
   public int getY() {   // Accessor method for y coordinate on the grid.
     return y;
+  }
+  public int getPlayerTurn() {
+    return playerTurn;
   }
 
 
