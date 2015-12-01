@@ -53,7 +53,7 @@ public class Server extends JFrame {
       jta.append("Server started at " + new Date() + '\n'); // Calls date function to state when connection was made, this is just part of the SER215 notes example however.
 
       // Connecting our client would be done this way:
-      connectionToTheServer = new Socket("192.168.1.109" /* localhost*/, 8000);
+      //connectionToTheServer = new Socket("192.168.1.109" /* localhost*/, 8000);
 
       // Listen for a connection request
       connectionToClient = serverSocket.accept();  // This is the most crucial part of the program, it listens to clients trying to connect to
