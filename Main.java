@@ -45,8 +45,8 @@ public class Main extends JFrame {
       pvcButton.setIcon(new ImageIcon(getClass().getResource("Assets/PlayerVsComputerCover2.jpg"))); // Placeholder image
 
       // Creates player vs player online button and sets image for the button
-      Jbutton pvpOnlineButton = new JButton();
-      pvpOnlineButton.setIcon(new ImageIcon(getClass().getResource("adf"))); // Placeholder image
+      JButton pvpOnlineButton = new JButton();
+      //pvpOnlineButton.setIcon(new ImageIcon(getClass().getResource("adf"))); // Placeholder image
 
 
 

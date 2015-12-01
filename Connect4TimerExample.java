@@ -305,29 +305,52 @@ class Board extends JPanel
                         System.out.println("You Win Called");
                         computerLost = true;
                         takeInput = false;
-                        YouWin youWin = new YouWin();
+                        YouWinNew youWin = new YouWinNew();
                     }
                 }
     		} else if (playerTurn % 2 == 1) {
-    			if (chipY < 18 + (rowComputerPlay * 100) + (15 * rowComputerPlay) + 100 + 30) {
-                	chipY += 10;
-                } else {
-                	
-                    	if (rowComputerPlay > -1) {
-                        	mBoardLogic.PlaceChip(playerTurn%2, columnComputerPlay, rowComputerPlay);
-                        	playerTurn++;
+    			if (typeOfGame == 3 || typeOfGame == 2 || typeOfGame == 1) {
+    				if (chipY < 18 + (rowComputerPlay * 100) + (15 * rowComputerPlay) + 100 + 30) {
+                    	chipY += 10;
+                    } else {
+                    	
+                        	if (rowComputerPlay > -1) {
+                            	mBoardLogic.PlaceChip(playerTurn%2, columnComputerPlay, rowComputerPlay);
+                            	playerTurn++;
+                            }
+                        
+                    	animationOccuring = false;
+                    	chipY = 18;
+
+                        if (mBoardLogic.ChipCheck(columnComputerPlay, rowComputerPlay, ((playerTurn-1)%2)) && animationOccuring == false) {
+                            System.out.println("You Lose Called");
+                            takeInput = false;
+                            YouLose youLose = new YouLose();
                         }
-                    
-                	animationOccuring = false;
-                	chipY = 18;
 
-                    if (mBoardLogic.ChipCheck(columnComputerPlay, rowComputerPlay, ((playerTurn-1)%2)) && animationOccuring == false) {
-                        System.out.println("You Lose Called");
-                        takeInput = false;
-                        YouLose youLose = new YouLose();
                     }
+    			} else if (typeOfGame == 0) {
+    				if (chipY < 18 + (columnHeight * 100) + (15 * columnHeight) + 100 + 30) {
+                    	chipY += 10;
+                    } else {
+                    	
+                        	if (columnHeight > -1) {
+                            	mBoardLogic.PlaceChip(playerTurn%2, columnClicked, columnHeight);
+                            	playerTurn++;
+                            }
+                        
+                    	animationOccuring = false;
+                    	chipY = 18;
 
-                }
+                        if (mBoardLogic.ChipCheck(columnClicked, columnHeight, ((playerTurn-1)%2)) && animationOccuring == false) {
+                            System.out.println("You Win Called");
+                            computerLost = true;
+                            takeInput = false;
+                            YouWinNew youWin = new YouWinNew();
+                        }
+                    }
+    			}
+    			
     		}
 
     		
