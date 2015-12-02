@@ -11,12 +11,14 @@ public class BoardLogic {
   //2 - player 2 has won
   //3 - tie game
   private int mWhoWon;
+  private int mPlayerTurn;
 
   private int[] mColumnMap;
   private Chip[][] mChips;
   private int[][] mDrawMap;
 
   public BoardLogic() {
+    this.mPlayerTurn = 0;
     this.mWhoWon = 0;
     this.mChipCount = 0;
     this.mConnectFour = false;
@@ -37,6 +39,13 @@ public class BoardLogic {
     	}
     }
   }
+
+    public void IncrementPlayerTurn() {
+      mPlayerTurn++;
+    }
+    public int GetPlayerTurn() {
+      return mPlayerTurn % 2;
+    }
 
   	public int WhoWon(int playerTurn) {
   		playerTurn = playerTurn % 2;
@@ -66,6 +75,7 @@ public class BoardLogic {
   		this.mChipCount = 0;
   		this.mWhoWon = 0;
   		this.mConnectFour = false;
+      this.mPlayerTurn = 0;
   	}
   
     // Calls chip constructor for either player1 or player2 chip
@@ -91,6 +101,12 @@ public class BoardLogic {
     }
     
     public int[][] GetDrawMap() {
+      for (int i = 0; i < 6; i++) {
+        for (int j = 0; j < 7; j++) {
+          System.out.print(mDrawMap[i][j]);
+        }
+        System.out.println("");
+      }
     	return mDrawMap;
     }
 

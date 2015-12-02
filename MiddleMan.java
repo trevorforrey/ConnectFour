@@ -1,49 +1,62 @@
-import java.io.*;
+import java.io.Serializable;
 import java.util.*;
 
 public class MiddleMan implements Serializable {
   private int [][] drawMap;   // Private variables so they cannot be interfered with outside of scope.
   private int x, y;           // Variables that will be used for the accessor and mutator methods in regards to x&y.
   private int playerTurn;
+  private int player;
   // Overloaded Constructors
   // -Basic Constructor
   // -From server
   // -From Client
-  public MiddleMan() {
+  
 
-    for (int i = 0; i < 6; i++) {       // Set multidimensional array to 0
-      for (int j = 0; j < 7; j++) {     // for standard constructor
-        drawMap[i][j] = 0;              //
-      }
-    }
-    x = 0;
-    y = 0;
+  public MiddleMan(int[][] drawMap, int playerTurn, int player) {    // Using multidimensional array for storing chips.
+    System.out.println("this constructor was called");
 
-  }
-
-  public MiddleMan(int[][] drawMap, int x, int y, int playerTurn) {    // Using multidimensional array for storing chips.
     this.drawMap = drawMap;             // Setting program drawMap array equal to user given drawMap array for each change made from client to server.
-    this.x = x;
-    this.y = y;
+    this.x = 0;
+    this.y = 0;
     this.playerTurn = playerTurn;
+    this.player = player;
+    System.out.println("Draw from constructor");
+    for (int i = 0; i < 6; i++) {
+        for (int j = 0; j < 7; j++) {
+          System.out.print(drawMap[i][j]);
+        }
+        System.out.println("");
+      }
   }
 
-  public MiddleMan(int x) {
-    MiddleMan();
+  public MiddleMan(int x, int player) {
+    
+    this.y = 0;
     this.x = x;
+    this.playerTurn = 0;
+    this.player = player;
   }
 
   public int[][] getDrawMap() {     // Retrieving the current gameboard with all the chips in place.
-    return drawMap;                 // Return the array with all the proper assigned values for chips placed.
+    for (int i = 0; i < 6; i++) {
+        for (int j = 0; j < 7; j++) {
+          System.out.print(drawMap[i][j]);
+        }
+        System.out.println("");
+      }
+    return this.drawMap;                 // Return the array with all the proper assigned values for chips placed.
   }
   public int getX() {   // Accessor method for x coordinate on the grid.
-    return x;
+    return this.x;
   }
   public int getY() {   // Accessor method for y coordinate on the grid.
-    return y;
+    return this.y;
   }
   public int getPlayerTurn() {
-    return playerTurn;
+    return this.playerTurn;
+  }
+  public int getPlayer() {
+    return this.player;
   }
 
 

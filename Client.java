@@ -24,27 +24,25 @@ import javax.swing.AbstractAction;
 import java.io.*;
 import java.net.*;
 import java.awt.*;
-import java.event.*;
 import javax.swing.*;
 
 /* IMPORTANT LINK FOR INFO: http://zetcode.com/tutorials/javagamestutorial/ 
 */
 
-public class Connect4TimerExample extends JFrame {
+public class Client extends JFrame {
 
     private int typeOfGame4Timer;
     
 
-    public Connect4TimerExample(int gameType) {
+    public Client() {
 
-        typeOfGame4Timer = gameType;
         
         initUI();
     }
     
     private void initUI() {
 
-        add(new Board(typeOfGame4Timer));           // Add gameboard class created below which implements draw function and timer for moving object.
+        add(new Board());           // Add gameboard class created below which implements draw function and timer for moving object.
         
         setResizable(false);
         pack();
@@ -53,19 +51,19 @@ public class Connect4TimerExample extends JFrame {
         setLocationRelativeTo(null);        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-/*
+
     public static void main(String[] args) {
-        /**
+        
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {            
-                JFrame ex = new Connect4TimerExample(2);
+                JFrame ex = new Client();
                 ex.setVisible(true);                
             }
         });
         
     }
-*/
+
 }
 
 class Board extends JPanel
@@ -93,80 +91,105 @@ class Board extends JPanel
     private boolean takeInput;
     private boolean animationOccuring;
     private int columnClicked, columnHeight;
+    private boolean needUpdate;
 
+    private int player;
+
+    String host;
+    private ObjectOutputStream objectToServer = null;
+    private ObjectInputStream objectFromServer = null;
+
+    private DataOutputStream dataToServer = null;
+    private DataInputStream dataFromServer = null;
+    private MiddleMan inMiddleMan = null;
+    private Socket socket;
     
-    public Board(int gameType) {
+    public Board() {
         initBoard();
-
-        String host = "192.168.1.109";
-        private ObjectOutputStream toServer;
-        private ObjectInputStream fromServer;
+        player = 0 ;
+        host = "192.168.1.127";
+        needUpdate = false;
         
         try {
-          Socket socket = new Socket(host, 8000);
-          
-          fromServer = new ObjectInputStream(socket.getInputStream());    // InputStream for connection from Server to socket Server.
-          toServer = new ObjectOutputStream(socket.getOutputStream());    // OutputStream for outputting changes to be rendered to Server from Socket connection of user.
-          
+            socket = new Socket(host, 8000);
+              
+            dataToServer = new DataOutputStream(socket.getOutputStream());
+            dataToServer.flush();
+            dataFromServer = new DataInputStream(socket.getInputStream());
+
+            System.out.println("connected");
+            System.out.println(dataFromServer.readUTF());
+
+            objectToServer = new ObjectOutputStream(socket.getOutputStream());
+            objectToServer.flush();
+            objectFromServer = new ObjectInputStream(socket.getInputStream());
+            
+            
+            inMiddleMan = (MiddleMan) objectFromServer.readObject();
+            drawMap = inMiddleMan.getDrawMap();
+            player = inMiddleMan.getPlayer();
+            playerTurn = inMiddleMan.getPlayerTurn();
+
+
+            
+            
       
           
-          // Flushing the stream, therefore making the changes render right upon calling.
-          toServer.flush();
+          
           
         } catch (IOException ex) {
-          System.err.println(ex);
+            System.err.println(ex);
+        } catch(ClassNotFoundException ec) {
+            System.err.println(ec);
         }
                 
         addMouseListener(new MouseAdapter() {
-          @Override
-          public void mouseClicked(MouseEvent e) {
-                if (takeInput && !animationOccuring) {
-                  if (e.getX() >= 0 && e.getX() <= 157) {          // X is in row 1.
-                  columnClicked = 0;
-                  }  
-                  else if (e.getX() >= 158 && e.getX() <= 271) {   // X is in row 2.
-                    columnClicked = 1;
-                  }
-                  else if (e.getX() >= 272 && e.getX() <= 386) {   // X is in row 3.
-                    columnClicked = 2;
-                  }
-                  else if (e.getX() >= 387 && e.getX() <= 503) {   // X is in row 4.
-                    columnClicked = 3;
-                  }
-                  else if (e.getX() >= 504 && e.getX() <= 616) {   // X is in row 5.
-                    columnClicked = 4;
-                  }
-                  else if (e.getX() >= 617 && e.getX() <= 732) {   // X is in row 6.
-                    columnClicked = 5;
-                  }
-                  else if (e.getX() >= 733 && e.getX() <= 890) {   // X is in row 7.
-                    columnClicked = 6;
-                  }
-                    System.out.println("Mouse clicked column " + columnClicked);
-                    //Need to add client side column height check function
-                    //columnHeight = mBoardLogic.CheckColumn(columnClicked);         // Calling to the CheckColumn method within the BoardLogic, which returns the amount of empty spaces we have.
-                    if (columnHeight == -1) {
-                      //then check columnHeight for a different column
-                    } else {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                
+                    if (takeInput && !animationOccuring) {
+                        if (e.getX() >= 0 && e.getX() <= 157) {          // X is in row 1.
+                            columnClicked = 0;
+                        }  
+                        else if (e.getX() >= 158 && e.getX() <= 271) {   // X is in row 2.
+                            columnClicked = 1;
+                        }
+                        else if (e.getX() >= 272 && e.getX() <= 386) {   // X is in row 3.
+                            columnClicked = 2;
+                        }
+                        else if (e.getX() >= 387 && e.getX() <= 503) {   // X is in row 4.
+                            columnClicked = 3;
+                        }
+                        else if (e.getX() >= 504 && e.getX() <= 616) {   // X is in row 5.
+                            columnClicked = 4;
+                        }
+                        else if (e.getX() >= 617 && e.getX() <= 732) {   // X is in row 6.
+                            columnClicked = 5;
+                        }
+                        else if (e.getX() >= 733 && e.getX() <= 890) {   // X is in row 7.
+                            columnClicked = 6;
+                        }
+                        System.out.println("Mouse clicked column " + columnClicked);
+                        //Need to add client side column height check function
+                        //columnHeight = mBoardLogic.CheckColumn(columnClicked);         // Calling to the CheckColumn method within the BoardLogic, which returns the amount of empty spaces we have.
+                        try {
+                            MiddleMan outMiddleMan = new MiddleMan(columnClicked, player);
+                            objectToServer.writeObject(outMiddleMan);
+                            objectToServer.flush();
+                            //dataToServer.writeInt(columnClicked);
+                            //dataToServer.flush();
+                            needUpdate = true;
+                            
+                            
+                        } catch (IOException ex) {
+                            System.out.println(ex);
+                        }
                         
-                      try {
-                        MiddleMan outMiddleMan = new MiddleMan(columnClicked);        // Calling to the MiddleMan constructor with column int value (x).
-                        toServer.writeObject(outMiddleMan);
-                        outMiddleMan = null;
-                        
-                      } catch(IOException ex) {
-                        System.err.println(ex);
-                      }
-                      
-                      
-                      
-                      chipX = 50 + (columnClicked * 100) + (columnClicked * 15);  // 50 is our initial, depending on column clicked we then add that, along with the y coordinate of where the column clicked is.
-                      animationOccuring = true;
                     }
-                    
-                }
+                
+                
                 revalidate();
-              }
+            }
         });
         addMouseMotionListener(new MouseAdapter() {                               // Overriding the mouseMotionListener for sake of program.
           public void mouseMoved(MouseEvent e) {
@@ -197,6 +220,9 @@ class Board extends JPanel
                     chipX = 50 + (6 * 100) + (6 * 15);
                   }
             }
+
+            
+
             revalidate();
           }
         });
@@ -250,10 +276,10 @@ class Board extends JPanel
     private void drawBoard(Graphics g) {
         
         
-        if (playerTurn % 2 == 0) {
+        if (player == 1) {
           chipPicture = redChip.getImage();
         }
-        if (playerTurn % 2 == 1) {
+        if (player == 2) {
           chipPicture = yellowChip.getImage();
         }
         g.drawImage(chipPicture,chipX, chipY,this);
@@ -276,89 +302,70 @@ class Board extends JPanel
     @Override
     public void actionPerformed(ActionEvent e) {    // Need to implement the action performed to suit our needs.
     
-    try {
+    /*try {
       MiddleMan inMiddleMan = (MiddleMan)fromServer.readObject();
       drawMap = inMiddleMan.getDrawMap();
       playerTurn = inMiddleMan.getPlayerTurn();
       inMiddleMan = null;
-    } catch (IOException ex) {
+    } catch (IOException ex | ClassNotFoundException(s, ex)) {
       System.err.println(ex);
+    }*/
+    /*try {
+        MiddleMan inMiddleMan = (MiddleMan) objectFromServer.readObject();
+        drawMap = inMiddleMan.getDrawMap();
+        player = inMiddleMan.getPlayer();
+        playerTurn = inMiddleMan.getPlayerTurn();
+    } catch (IOException ex) {
+        System.out.println(ex);
+    } catch (ClassNotFoundException ec) {
+
+    }*/
+    
+    if (needUpdate) {
+        System.out.println("Need update Called");
+        try {
+            inMiddleMan = (MiddleMan) objectFromServer.readObject();
+            this.drawMap = inMiddleMan.getDrawMap();
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 7; j++) {
+                    System.out.print(drawMap[i][j]);
+                }
+                System.out.println();
+            }
+            playerTurn = inMiddleMan.getPlayerTurn();
+            needUpdate = false;
+            System.out.println("Retrieved the junk");
+        } catch (IOException ex) {
+            System.out.println(ex);
+        } catch (ClassNotFoundException ec) {
+            System.out.println(ec);
+        }
+        
     }
 
-
-      if (animationOccuring) {
+    if (animationOccuring) {
         if (playerTurn % 2 == 0) {
-          if (chipY < 18 + (columnHeight * 100) + (15 * columnHeight) + 100 + 30) {
-                  chipY += 10;
-                } else {
-                  
-                      if (columnHeight > -1) {
-                          mBoardLogic.PlaceChip(playerTurn%2, columnClicked, columnHeight);
-                          playerTurn++;
-                        }
-                    
-                  animationOccuring = false;
-                  chipY = 18;
-  
-                    if (mBoardLogic.ChipCheck(columnClicked, columnHeight, ((playerTurn-1)%2)) && animationOccuring == false) {
-                        System.out.println("Player 1 has won!");
-                        /*
-                        takeInput = false;
-                        YouWinNew youWin = new YouWinNew(mBoardLogic);
-                        takeInput = true;*/
-                        
-                    }
-                }
-        } else if (playerTurn % 2 == 1) {
             if (chipY < 18 + (columnHeight * 100) + (15 * columnHeight) + 100 + 30) {
-
                 chipY += 10;
-                } else {
-                  
-                      if (columnHeight > -1) {
-                          mBoardLogic.PlaceChip(playerTurn%2, columnClicked, columnHeight);
-                      playerTurn++;
-                      chipY += 10;
-                    } else {
-                      
-                          if (columnHeight > -1) {
-                              mBoardLogic.PlaceChip(playerTurn%2, columnClicked, columnHeight);
-                              playerTurn++;
-                            }
-                        
-                      animationOccuring = false;
-                      chipY = 18;
+            } else {      
+                if (columnHeight > -1) {
 
-                        if (mBoardLogic.ChipCheck(columnClicked, columnHeight, ((playerTurn-1)%2)) && animationOccuring == false) {
-                            System.out.println("You Win Called");
-                            
-                        }
-                    
-                  animationOccuring = false;
-                  chipY = 18;
-
-                    if (mBoardLogic.ChipCheck(columnClicked, columnHeight, ((playerTurn-1)%2)) && animationOccuring == false) {
-                        System.out.println("Player 2 has won!");
-                        /*
-                        takeInput = false;
-                        YouWinNew youWin = new YouWinNew(mBoardLogic);
-                        takeInput = true;*/
-                    }
                 }
+                animationOccuring = false;
+                chipY = 18;        
             }
         }
-
-        
-      } else {
+    } else {
         chipY = 18;
-      }
-
-      if (mBoardLogic.WhoWon(playerTurn) == 3) {
-        takeInput = false;
-        TieGame tieGame = new TieGame(mBoardLogic);
-        takeInput = true;
-      }
-      validate();
-        repaint();
     }
+
+      
+    validate();
+    repaint();
+    }
+
+    
+
+
+
 }

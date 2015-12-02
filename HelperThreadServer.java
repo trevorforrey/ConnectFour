@@ -1,16 +1,25 @@
+import java.io.*;
+import java.net.*;
+
 public class HelperThreadServer extends Thread {
 
     private Socket socket = null;
     
-    private ObjectInputStream serverInputStream;
-    private ObjectOutputStream serverOutputStream;
+    ObjectInputStream serverInputStream;
+    ObjectOutputStream serverOutputStream;
     
     private MiddleMan inMiddleMan;
 
     public HelperThreadServer(Socket socket) {
-        serverInputStream = new ObjectInputStream(socket.getInputStream());
-        new ObjectOutputStream(socket.getOutputStream());
-        this.socket = socket;
+        try {
+            this.socket = socket;
+            serverInputStream = new ObjectInputStream(socket.getInputStream());
+            serverOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+        
 
     }
 
