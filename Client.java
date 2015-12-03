@@ -30,10 +30,7 @@ import javax.swing.*;
 */
 
 public class Client extends JFrame {
-
-    private int typeOfGame4Timer;
     
-
     public Client() {
 
         
@@ -72,7 +69,7 @@ class Board extends JPanel
   
 
 
-    private final int B_WIDTH = 890;        // Realy peculiar dimensions, but needed to create perfect alignment between chip and gameboard.
+    private final int B_WIDTH = 1190;        // Realy peculiar dimensions, but needed to create perfect alignment between chip and gameboard.
     private final int B_HEIGHT = 880;
     private final int INITIAL_X = 36;       // INITIAL X for the gameboard.
     private final int INITIAL_Y = 134;        // INboardTAL Y for the gameboard.
@@ -130,7 +127,16 @@ class Board extends JPanel
             player = inMiddleMan.getPlayer();
             playerTurn = inMiddleMan.getPlayerTurn();
 
+            System.out.println("You are player: " + player);
 
+            if (player == 1) {
+                takeInput = true;
+                System.out.println("Taking input from player one");
+            }
+            if (player == 2) {
+                takeInput = false;
+                System.out.println("Waiting on player one");
+            }
             
             
       
@@ -146,7 +152,9 @@ class Board extends JPanel
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                
+                if (playerTurn + 1 == player) {
+
+
                     if (takeInput && !animationOccuring) {
                         if (e.getX() >= 0 && e.getX() <= 157) {          // X is in row 1.
                             columnClicked = 0;
@@ -178,8 +186,8 @@ class Board extends JPanel
                             objectToServer.flush();
                             //dataToServer.writeInt(columnClicked);
                             //dataToServer.flush();
+                            takeInput = false;
                             needUpdate = true;
-                            
                             
                         } catch (IOException ex) {
                             System.out.println(ex);
@@ -187,7 +195,7 @@ class Board extends JPanel
                         
                     }
                 
-                
+                }
                 revalidate();
             }
         });
@@ -326,15 +334,24 @@ class Board extends JPanel
         try {
             inMiddleMan = (MiddleMan) objectFromServer.readObject();
             this.drawMap = inMiddleMan.getDrawMap();
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 7; j++) {
-                    System.out.print(drawMap[i][j]);
+            
+            if (playerTurn == inMiddleMan.getPlayerTurn()) {
+                if (playerTurn == 0) {
+                    playerTurn = 1;
+                } else if (playerTurn == 1) {
+                    playerTurn = 0;
                 }
-                System.out.println();
+            } else {
+                playerTurn = inMiddleMan.getPlayerTurn();
             }
-            playerTurn = inMiddleMan.getPlayerTurn();
-            needUpdate = false;
+            
+            System.out.println("Player turn = " + playerTurn);
+            
             System.out.println("Retrieved the junk");
+            if (playerTurn +1  == player) {
+                takeInput = true;
+            }
+            needUpdate = false;
         } catch (IOException ex) {
             System.out.println(ex);
         } catch (ClassNotFoundException ec) {
@@ -342,6 +359,26 @@ class Board extends JPanel
         }
         
     }
+    if ((playerTurn + 1 != player )) {
+        System.out.println("Continuous Update Called on Client");
+        try {
+            inMiddleMan = (MiddleMan) objectFromServer.readObject();
+            this.drawMap = inMiddleMan.getDrawMap();
+            
+            playerTurn = inMiddleMan.getPlayerTurn();
+            
+            System.out.println("Retrieved the junk");
+            if (playerTurn + 1 == player) {
+                takeInput = true;
+            }
+        } catch (IOException ex) {
+            System.out.println(ex);
+        } catch (ClassNotFoundException ec) {
+            System.out.println(ec);
+        }
+        
+    }
+
 
     if (animationOccuring) {
         if (playerTurn % 2 == 0) {

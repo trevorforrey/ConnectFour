@@ -28,7 +28,7 @@ public class Main extends JFrame {
 
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
       setTitle("Connect Four"); // Sets title
-      setSize(970, 710);         // Sets initial size
+      setSize(1100, 710);         // Sets initial size
       setVisible(true);          // Shows
       setLocationRelativeTo(null); // Displays frame in the middle of the screen
 

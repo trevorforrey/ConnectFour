@@ -20,14 +20,8 @@ public class MiddleMan implements Serializable {
     this.y = 0;
     this.playerTurn = playerTurn;
     this.player = player;
-    System.out.println("Draw from constructor");
-    for (int i = 0; i < 6; i++) {
-        for (int j = 0; j < 7; j++) {
-          System.out.print(drawMap[i][j]);
-        }
-        System.out.println("");
-      }
   }
+  
 
   public MiddleMan(int x, int player) {
     
@@ -38,12 +32,6 @@ public class MiddleMan implements Serializable {
   }
 
   public int[][] getDrawMap() {     // Retrieving the current gameboard with all the chips in place.
-    for (int i = 0; i < 6; i++) {
-        for (int j = 0; j < 7; j++) {
-          System.out.print(drawMap[i][j]);
-        }
-        System.out.println("");
-      }
     return this.drawMap;                 // Return the array with all the proper assigned values for chips placed.
   }
   public int getX() {   // Accessor method for x coordinate on the grid.

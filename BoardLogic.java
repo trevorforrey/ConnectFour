@@ -101,12 +101,7 @@ public class BoardLogic {
     }
     
     public int[][] GetDrawMap() {
-      for (int i = 0; i < 6; i++) {
-        for (int j = 0; j < 7; j++) {
-          System.out.print(mDrawMap[i][j]);
-        }
-        System.out.println("");
-      }
+      
     	return mDrawMap;
     }
 
@@ -646,7 +641,7 @@ public class BoardLogic {
   		  }
   		  else if (y > 0 && y < 5) {
   		    //8 distinct cases
-  		    if (y == 1) {
+  		    if (y == 1 && x != 3) {
   		      if (x > 0 && x < 3) {
   		        //1
   		        if ((DiagonalTopLeftward(x, y, playerTurn) + DiagonalBotRightward(x, y, playerTurn) - 1) >= 4) {
@@ -672,7 +667,7 @@ public class BoardLogic {
   		        }
   		      }
   		    }
-  		    else if ( y == 4) {
+  		    else if ( y == 4 && x != 3) {
   		      if (x > 0 && x < 3) {
   		        //3
   		        if ((DiagonalLeftUpward(x, y, playerTurn) + DiagonalBotRightward(x, y, playerTurn) - 1) >= 4) {

@@ -16,7 +16,7 @@ public class Server implements Runnable{
 
 
 	private static BoardLogic mBoardLogic;
-	private int playerTurn;
+	private static int playerTurn;
 	private int player;
 
 	public static void main(String[] args) {
@@ -82,34 +82,102 @@ public class Server implements Runnable{
 			//System.out.println("Sending object!!!!!");
 			//MiddleMan outMiddleMan = new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn());
 			//objectToClient.writeObject(outMiddleMan);
-				
+			
 			while(true) {
-				MiddleMan inMiddleMan = (MiddleMan) objectFromClient.readObject();
-				System.out.println("Got object from Unique Client: " + this.ID);
-				System.out.println("The x value contained is: " + inMiddleMan.getX() + ". From Player " + inMiddleMan.getPlayer());
-				System.out.println("The y value is: " + mBoardLogic.CheckColumn(inMiddleMan.getX()));
-				System.out.println("The playerTurn % 2 = " + mBoardLogic.GetPlayerTurn());
-				mBoardLogic.PlaceChip(mBoardLogic.GetPlayerTurn(), inMiddleMan.getX(), mBoardLogic.CheckColumn(inMiddleMan.getX()));
-				mBoardLogic.IncrementPlayerTurn();
-				
-				
+				if (this.player == 1) {
+					if (mBoardLogic.GetPlayerTurn() == 0) {
+						System.out.println("Sending updated data...");
+						
+						objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
+						objectToClient.flush();
+						objectToClient.reset();
+						System.out.println("Sent!");
+						System.out.println("Thread now sleeping...");
 
-				System.out.println("Sending updated data...");
+						MiddleMan inMiddleMan = (MiddleMan) objectFromClient.readObject();
+						System.out.println("Got object from Unique Client: " + this.ID);
+						System.out.println("The x value contained is: " + inMiddleMan.getX() + ". From Player " + inMiddleMan.getPlayer());
+						System.out.println("The y value is: " + mBoardLogic.CheckColumn(inMiddleMan.getX()));
+						System.out.println("The playerTurn % 2 = " + mBoardLogic.GetPlayerTurn());
+						mBoardLogic.PlaceChip(mBoardLogic.GetPlayerTurn(), inMiddleMan.getX(), mBoardLogic.CheckColumn(inMiddleMan.getX()));
+						mBoardLogic.IncrementPlayerTurn();
+						
+						
+
+						/*System.out.println("Sending updated data...");
+						
+						objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
+						objectToClient.flush();
+						objectToClient.reset();
+						System.out.println("Sent!");*/
+					}
+					if (mBoardLogic.GetPlayerTurn() == 1) {
+						System.out.println("Sending updated data...");
+						
+						objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
+						objectToClient.flush();
+						objectToClient.reset();
+						System.out.println("Sent!");
+						System.out.println("Thread now sleeping...");
+						Thread.sleep(2000);
+
+					}
+				} else if (this.player == 2) {
+					
+					if (mBoardLogic.GetPlayerTurn() == 1) {
+						System.out.println("Sending updated data...");
+						
+						objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
+						objectToClient.flush();
+						objectToClient.reset();
+						System.out.println("Sent!");
+						MiddleMan inMiddleMan = (MiddleMan) objectFromClient.readObject();
+						System.out.println("Got object from Unique Client: " + this.ID);
+						System.out.println("The x value contained is: " + inMiddleMan.getX() + ". From Player " + inMiddleMan.getPlayer());
+						System.out.println("The y value is: " + mBoardLogic.CheckColumn(inMiddleMan.getX()));
+						System.out.println("The playerTurn % 2 = " + mBoardLogic.GetPlayerTurn());
+						mBoardLogic.PlaceChip(mBoardLogic.GetPlayerTurn(), inMiddleMan.getX(), mBoardLogic.CheckColumn(inMiddleMan.getX()));
+						mBoardLogic.IncrementPlayerTurn();
+						
+						
+
+						/*System.out.println("Sending updated data...");
+						
+						objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
+						objectToClient.flush();
+						objectToClient.reset();
+						System.out.println("Sent!");
+						*/
+					}
+					if(mBoardLogic.GetPlayerTurn() == 0) {
+						System.out.println("Sending updated data...");
+						
+						objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
+						objectToClient.flush();
+						objectToClient.reset();
+						System.out.println("Sent!");
+						System.out.println("Thread now sleeping...");
+						Thread.sleep(2000);
+
+					}
+				}
 				
-				objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
-				objectToClient.flush();
-				objectToClient.reset();
-				System.out.println("Sent!");
 
 
 			}
 			
 
 		} catch (Exception e) {
-			if (clientCount == 2) {
-				System.out.println("Player 2 has left the game...");
-			} else if (clientCount == 1) {
+			if (player == 1) {
 				System.out.println("Player 1 has left the game...");
+			} else if (player == 2) {
+				System.out.println("Player 2 has left the game...");
+			}
+
+			if (clientCount == 1) {
+				
+				mBoardLogic.resetBoard();
+				playerTurn = 0;
 			}
 			System.out.println("Unique Client: " + this.ID + " has disconnected from the server...");
 			clientCount -= 1;
