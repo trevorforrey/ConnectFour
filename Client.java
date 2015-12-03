@@ -41,7 +41,7 @@ public class Client extends JFrame {
     
     private void initUI() {
 
-        add(new Board(portNum, ipAdd));           // Add gameboard class created below which implements draw function and timer for moving object.
+        add(new BoardClient(portNum, ipAdd));           // Add gameboard class created below which implements draw function and timer for moving object.
         
         setResizable(false);
         pack();
@@ -65,7 +65,7 @@ public class Client extends JFrame {
 
 }
 
-class Board extends JPanel
+class BoardClient extends JPanel
         implements ActionListener {         // Example already implemented a action listener in the signature, therefore you have to overload the ActionPerformed task.
 
   
@@ -105,7 +105,7 @@ class Board extends JPanel
     private MiddleMan inMiddleMan = null;
     private Socket socket;
     
-    public Board(int port, String ip) {
+    public BoardClient(int port, String ip) {
         initBoard();
         player = 0 ;
         host = ip;
