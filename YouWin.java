@@ -23,7 +23,7 @@ public class YouWin extends JFrame {
 
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
       setTitle("You Won"); // Sets title
-      setSize(650, 450);         // Sets initial size
+      setSize(800, 450);         // Sets initial size
       setVisible(true);          // Shows
       setLocationRelativeTo(null); // Displays frame in the middle of the screen
 
@@ -44,8 +44,7 @@ public class YouWin extends JFrame {
 
 
       // Creates main menu button and sets image for the button
-      JButton mainMenuButton = new JButton();
-      mainMenuButton.setIcon(new ImageIcon(getClass().getResource("Assets/MainMenuButton.jpg"))); // Placeholder image
+      
       //pvcButton.setBorder(BorderFactory.createEmptyBorder());
       //pvcButton.setContentAreaFilled(false);
 
@@ -56,7 +55,6 @@ public class YouWin extends JFrame {
       youWinCover.add(youWinTitleCover);
 
       postGameOptions.add(rematchButton);
-      postGameOptions.add(mainMenuButton);
 
       
       container.add(postGameOptions, BorderLayout.SOUTH);
@@ -83,24 +81,7 @@ public class YouWin extends JFrame {
 
 
       // Main menu button action listener
-      mainMenuButton.addActionListener(new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            // Components are deleted from frame, new components are brought up
-            dispose();
-            
-            /**
-
-               Code that brings the player back to the main menu
-               
-
-            **/
-
-
-            //Test
-            System.out.println("Main Menu clicked");
-         }
-      });
+      
    }
  
 

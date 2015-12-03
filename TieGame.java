@@ -23,7 +23,7 @@ public class TieGame extends JFrame {
 
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
       setTitle("Tie Game"); // Sets title
-      setSize(650, 450);         // Sets initial size
+      setSize(800, 450);         // Sets initial size
       setVisible(true);          // Shows
       setLocationRelativeTo(null); // Displays frame in the middle of the screen
 
@@ -43,9 +43,7 @@ public class TieGame extends JFrame {
       //pvpButton.setContentAreaFilled(false);
 
 
-      // Creates main menu button and sets image for the button
-      JButton mainMenuButton = new JButton();
-      mainMenuButton.setIcon(new ImageIcon(getClass().getResource("Assets/MainMenuButton.jpg"))); // Placeholder image
+      
       //pvcButton.setBorder(BorderFactory.createEmptyBorder());
       //pvcButton.setContentAreaFilled(false);
 
@@ -56,7 +54,6 @@ public class TieGame extends JFrame {
       tieGameCover.add(tieGameTitleCover);
 
       postGameOptions.add(rematchButton);
-      postGameOptions.add(mainMenuButton);
 
       
       container.add(postGameOptions, BorderLayout.SOUTH);
@@ -91,25 +88,7 @@ public class TieGame extends JFrame {
       });
 
 
-      // Main menu button action listener
-      mainMenuButton.addActionListener(new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            // Components are deleted from frame, new components are brought up
-            dispose();
-            
-            /**
 
-               Code that brings the player back to the main menu
-               
-
-            **/
-
-
-            //Test
-            System.out.println("Main Menu clicked");
-         }
-      });
    }
  
 
