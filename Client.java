@@ -30,16 +30,18 @@ import javax.swing.*;
 */
 
 public class Client extends JFrame {
-    
-    public Client() {
+    private static int portNum;
+    private static String ipAdd;
+    public Client(int port, String ip) {
 
-        
+        portNum = port;
+        ipAdd = ip;
         initUI();
     }
     
     private void initUI() {
 
-        add(new Board());           // Add gameboard class created below which implements draw function and timer for moving object.
+        add(new Board(portNum, ipAdd));           // Add gameboard class created below which implements draw function and timer for moving object.
         
         setResizable(false);
         pack();
@@ -49,17 +51,17 @@ public class Client extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {            
-                JFrame ex = new Client();
+                JFrame ex = new Client(8000, "192.168.1.127");
                 ex.setVisible(true);                
             }
         });
         
-    }
+    }*/
 
 }
 
@@ -89,10 +91,12 @@ class Board extends JPanel
     private boolean animationOccuring;
     private int columnClicked, columnHeight;
     private boolean needUpdate;
+    private boolean canPlace;
 
     private int player;
 
-    String host;
+    private String host;
+    private int portNumber;
     private ObjectOutputStream objectToServer = null;
     private ObjectInputStream objectFromServer = null;
 
@@ -101,14 +105,16 @@ class Board extends JPanel
     private MiddleMan inMiddleMan = null;
     private Socket socket;
     
-    public Board() {
+    public Board(int port, String ip) {
         initBoard();
         player = 0 ;
-        host = "192.168.1.127";
+        host = ip;
+        portNumber = port;
         needUpdate = false;
+        canPlace = true;
         
         try {
-            socket = new Socket(host, 8000);
+            socket = new Socket(host, portNumber);
               
             dataToServer = new DataOutputStream(socket.getOutputStream());
             dataToServer.flush();
@@ -180,21 +186,31 @@ class Board extends JPanel
                         System.out.println("Mouse clicked column " + columnClicked);
                         //Need to add client side column height check function
                         //columnHeight = mBoardLogic.CheckColumn(columnClicked);         // Calling to the CheckColumn method within the BoardLogic, which returns the amount of empty spaces we have.
-                        try {
-                            MiddleMan outMiddleMan = new MiddleMan(columnClicked, player);
-                            objectToServer.writeObject(outMiddleMan);
-                            objectToServer.flush();
-                            //dataToServer.writeInt(columnClicked);
-                            //dataToServer.flush();
-                            takeInput = false;
-                            needUpdate = true;
-                            
-                        } catch (IOException ex) {
-                            System.out.println(ex);
+                        int count = 5;
+                        for (int i = 5; i > -1; i--) {
+                            if (drawMap[i][columnClicked] == 1 || drawMap[i][columnClicked] == 2) {
+                                count -= 1;
+                            } else {
+                                break;
+                            }
                         }
-                        
+                        if (count == -1) {
+                            System.out.println("Cannot place at selected position.");
+                        } else {
+                            try {
+                                MiddleMan outMiddleMan = new MiddleMan(columnClicked, player);
+                                objectToServer.writeObject(outMiddleMan);
+                                objectToServer.flush();
+                                //dataToServer.writeInt(columnClicked);
+                                //dataToServer.flush();
+                                takeInput = false;
+                                needUpdate = true;
+                                
+                            } catch (IOException ex) {
+                                System.out.println(ex);
+                            }
+                        }
                     }
-                
                 }
                 revalidate();
             }

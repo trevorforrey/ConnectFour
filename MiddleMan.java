@@ -13,7 +13,7 @@ public class MiddleMan implements Serializable {
   
 
   public MiddleMan(int[][] drawMap, int playerTurn, int player) {    // Using multidimensional array for storing chips.
-    System.out.println("this constructor was called");
+    //System.out.println("this constructor was called");
 
     this.drawMap = drawMap;             // Setting program drawMap array equal to user given drawMap array for each change made from client to server.
     this.x = 0;

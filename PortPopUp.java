@@ -6,7 +6,7 @@ import javax.swing.*;    // Using Swing components and containers
 public class PortPopUp extends JFrame {
    private JTextField portInput;
    private JTextField ipInput;
-   private int ipNumber;
+   private String ipNumber;
    private int portNumber;
  
    /** Constructor to setup the GUI */
@@ -31,19 +31,20 @@ public class PortPopUp extends JFrame {
       container.add(ipAddressPrompt);
       container.add(ipInput);
       container.add(enterNetworkDataButton);
+      setLocationRelativeTo(null);
  
       // Create action listener for button
       enterNetworkDataButton.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
             portNumber = Integer.parseInt(portInput.getText());
-            ipNumber = Integer.parseInt(ipInput.getText());
-
+            ipNumber = (ipInput.getText());
+            dispose();
             //Network program creates connection between both players
 
             //Test
-            System.out.println(portNumber);
-            System.out.println(ipNumber);
+            Client client = new Client(portNumber, ipNumber);
+            client.setVisible(true);
          }
       });
  

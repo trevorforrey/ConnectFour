@@ -64,6 +64,11 @@ public class BoardLogic {
   		
   		return mWhoWon;
   	}
+
+    public boolean getWon() {
+      return this.mConnectFour;
+    }
+    
   	public void resetBoard() {
   		for (int i = 0; i < 6; i++) {
   			for (int j = 0; j < 7; j++) {

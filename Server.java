@@ -18,12 +18,13 @@ public class Server implements Runnable{
 	private static BoardLogic mBoardLogic;
 	private static int playerTurn;
 	private int player;
+	private static boolean kickPlayers;
 
 	public static void main(String[] args) {
 		mBoardLogic = new BoardLogic();
 		int port = 8000;
 		int count = 0;
-
+		kickPlayers = false;
 		try {
 			ServerSocket socket1 = new ServerSocket(port);
 			System.out.println("Server initialized...\nWaiting on clients...");
@@ -50,7 +51,7 @@ public class Server implements Runnable{
 	
 	public void run() {
 		try {
-			System.out.println("Thread started...");
+			//System.out.println("Thread started...");
 			DataOutputStream outputToClient = new DataOutputStream(this.connection.getOutputStream());
 			if (clientCount == 1) {
 				outputToClient.writeUTF("You are player one");
@@ -68,13 +69,13 @@ public class Server implements Runnable{
 
 			
 			ObjectOutputStream objectToClient = new ObjectOutputStream(this.connection.getOutputStream());
-			System.out.println("Sending object...");
+			//System.out.println("Sending object...");
 			
 			
 			objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
 			objectToClient.flush();
 			objectToClient.reset();
-			System.out.println("Sent...");
+			//System.out.println("Sent...");
 			
 			ObjectInputStream objectFromClient = new ObjectInputStream(this.connection.getInputStream());
 			
@@ -84,24 +85,41 @@ public class Server implements Runnable{
 			//objectToClient.writeObject(outMiddleMan);
 			
 			while(true) {
+				if (mBoardLogic.getWon()) {
+					if (mBoardLogic.WhoWon(playerTurn - 1) == 1) {
+						System.out.println("\nPlayer one has won! Players now being ejected from server...\n\n");
+						kickPlayers = true;
+					} else if (mBoardLogic.WhoWon(playerTurn - 1) == 2) {
+						System.out.println("\nPlayer two has won! Players now begin ejected from server...\n\n");
+						kickPlayers = false;
+					}
+				}
+				if (mBoardLogic.WhoWon(playerTurn - 1) == 3) {
+					System.out.println("\nNo one has won. Players being ejected from server...\n\n");
+					kickPlayers = true;
+				}
+				if (kickPlayers) {
+					this.connection.close();
+				}
 				if (this.player == 1) {
 					if (mBoardLogic.GetPlayerTurn() == 0) {
-						System.out.println("Sending updated data...");
+						//System.out.println("Sending updated data...");
 						
 						objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
 						objectToClient.flush();
 						objectToClient.reset();
-						System.out.println("Sent!");
-						System.out.println("Thread now sleeping...");
+						//System.out.println("Sent!");
+						//System.out.println("Thread now sleeping...");
 
 						MiddleMan inMiddleMan = (MiddleMan) objectFromClient.readObject();
-						System.out.println("Got object from Unique Client: " + this.ID);
+						System.out.println("\nGot object from Unique Client: " + this.ID);
 						System.out.println("The x value contained is: " + inMiddleMan.getX() + ". From Player " + inMiddleMan.getPlayer());
 						System.out.println("The y value is: " + mBoardLogic.CheckColumn(inMiddleMan.getX()));
-						System.out.println("The playerTurn % 2 = " + mBoardLogic.GetPlayerTurn());
+						System.out.println("The playerTurn % 2 = " + mBoardLogic.GetPlayerTurn() + "\n");
 						mBoardLogic.PlaceChip(mBoardLogic.GetPlayerTurn(), inMiddleMan.getX(), mBoardLogic.CheckColumn(inMiddleMan.getX()));
-						mBoardLogic.IncrementPlayerTurn();
 						
+						mBoardLogic.IncrementPlayerTurn();
+						playerTurn++;
 						
 
 						/*System.out.println("Sending updated data...");
@@ -112,33 +130,36 @@ public class Server implements Runnable{
 						System.out.println("Sent!");*/
 					}
 					if (mBoardLogic.GetPlayerTurn() == 1) {
-						System.out.println("Sending updated data...");
+						//System.out.println("Sending updated data...");
 						
 						objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
 						objectToClient.flush();
 						objectToClient.reset();
-						System.out.println("Sent!");
-						System.out.println("Thread now sleeping...");
+						//System.out.println("Sent!");
+						//System.out.println("Thread now sleeping...");
 						Thread.sleep(2000);
 
 					}
 				} else if (this.player == 2) {
 					
 					if (mBoardLogic.GetPlayerTurn() == 1) {
-						System.out.println("Sending updated data...");
+						//System.out.println("Sending updated data...");
 						
 						objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
 						objectToClient.flush();
 						objectToClient.reset();
-						System.out.println("Sent!");
+						//System.out.println("Sent!");
 						MiddleMan inMiddleMan = (MiddleMan) objectFromClient.readObject();
-						System.out.println("Got object from Unique Client: " + this.ID);
+						System.out.println("\nGot object from Unique Client: " + this.ID);
 						System.out.println("The x value contained is: " + inMiddleMan.getX() + ". From Player " + inMiddleMan.getPlayer());
 						System.out.println("The y value is: " + mBoardLogic.CheckColumn(inMiddleMan.getX()));
-						System.out.println("The playerTurn % 2 = " + mBoardLogic.GetPlayerTurn());
+						System.out.println("The playerTurn % 2 = " + mBoardLogic.GetPlayerTurn() + "\n");
 						mBoardLogic.PlaceChip(mBoardLogic.GetPlayerTurn(), inMiddleMan.getX(), mBoardLogic.CheckColumn(inMiddleMan.getX()));
+						/*if (mBoardLogic.ChipCheck(inMiddleMan.getX(), mBoardLogic.CheckColumn(inMiddleMan.getX()), playerTurn % 2)) {
+							kickPlayers = false;
+						}*/
 						mBoardLogic.IncrementPlayerTurn();
-						
+						playerTurn++;
 						
 
 						/*System.out.println("Sending updated data...");
@@ -150,13 +171,13 @@ public class Server implements Runnable{
 						*/
 					}
 					if(mBoardLogic.GetPlayerTurn() == 0) {
-						System.out.println("Sending updated data...");
+						//System.out.println("Sending updated data...");
 						
 						objectToClient.writeObject(new MiddleMan(mBoardLogic.GetDrawMap(), mBoardLogic.GetPlayerTurn(), this.player));
 						objectToClient.flush();
 						objectToClient.reset();
-						System.out.println("Sent!");
-						System.out.println("Thread now sleeping...");
+						//System.out.println("Sent!");
+						//System.out.println("Thread now sleeping...");
 						Thread.sleep(2000);
 
 					}
@@ -175,7 +196,7 @@ public class Server implements Runnable{
 			}
 
 			if (clientCount == 1) {
-				
+				kickPlayers = false;
 				mBoardLogic.resetBoard();
 				playerTurn = 0;
 			}

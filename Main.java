@@ -95,6 +95,7 @@ public class Main extends JFrame {
             **/
 
             //Test
+            PortPopUp portpopup = new PortPopUp();
             System.out.println("Player vs Player was clicked");
          }
       });
