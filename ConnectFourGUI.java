@@ -61,7 +61,7 @@ class Board extends JPanel
     private final int B_HEIGHT = 880;
     private final int INITIAL_X = 36;       // INITIAL X for the gameboard.
     private final int INITIAL_Y = 134;        // INboardTAL Y for the gameboard.
-    private final int DELAY = 1;           // Time delay for response to animation rendering.
+    private final int DELAY = 25;           // Time delay for response to animation rendering.
 
     private Image backgroundGameBoard;      // Create variable type of image for background gameboard.
     private Image chipPicture;              // Create chip image variable for animated chip.
