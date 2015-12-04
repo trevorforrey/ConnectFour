@@ -97,7 +97,7 @@ public class Main extends JFrame {
 
             // Components are deleted from frame, new components are brought up
             dispose();
-            Connect4TimerExample board = new Connect4TimerExample(0);
+            ConnectFourGUI board = new ConnectFourGUI(0);
             board.setVisible(true);
 
 

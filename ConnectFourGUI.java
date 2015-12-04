@@ -21,14 +21,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 
-/* IMPORTANT LINK FOR INFO: http://zetcode.com/tutorials/javagamestutorial/ 
-*/
-
-public class Connect4TimerExample extends JFrame {
+public class ConnectFourGUI extends JFrame {
 
     private int typeOfGame4Timer;
 
-    public Connect4TimerExample(int gameType) {
+    public ConnectFourGUI(int gameType) {
 
         typeOfGame4Timer = gameType;
         

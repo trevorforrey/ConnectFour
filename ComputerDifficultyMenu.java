@@ -67,7 +67,7 @@ public class ComputerDifficultyMenu extends JFrame {
             dispose();
 
             // Calls board board and integer representing the type of game the player chose (easy computer)
-            Connect4TimerExample board = new Connect4TimerExample(easyComputerGame);
+            ConnectFourGUI board = new ConnectFourGUI(easyComputerGame);
             board.setVisible(true);
 
 
@@ -86,7 +86,7 @@ public class ComputerDifficultyMenu extends JFrame {
             dispose();
 
             // Calls board board and integer representing the type of game the player chose (medium computer)
-            Connect4TimerExample board = new Connect4TimerExample(mediumComputerGame);
+            ConnectFourGUI board = new ConnectFourGUI(mediumComputerGame);
             board.setVisible(true);
 
 
@@ -104,7 +104,7 @@ public class ComputerDifficultyMenu extends JFrame {
             dispose();
 
             // Calls board board and integer representing the type of game the player chose (hard computer)
-            Connect4TimerExample board = new Connect4TimerExample(hardComputerGame);
+            ConnectFourGUI board = new ConnectFourGUI(hardComputerGame);
             board.setVisible(true);
 
 
