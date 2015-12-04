@@ -39,14 +39,6 @@ public class YouWin extends JFrame {
       // Creates rematch button and sets image for the button
       JButton rematchButton = new JButton();
       rematchButton.setIcon(new ImageIcon(getClass().getResource("Assets/RematchButton.jpg"))); // Placeholder image
-      //pvpButton.setBorder(BorderFactory.createEmptyBorder());
-      //pvpButton.setContentAreaFilled(false);
-
-
-      // Creates main menu button and sets image for the button
-      
-      //pvcButton.setBorder(BorderFactory.createEmptyBorder());
-      //pvcButton.setContentAreaFilled(false);
 
 
 
@@ -73,27 +65,11 @@ public class YouWin extends JFrame {
             // Components are deleted from frame, new components are brought up
             dispose();
             
-
+            // Empties the board of all chips and allows players to play on the board again
             mBoardLogic.resetBoard();
             mboard.resetGame();
             System.out.println("Rematch clicked");
          }
       });
-
-
-      // Main menu button action listener
-      
    }
- 
-
-   /** Testing Main Menu **/
-   /*public static void main(String[] args) {
-      // Run the GUI construction in the Event-Dispatching thread for thread-safety
-      SwingUtilities.invokeLater(new Runnable() {
-         @Override
-         public void run() {
-            new YouWin(); // Constructor does the job
-         }
-      });
-   }*/
 }

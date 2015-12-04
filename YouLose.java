@@ -39,15 +39,6 @@ public class YouLose extends JFrame {
       // Creates rematch button and sets image for the button
       JButton rematchButton = new JButton();
       rematchButton.setIcon(new ImageIcon(getClass().getResource("Assets/RematchButton.jpg"))); // Placeholder image
-      //pvpButton.setBorder(BorderFactory.createEmptyBorder());
-      //pvpButton.setContentAreaFilled(false);
-
-
-      
-      //pvcButton.setBorder(BorderFactory.createEmptyBorder());
-      //pvcButton.setContentAreaFilled(false);
-
-
 
       // Components added to the frame
 
@@ -72,35 +63,11 @@ public class YouLose extends JFrame {
             // Components are deleted from frame, new components are brought up
             dispose();
             
-
-            /**
-
-               Code that calls the resetting of the board
-               
-
-            **/
-
-
-            //Test
+            // Empties the board of all chips and allows players to play on the board again
             mBoardLogic.resetBoard();
             board.resetGame();
             System.out.println("Rematch clicked");
          }
       });
-
-
-
    }
- 
-
-   /** Testing Main Menu **/
-   /*public static void main(String[] args) {
-      // Run the GUI construction in the Event-Dispatching thread for thread-safety
-      SwingUtilities.invokeLater(new Runnable() {
-         @Override
-         public void run() {
-            new YouLose(); // Constructor does the job
-         }
-      });
-   }*/
 }
