@@ -17,11 +17,7 @@ public class ComputerDifficultyMenu extends JFrame {
       // All operations done on the content-pane
       Container container = getContentPane();
 
-      /**
-         We might want to do a flow layout so that the menu is responsive
-         Let me know what you guys think
-         -Trevor
-      **/
+
       container.setLayout(new BorderLayout(0,0)); 
 
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
@@ -114,18 +110,6 @@ public class ComputerDifficultyMenu extends JFrame {
 
             //Test
             System.out.println("Hard Computer was clicked");
-         }
-      });
-   }
- 
-
-   /** Testing ComputerDifficultyMenu Menu **/
-   public static void main(String[] args) {
-      // Run the GUI construction in the Event-Dispatching thread for thread-safety
-      SwingUtilities.invokeLater(new Runnable() {
-         @Override
-         public void run() {
-            new ComputerDifficultyMenu(); // Constructor does the job
          }
       });
    }

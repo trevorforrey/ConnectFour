@@ -46,19 +46,6 @@ public class Connect4TimerExample extends JFrame {
         setLocationRelativeTo(null);        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-/**
-    public static void main(String[] args) {
-        /**
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {            
-                JFrame ex = new Connect4TimerExample(2);
-                ex.setVisible(true);                
-            }
-        });
-        
-    }
-**/
 }
 
 class Board extends JPanel
@@ -148,8 +135,6 @@ class Board extends JPanel
         addMouseMotionListener(new MouseAdapter() {
         	public void mouseMoved(MouseEvent e) {
         		
-//*****************
-
 
         		if (animationOccuring == false && takeInput) {
         			if (e.getX() >= 0 && e.getX() <= 157) {
@@ -213,9 +198,6 @@ class Board extends JPanel
         
         timer = new Timer(DELAY, this);
         timer.start();
-        //timer.start();
-        //this.addMouseListener(new BoardMouseListener(mBoardLogic));
-        //this.addMouseMotionListener(new BoardMouseListener(mBoardLogic));
     }
 
     @Override

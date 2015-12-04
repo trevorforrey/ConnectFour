@@ -19,11 +19,6 @@ public class Main extends JFrame {
 
       JPanel cover = new JPanel();
 
-      /**
-         We might want to do a flow layout so that the menu is responsive
-         Let me know what you guys think
-         -Trevor
-      **/
       container.setLayout(new BorderLayout(0,0)); 
 
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
@@ -86,16 +81,10 @@ public class Main extends JFrame {
 
             // Components are deleted from frame, new components are brought up
             dispose();
-            /**
 
-
-               Code that begins the pvp online game setup and board creation
-
-
-            **/
+            PortPopUp portpopup = new PortPopUp();
 
             //Test
-            PortPopUp portpopup = new PortPopUp();
             System.out.println("Player vs Player was clicked");
          }
       });

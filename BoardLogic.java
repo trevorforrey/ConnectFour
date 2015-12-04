@@ -772,30 +772,4 @@ public class BoardLogic {
         return false;
       }
     }
-
-    // Handles the animation of a recently placed chip
-    private void DropChip() {
-
-    }
-
-    // Handles each players turn
-    /** Will need to take in position of player's mouse when they click
-     * Find lowest empty chip position in the column they clicked
-     * Place, Set, and Drop their specific chip
-    **/
-    private void PlayerTurn(int playerTurn) {
-
-    }
-
-
-    
-    
-    /*
-    // Basic Board Frame attributes
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Exit program if close-window button clicked
-    setTitle("Connect Four"); // Sets title
-    setSize(*boardsize*);         // Sets initial size
-    setVisible(true)
-    */
-    
 }
