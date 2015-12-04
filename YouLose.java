@@ -8,7 +8,7 @@ import java.util.*;
 public class YouLose extends JFrame {
  
    /** Constructor to setup the GUI */
-   public YouLose(BoardLogic mBoardLogic) {
+   public YouLose(BoardLogic mBoardLogic, Board board) {
 
       // Retrieve the content-pane of the top-level container JFrame
       // All operations done on the content-pane
@@ -83,6 +83,7 @@ public class YouLose extends JFrame {
 
             //Test
             mBoardLogic.resetBoard();
+            board.resetGame();
             System.out.println("Rematch clicked");
          }
       });

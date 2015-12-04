@@ -95,7 +95,7 @@ class Board extends JPanel
     private boolean animationOccuring;
     private int columnClicked, columnHeight;
 
-    private boolean computerLost;
+    private boolean gameOver;
     
     public Board(int gameType) {
     	drawMap = mBoardLogic.GetDrawMap();
@@ -103,7 +103,7 @@ class Board extends JPanel
 
         typeOfGame = gameType;
         computerPlayer = new ComputerPlayer("RAMy");
-        computerLost = false;
+        gameOver = false;
                 
         addMouseListener(new MouseAdapter() {
         	@Override
@@ -257,7 +257,7 @@ class Board extends JPanel
         // Computer Turns
 
         // If its a game against an easy computer player and the game isn't over or a chip is droped
-        if (typeOfGame == 1 && playerTurn % 2 == 1 && !computerLost && !animationOccuring) {
+        if (typeOfGame == 1 && playerTurn % 2 == 1 && !gameOver && !animationOccuring) {
 
             columnComputerPlay = computerPlayer.easyTurn(mBoardLogic.getChips());
             rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
@@ -269,7 +269,7 @@ class Board extends JPanel
 
 
         // If its a game against a medium computer player and the game isn't over or a chip is droped
-        if (typeOfGame == 2 && playerTurn % 2 == 1 && !computerLost && !animationOccuring) {
+        if (typeOfGame == 2 && playerTurn % 2 == 1 && !gameOver && !animationOccuring) {
 
             columnComputerPlay = computerPlayer.mediumTurn(mBoardLogic.getChips());
             rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
@@ -281,7 +281,7 @@ class Board extends JPanel
 
 
         // If its a game against a hard computer player and the game isn't over or a chip is dropped
-        if (typeOfGame == 3 && playerTurn % 2 == 1 && !computerLost && !animationOccuring) {
+        if (typeOfGame == 3 && playerTurn % 2 == 1 && !gameOver && !animationOccuring) {
 
             columnComputerPlay = computerPlayer.hardTurn(mBoardLogic.getChips());
             rowComputerPlay = mBoardLogic.CheckColumn(columnComputerPlay);
@@ -308,11 +308,9 @@ class Board extends JPanel
 
                     if (mBoardLogic.ChipCheck(columnClicked, columnHeight, ((playerTurn-1)%2)) && animationOccuring == false) {
                         System.out.println("You Win Called");
-                        computerLost = true;
+                        gameOver = true;
                         takeInput = false;
-                        YouWin youWin = new YouWin(mBoardLogic);
-                        takeInput = true;
-                        computerLost = false;
+                        YouWin youWin = new YouWin(mBoardLogic, this);
                     }
                 }
     		} else if (playerTurn % 2 == 1) {
@@ -332,9 +330,8 @@ class Board extends JPanel
                         if (mBoardLogic.ChipCheck(columnComputerPlay, rowComputerPlay, ((playerTurn-1)%2)) && animationOccuring == false) {
                             System.out.println("You Lose Called");
                             takeInput = false;
-                            YouLose youLose = new YouLose(mBoardLogic);
-                            takeInput = true;
-                            
+                            gameOver = true;
+                            YouLose youLose = new YouLose(mBoardLogic, this);
                         }
 
                     }
@@ -353,11 +350,9 @@ class Board extends JPanel
 
                         if (mBoardLogic.ChipCheck(columnClicked, columnHeight, ((playerTurn-1)%2)) && animationOccuring == false) {
                             System.out.println("You Win Called");
-                            computerLost = true;
+                            gameOver = true;
                             takeInput = false;
-                            YouWin youWin = new YouWin(mBoardLogic);
-                            takeInput = true;
-                            computerLost = false;
+                            YouWin youWin = new YouWin(mBoardLogic, this);
                         }
                     }
     			}
@@ -371,9 +366,14 @@ class Board extends JPanel
 
     	if (mBoardLogic.WhoWon(playerTurn) == 3) {
     		takeInput = false;
-    		TieGame tieGame = new TieGame(mBoardLogic);
+    		TieGame tieGame = new TieGame(mBoardLogic, this);
     	}
     	validate();
         repaint();
+    }
+    public void resetGame() {
+        gameOver = false;
+        takeInput = true;
+        playerTurn = 0;
     }
 }

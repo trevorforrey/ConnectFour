@@ -8,7 +8,7 @@ import java.util.*;
 public class TieGame extends JFrame {
  
    /** Constructor to setup the GUI */
-   public TieGame(BoardLogic mBoardLogic) {
+   public TieGame(BoardLogic mBoardLogic, Board board) {
 
       // Retrieve the content-pane of the top-level container JFrame
       // All operations done on the content-pane
@@ -83,6 +83,7 @@ public class TieGame extends JFrame {
 
             //Test
             mBoardLogic.resetBoard();
+            board.resetGame();
             System.out.println("Rematch clicked");
          }
       });
