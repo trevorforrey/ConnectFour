@@ -56,7 +56,7 @@ public class BoardLogic {
   			} else if (playerTurn == 1) {
   				mWhoWon = 2;
   			}
-  		} else if (mChipCount == 42 && !mConnectFour) {
+  		} else if (mChipCount >= 42 && !mConnectFour) {
   			mWhoWon = 3;
   		} else {
   			mWhoWon = 0;

@@ -61,7 +61,7 @@ class Board extends JPanel
     private final int B_HEIGHT = 880;
     private final int INITIAL_X = 36;       // INITIAL X for the gameboard.
     private final int INITIAL_Y = 134;        // INboardTAL Y for the gameboard.
-    private final int DELAY = 25;           // Time delay for response to animation rendering.
+    private final int DELAY = 1;           // Time delay for response to animation rendering.
 
     private Image backgroundGameBoard;      // Create variable type of image for background gameboard.
     private Image chipPicture;              // Create chip image variable for animated chip.
@@ -78,6 +78,7 @@ class Board extends JPanel
     private boolean takeInput;
     private boolean animationOccuring;
     private int columnClicked, columnHeight;
+    private int tieGameCount;
 
     private boolean gameOver;
     
@@ -88,6 +89,7 @@ class Board extends JPanel
         typeOfGame = gameType;
         computerPlayer = new ComputerPlayer("RAMy");
         gameOver = false;
+        tieGameCount = 0;
                 
         addMouseListener(new MouseAdapter() {
         	@Override
@@ -345,7 +347,10 @@ class Board extends JPanel
 
     	if (mBoardLogic.WhoWon(playerTurn) == 3) {
     		takeInput = false;
-    		TieGame tieGame = new TieGame(mBoardLogic, this);
+            if (tieGameCount == 0) {
+    		  TieGame tieGame = new TieGame(mBoardLogic, this);
+              tieGameCount++;
+            }
     	}
     	validate();
         repaint();
@@ -354,5 +359,6 @@ class Board extends JPanel
         gameOver = false;
         takeInput = true;
         playerTurn = 0;
+        tieGameCount = 0;
     }
 }
